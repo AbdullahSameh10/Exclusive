@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const images = [
-  "src/Components/Assets/Banner/banner1.png",
-  "src/Components/Assets/Banner/banner2.png",
-  "src/Components/Assets/Banner/banner3.png",
-  "src/Components/Assets/Banner/banner4.png",
+  "@Assets/Banner/banner1.png",
+  "@Assets/Banner/banner2.png",
+  "@Assets/Banner/banner3.png",
+  "@Assets/Banner/banner4.png",
 ];
 
 const colors = ["#0000FF", "#883399", "#c46d02", "#02aba5"];

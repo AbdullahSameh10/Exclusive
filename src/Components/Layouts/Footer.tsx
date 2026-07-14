@@ -40,7 +40,7 @@ export default function Footer() {
               />
               <button className="absolute right-[15px] top-3 h-6 w-6">
                 <img
-                  src="../../../src/Components/Assets/Footer/icon-send.svg"
+                  src="@Assets/Footer/icon-send.svg"
                   alt="send"
                 />
               </button>
@@ -196,20 +196,20 @@ export default function Footer() {
           </p>
           <div className="mb-6 mt-2 flex gap-2">
             <img
-              src="../../../src/Components/Assets/Footer/Qr Code.svg"
+              src="@Assets/Footer/Qr Code.svg"
               alt="qr code image"
               className="h-20 w-20"
             />
             <div className="flex flex-col gap-1">
               <button className="h-10 transition-transform duration-300 hover:scale-105">
                 <img
-                  src="../../../src/Components/Assets/Footer/downloadGooglePlay.svg"
+                  src="@Assets/Footer/downloadGooglePlay.svg"
                   alt="download app from google play btn"
                 />
               </button>
               <button className="h-10 transition-transform duration-300 hover:scale-105">
                 <img
-                  src="../../../src/Components/Assets/Footer/downloadAppStore.svg"
+                  src="@Assets/Footer/downloadAppStore.svg"
                   alt="download app from app store btn"
                 />
               </button>
@@ -218,25 +218,25 @@ export default function Footer() {
           <div className="flex gap-6">
             <a href="#">
               <img
-                src="../../../src/Components/Assets/Footer/facebook.svg"
+                src="@Assets/Footer/facebook.svg"
                 alt=""
               />
             </a>
             <a href="#">
               <img
-                src="../../../src/Components/Assets/Footer/twitter.svg"
+                src="@Assets/Footer/twitter.svg"
                 alt=""
               />
             </a>
             <a href="#">
               <img
-                src="../../../src/Components/Assets/Footer/instagram.svg"
+                src="@Assets/Footer/instagram.svg"
                 alt=""
               />
             </a>
             <a href="#">
               <img
-                src="../../../src/Components/Assets/Footer/linkedin.svg"
+                src="@Assets/Footer/linkedin.svg"
                 alt=""
               />
             </a>

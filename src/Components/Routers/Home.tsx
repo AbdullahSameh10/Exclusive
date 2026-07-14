@@ -22,12 +22,12 @@ const dummyCategories = [
   "Gamming",
 ];
 const dummyIcons = [
-  "src/Components/Assets/Dummy/Category-CellPhone.svg",
-  "src/Components/Assets/Dummy/Category-Computer.svg",
-  "src/Components/Assets/Dummy/Category-SmartWatch.svg",
-  "src/Components/Assets/Dummy/Category-Camera.svg",
-  "src/Components/Assets/Dummy/Category-HeadPhone.svg",
-  "src/Components/Assets/Dummy/Category-GamePad.svg",
+  "@Assets/Dummy/Category-CellPhone.svg",
+  "@Assets/Dummy/Category-Computer.svg",
+  "@Assets/Dummy/Category-SmartWatch.svg",
+  "@Assets/Dummy/Category-Camera.svg",
+  "@Assets/Dummy/Category-HeadPhone.svg",
+  "@Assets/Dummy/Category-GamePad.svg",
 ];
 
 const SectionButton = <Button>View All</Button>;
@@ -356,7 +356,7 @@ export default function Home() {
       <div className="mx-auto my-[140px] flex w-fit gap-[88px]">
         <div className="group flex flex-col items-center gap-6">
           <img
-            src="src/Components/Assets/Services.svg"
+            src="@Assets/Services.svg"
             alt="icon"
             className="transition-transform duration-300 group-hover:scale-110"
           />
@@ -371,7 +371,7 @@ export default function Home() {
         </div>
         <div className="group flex flex-col items-center gap-6">
           <img
-            src="src/Components/Assets/Services (1).svg"
+            src="@Assets/Services (1).svg"
             alt="icon"
             className="transition-transform duration-300 group-hover:scale-110"
           />
@@ -384,7 +384,7 @@ export default function Home() {
         </div>
         <div className="group flex flex-col items-center gap-6">
           <img
-            src="src/Components/Assets/Services (2).svg"
+            src="@Assets/Services (2).svg"
             alt="icon"
             className="transition-transform duration-300 group-hover:scale-110"
           />

@@ -1,16 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
-import useRouteTransition from "../Hooks/useRouteTransition";
+import {useRouteTransition} from "@Hooks/index";
 import {
   AuthIllustrations,
   AuthPanel,
   LoginForm,
   SignupForm,
-} from "../Elements";
-import signInWithGoogle from "../Utilities/signInWithGoogle";
-import { signUpWithGoogle } from "../Utilities";
+} from "@Elements/index";
+import { signInWithGoogle, signUpWithGoogle } from "@Utilities/index";
 import { toast } from "react-toastify";
-import { UserContext } from "../Contexts";
+import { UserContext } from "@Contexts/index";
 
 export default function Authentication() {
   const { setVerified } = useContext(UserContext);

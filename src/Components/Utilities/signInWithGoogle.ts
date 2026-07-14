@@ -3,7 +3,7 @@ import {
   GoogleAuthProvider,
   getAdditionalUserInfo,
 } from "firebase/auth";
-import { auth } from "../../Authentication/firebase";
+import { auth } from "@Authentication/firebase";
 import { toast } from "react-toastify";
 
 const provider = new GoogleAuthProvider();

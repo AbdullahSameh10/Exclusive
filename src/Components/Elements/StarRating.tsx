@@ -8,21 +8,21 @@ export default function StarRating({ rating }: { rating: number }) {
       {Array.from({ length: filledStars }).map((_, i) => (
         <img
           key={i}
-          src="../../src/Components/Assets/filledStar.svg"
+          src="@Assets/filledStar.svg"
           alt="star"
         />
       ))}
       {hasHalfStar && (
         <img
           key="half"
-          src="../../src/Components/Assets/halfFilledStar.svg"
+          src="@Assets/halfFilledStar.svg"
           alt="half star"
         />
       )}
       {Array.from({ length: emptyStars }).map((_, i) => (
         <img
           key={i}
-          src="../../src/Components/Assets/emptyStar.svg"
+          src="@Assets/emptyStar.svg"
           alt="empty star"
         />
       ))}

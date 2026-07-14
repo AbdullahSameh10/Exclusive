@@ -5,14 +5,14 @@ import {
   ProductCard,
   ProductSpecifications,
   StarRating,
-} from "../Elements";
-import { WishlistIcon } from "../Assets/Assets Elements";
-import useRouteTransition from "../Hooks/useRouteTransition";
+} from "@Elements/index";
+import {useRouteTransition} from "@Hooks/index";
 import { useParams } from "react-router";
-import { shuffleArray } from "../Utilities";
-import { Section } from "../Layouts";
+import { shuffleArray } from "@Utilities/index";
+import { Section } from "@Layouts/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { WishlistIcon } from "@Assets/Assets Elements";
 
 type Reviews = {
   rating: number;

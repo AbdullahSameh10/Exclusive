@@ -6,15 +6,15 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@Authentication/firebase";
 import { useAuth } from "@Hooks/index";
 
-import visa from "@Components/Assets/payment/visa.png";
-import mastercard from "@Components/Assets/payment/mastercard.png";
-import paypal from "@Components/Assets/payment/paypal.png";
-import stripe from "@Components/Assets/payment/stripe.png";
-import paymob from "@Components/Assets/payment/paymob.png";
-import fawry from "@Components/Assets/payment/fawry.png";
-import vodafoneCash from "@Components/Assets/payment/cash.png";
-import instapay from "@Components/Assets/payment/instapay.png";
-import cod from "@Components/Assets/payment/cod.png";
+import visa from "@Assets/payment/visa.png";
+import mastercard from "@Assets/payment/mastercard.png";
+import paypal from "@Assets/payment/paypal.png";
+import stripe from "@Assets/payment/stripe.png";
+import paymob from "@Assets/payment/paymob.png";
+import fawry from "@Assets/payment/fawry.png";
+import vodafoneCash from "@Assets/payment/cash.png";
+import instapay from "@Assets/payment/instapay.png";
+import cod from "@Assets/payment/cod.png";
 import { toast } from "react-toastify";
 
 const paymentMethods = [

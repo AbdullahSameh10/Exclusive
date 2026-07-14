@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { auth } from "../../Authentication/firebase";
+import { auth } from "@Authentication/firebase";
 import { toast } from "react-toastify";
 
 export default async function signIn(email: string, password: string) {

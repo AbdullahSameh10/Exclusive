@@ -100,7 +100,7 @@ export default function Header() {
               <div className="relative" ref={dropdownRef}>
                 {/* AVATAR */}
                 <img
-                  src={user.avatar || "../../../src/Components/Assets/avatar.png"}
+                  src={user.avatar || "@Assets/avatar.png"}
                   className="h-10 w-10 cursor-pointer object-cover rounded-full border"
                   onClick={() => setOpen(!open)}
                 />
