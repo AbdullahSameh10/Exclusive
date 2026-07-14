@@ -17,7 +17,8 @@
       "@Hooks/*": ["./src/Components/Hooks/*"],
       "@Layouts/*": ["./src/Components/Layouts/*"],
       "@Routers/*": ["./src/Components/Routers/*"],
-      "@Utilities/*": ["./src/Components/Utilities/*"]
+      "@Utilities/*": ["./src/Components/Utilities/*"],
+      "@Assets/*": ["./src/Components/Assets/*"]
     },
 
     /* Bundler mode */

@@ -16,6 +16,7 @@ export default defineConfig({
       "@Layouts": path.resolve(__dirname, "./src/Components/Layouts"),
       "@Routers": path.resolve(__dirname, "./src/Components/Routers"),
       "@Utilities": path.resolve(__dirname, "./src/Components/Utilities"),
+      "@Assets": path.resolve(__dirname, "./src/Components/Assets"),
     },
   },
 });
