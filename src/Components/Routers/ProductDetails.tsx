@@ -12,7 +12,7 @@ import { shuffleArray } from "@Utilities/index";
 import { Section } from "@Layouts/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import { WishlistIcon } from "@Assets/Assets Elements";
+import { WishlistIcon } from "@Components/Assets/Assets Elements";
 
 type Reviews = {
   rating: number;
