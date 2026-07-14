@@ -2,6 +2,9 @@ type AuthIllustrationsProps = {
   isSignup: boolean;
 };
 
+import signupIllustration from "@Assets/Authentication/Signup.png"
+import loginIllustration from "@Assets/Authentication/Login.png"
+
 export default function AuthIllustrations(props: AuthIllustrationsProps) {
   const { isSignup } = props;
   return (
@@ -11,7 +14,7 @@ export default function AuthIllustrations(props: AuthIllustrationsProps) {
         className={`flex w-1/2 items-center justify-center transition-all duration-700 ease-in-out will-change-transform ${isSignup ? "-translate-x-full opacity-0" : "translate-x-0 opacity-100"}`}
       >
         <img
-          src="@Assets/Authentication/Login.png"
+          src={signupIllustration}
           alt="login illustration"
           className="w-[700px]"
         />
@@ -21,7 +24,7 @@ export default function AuthIllustrations(props: AuthIllustrationsProps) {
         className={`will-change-transform flex w-1/2 items-center justify-center transition-all duration-700 ease-in-out ${isSignup ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
       >
         <img
-          src="@Assets/Authentication/Signup.png"
+          src={loginIllustration}
           alt="signup illustration"
           className="w-[600px]"
         />

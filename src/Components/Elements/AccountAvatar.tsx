@@ -7,7 +7,7 @@ import { useAuth } from "@Hooks/index";
 import { uploadImage } from "@Utilities/index";
 import { doc, updateDoc } from "firebase/firestore";
 
-const defaultAvatar = "@Assets/avatar.png";
+import defaultAvatar from "@Assets/Avatar.png"
 
 export default function AvatarSection() {
   const { setUser, user } = useAuth();
