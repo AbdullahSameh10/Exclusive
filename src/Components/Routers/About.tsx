@@ -1,6 +1,13 @@
 import { useEffect, type ReactElement } from "react";
 import { Breadcrumb } from "@Elements/index";
 import useRouteTransition from "@Hooks/useRouteTransition";
+import aboutUsIllustration from "@Assets/About/About us.svg";
+import servicesImg from "@Assets/Services.svg";
+import servicesImg2 from "@Assets/Services (1).svg";
+import servicesImg3 from "@Assets/Services (2).svg";
+import businessman1 from "@Assets/About/businessman 1.png";
+import businessman2 from "@Assets/About/businessman 2.png";
+import businessman3 from "@Assets/About/businessman 3.png";
 
 type MiddleCardPropsTypes = {
   img: ReactElement;
@@ -228,7 +235,7 @@ export default function About() {
           </div>
           <div className="flex translate-x-[20%] items-center justify-center">
             <img
-              src="@Assets/About/About us.svg"
+              src={aboutUsIllustration}
               alt="about us illustration"
               className="w-[709px] animate-float"
             />
@@ -258,17 +265,17 @@ export default function About() {
         </div>
         <div className="flex gap-[30px]">
           <PersonCard
-            img="@Assets/About/businessman 1.png"
+            img={businessman1}
             name="Tom Cruise"
             description="Founder & Chairman"
           />
           <PersonCard
-            img="@Assets/About/businessman 2.png"
+            img={businessman2}
             name="Emma Watson"
             description="Managing Director"
           />
           <PersonCard
-            img="@Assets/About/businessman 3.png"
+            img={businessman3}
             name="Will Smith"
             description="Product Designer"
           />
@@ -276,7 +283,7 @@ export default function About() {
         <div className="mx-auto mt-[56px] flex w-fit gap-[88px]">
           <div className="group flex flex-col items-center gap-6">
             <img
-              src="@Assets/Services.svg"
+              src={servicesImg}
               alt="icon"
               className="transition-transform duration-300 group-hover:scale-110"
             />
@@ -291,7 +298,7 @@ export default function About() {
           </div>
           <div className="group flex flex-col items-center gap-6">
             <img
-              src="@Assets/Services (1).svg"
+              src={servicesImg2}
               alt="icon"
               className="transition-transform duration-300 group-hover:scale-110"
             />
@@ -306,7 +313,7 @@ export default function About() {
           </div>
           <div className="group flex flex-col items-center gap-6">
             <img
-              src="@Assets/Services (2).svg"
+              src={servicesImg3}
               alt="icon"
               className="transition-transform duration-300 group-hover:scale-110"
             />

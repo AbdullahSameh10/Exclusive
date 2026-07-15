@@ -1,3 +1,6 @@
+import filledStar from "@Assets/filledStar.svg";
+import halfStar from "@Assets/halfFilledStar.svg";
+import emptyStar from "@Assets/emptyStar.svg";
 export default function StarRating({ rating }: { rating: number }) {
   const filledStars = Math.floor(rating);
   const hasHalfStar = rating % 1 >= 0.5;
@@ -8,21 +11,21 @@ export default function StarRating({ rating }: { rating: number }) {
       {Array.from({ length: filledStars }).map((_, i) => (
         <img
           key={i}
-          src="@Assets/filledStar.svg"
+          src={filledStar}
           alt="star"
         />
       ))}
       {hasHalfStar && (
         <img
           key="half"
-          src="@Assets/halfFilledStar.svg"
+          src={halfStar}
           alt="half star"
         />
       )}
       {Array.from({ length: emptyStars }).map((_, i) => (
         <img
           key={i}
-          src="@Assets/emptyStar.svg"
+          src={emptyStar}
           alt="empty star"
         />
       ))}

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { JSX, ReactNode } from "react";
+import rightArrowImg from "@Assets/right arrow.svg";
+import leftArrowImg from "@Assets/left arrow.svg";
 
 type SectionPropsTypes = {
   category: string;
@@ -85,7 +87,7 @@ export default function Section(props: SectionPropsTypes) {
               disabled={isAtStart}
             >
               <img
-                src="src/Components/Assets/left arrow.svg"
+                src={leftArrowImg}
                 alt="left arrow"
               />
             </button>
@@ -96,7 +98,7 @@ export default function Section(props: SectionPropsTypes) {
               disabled={isAtEnd}
             >
               <img
-                src="src/Components/Assets/right arrow.svg"
+                src={rightArrowImg}
                 alt="right arrow"
               />
             </button>

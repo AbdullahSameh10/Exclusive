@@ -13,6 +13,8 @@ import { Section } from "@Layouts/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { WishlistIcon } from "@Components/Assets/Assets Elements";
+import deliveryIcon from "@Assets/icon-delivery.svg";
+import returnIcon from "@Assets/icon-return.svg";
 
 type Reviews = {
   rating: number;
@@ -323,7 +325,7 @@ export default function ProductDetails() {
             <div className="flex w-full flex-col rounded-md border border-black/50">
               <div className="m-[24px_0_16px_16px] flex gap-4">
                 <img
-                  src="../../src/Components/Assets/icon-delivery.svg"
+                  src={deliveryIcon}
                   alt="delivery icon"
                 />
                 <div className="flex flex-col gap-2">
@@ -338,7 +340,7 @@ export default function ProductDetails() {
               <hr className="h-[0.5px] border-0 bg-black/50" />
               <div className="m-[16px_0_24px_16px] flex gap-4">
                 <img
-                  src="../../src/Components/Assets/icon-return.svg"
+                  src={returnIcon}
                   alt="return icon"
                 />
                 <div className="flex flex-col gap-2">

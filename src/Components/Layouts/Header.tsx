@@ -1,12 +1,14 @@
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
-import { Button, SearchBar } from "../Elements";
+import { Button, SearchBar } from "@Elements/index";
 import { CartIcon, WishlistIcon } from "../Assets/Assets Elements";
-import styles from "../../styles.module.css";
-import useRouteTransition from "../Hooks/useRouteTransition";
+import styles from "@/styles.module.css";
+import {useRouteTransition} from "@Hooks/index";
 import { signOut } from "firebase/auth";
-import { auth } from "../../Authentication/firebase";
+import { auth } from "@Authentication/firebase";
 import { useState, useRef, useEffect } from "react";
-import { useAuth } from "../Hooks";
+import { useAuth } from "@Hooks/index";
+
+import avatar from "@Assets/Avatar.png";
 
 export default function Header() {
   const location = useLocation();
@@ -100,8 +102,8 @@ export default function Header() {
               <div className="relative" ref={dropdownRef}>
                 {/* AVATAR */}
                 <img
-                  src={user.avatar || "@Assets/avatar.png"}
-                  className="h-10 w-10 cursor-pointer object-cover rounded-full border"
+                  src={user.avatar || avatar}
+                  className="h-10 w-10 cursor-pointer rounded-full border object-cover"
                   onClick={() => setOpen(!open)}
                 />
 
@@ -119,29 +121,41 @@ export default function Header() {
                     onClick={() => {
                       transition.start();
                       window.scrollTo({ top: 0, behavior: "smooth" });
-                      navigate("/account", { replace: true }); 
-                      
+                      navigate("/account", { replace: true });
+
                       setOpen(false);
                     }}
                   />
-                  <DropdownItem icon="📦" text="My Orders" onClick={() => {
-                    transition.start();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                    navigate("/account/orders", { replace: true });
-                    setOpen(false);
-                  }} />
-                  <DropdownItem icon="❌" text="My Cancellations" onClick={() => {
-                    transition.start();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                    navigate("/account/cancellations", { replace: true });
-                    setOpen(false);
-                  }} />
-                  <DropdownItem icon="⭐" text="My Reviews" onClick={() => {
-                    transition.start();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                    navigate("/account/reviews", { replace: true });
-                    setOpen(false);
-                  }} />
+                  <DropdownItem
+                    icon="📦"
+                    text="My Orders"
+                    onClick={() => {
+                      transition.start();
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      navigate("/account/orders", { replace: true });
+                      setOpen(false);
+                    }}
+                  />
+                  <DropdownItem
+                    icon="❌"
+                    text="My Cancellations"
+                    onClick={() => {
+                      transition.start();
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      navigate("/account/cancellations", { replace: true });
+                      setOpen(false);
+                    }}
+                  />
+                  <DropdownItem
+                    icon="⭐"
+                    text="My Reviews"
+                    onClick={() => {
+                      transition.start();
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      navigate("/account/reviews", { replace: true });
+                      setOpen(false);
+                    }}
+                  />
 
                   <div className="my-2 h-px bg-white/20" />
 

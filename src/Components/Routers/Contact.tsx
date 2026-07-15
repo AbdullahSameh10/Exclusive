@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { Breadcrumb, Button } from "../Elements";
 import useRouteTransition from "../Hooks/useRouteTransition";
 import { useForm, ValidationError } from "@formspree/react";
+import phoneIcon from "@Assets/icons-phone.svg";
+import emailIcon from "@Assets/icons-mail.svg";
 
 export default function Contact() {
   const transition = useRouteTransition();
@@ -21,7 +23,7 @@ export default function Contact() {
             <div className="flex flex-col gap-6">
               <div className="flex items-center gap-4">
                 <img
-                  src="src\Components\Assets\icons-phone.svg"
+                  src={phoneIcon}
                   alt="phone icon"
                 />
                 <span className="font-poppins text-base font-medium text-black">
@@ -45,7 +47,7 @@ export default function Contact() {
             <div className="flex flex-col gap-6">
               <div className="flex items-center gap-4">
                 <img
-                  src="src\Components\Assets\icons-mail.svg"
+                  src={emailIcon}
                   alt="phone icon"
                 />
                 <span className="font-poppins text-base font-medium text-black">

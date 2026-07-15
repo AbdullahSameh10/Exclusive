@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useAuth, useRouteTransition } from "@Hooks/index";
 import { AccountAvatar, Button, PhoneField } from "@Elements/index";
 import { doc, updateDoc } from "firebase/firestore";
-import { auth, db } from "@/Authentication/firebase";
+import { auth, db } from "@Authentication/firebase";
 import { updateProfile, verifyBeforeUpdateEmail } from "firebase/auth";
 import { toast } from "react-toastify";
 import { UserContext } from "@Contexts/index";

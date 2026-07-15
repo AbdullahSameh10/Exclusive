@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import styled from "styled-components";
-import useRouteTransition from "../Hooks/useRouteTransition";
+import {useRouteTransition} from "@Hooks/index";
 
 const StyledRow = styled.div`
   font-family: Poppins, sans-serif;
@@ -15,6 +15,14 @@ const StyledH4 = styled.h4`
   font-weight: 500;
   color: #fafafa;
 `;
+import sendIcon from "@Assets/Footer/icon-send.svg";
+import QRCodeImg from "@Assets/Footer/Qr Code.svg";
+import googlePlayIcon from "@Assets/Footer/downloadGooglePlay.svg";
+import appStoreIcon from "@Assets/Footer/downloadAppStore.svg";
+import facebookIcon from "@Assets/Footer/facebook.svg";
+import twitterIcon from "@Assets/Footer/twitter.svg";
+import instagramIcon from "@Assets/Footer/instagram.svg";
+import linkedInIcon from "@Assets/Footer/linkedin.svg";
 
 export default function Footer() {
   const transition = useRouteTransition();
@@ -39,10 +47,7 @@ export default function Footer() {
                 className="h-[48px] w-[217px] rounded-[4px] border-[1.5px] border-white bg-transparent py-3 pl-4 pr-12"
               />
               <button className="absolute right-[15px] top-3 h-6 w-6">
-                <img
-                  src="@Assets/Footer/icon-send.svg"
-                  alt="send"
-                />
+                <img src={sendIcon} alt="send" />
               </button>
             </div>
           </div>
@@ -195,50 +200,31 @@ export default function Footer() {
             Save $3 with App New User Only
           </p>
           <div className="mb-6 mt-2 flex gap-2">
-            <img
-              src="@Assets/Footer/Qr Code.svg"
-              alt="qr code image"
-              className="h-20 w-20"
-            />
+            <img src={QRCodeImg} alt="qr code image" className="h-20 w-20" />
             <div className="flex flex-col gap-1">
               <button className="h-10 transition-transform duration-300 hover:scale-105">
                 <img
-                  src="@Assets/Footer/downloadGooglePlay.svg"
+                  src={googlePlayIcon}
                   alt="download app from google play btn"
                 />
               </button>
               <button className="h-10 transition-transform duration-300 hover:scale-105">
-                <img
-                  src="@Assets/Footer/downloadAppStore.svg"
-                  alt="download app from app store btn"
-                />
+                <img src={appStoreIcon} alt="download app from app store btn" />
               </button>
             </div>
           </div>
           <div className="flex gap-6">
             <a href="#">
-              <img
-                src="@Assets/Footer/facebook.svg"
-                alt=""
-              />
+              <img src={facebookIcon} alt="facebook icon" />
             </a>
             <a href="#">
-              <img
-                src="@Assets/Footer/twitter.svg"
-                alt=""
-              />
+              <img src={twitterIcon} alt="twitter icon" />
             </a>
             <a href="#">
-              <img
-                src="@Assets/Footer/instagram.svg"
-                alt=""
-              />
+              <img src={instagramIcon} alt="instagram icon" />
             </a>
             <a href="#">
-              <img
-                src="@Assets/Footer/linkedin.svg"
-                alt=""
-              />
+              <img src={linkedInIcon} alt="linkedin icon" />
             </a>
           </div>
         </StyledRow>

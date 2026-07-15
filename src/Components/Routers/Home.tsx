@@ -12,6 +12,9 @@ import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import useRouteTransition from "../Hooks/useRouteTransition";
 import { shuffleArray } from "../Utilities";
+import servicesImg from "@Assets/Services.svg";
+import servicesImg2 from "@Assets/Services (1).svg";
+import servicesImg3 from "@Assets/Services (2).svg";
 
 const dummyCategories = [
   "Phones",
@@ -356,7 +359,7 @@ export default function Home() {
       <div className="mx-auto my-[140px] flex w-fit gap-[88px]">
         <div className="group flex flex-col items-center gap-6">
           <img
-            src="@Assets/Services.svg"
+            src={servicesImg}
             alt="icon"
             className="transition-transform duration-300 group-hover:scale-110"
           />
@@ -371,7 +374,7 @@ export default function Home() {
         </div>
         <div className="group flex flex-col items-center gap-6">
           <img
-            src="@Assets/Services (1).svg"
+            src={servicesImg2}
             alt="icon"
             className="transition-transform duration-300 group-hover:scale-110"
           />
@@ -384,7 +387,7 @@ export default function Home() {
         </div>
         <div className="group flex flex-col items-center gap-6">
           <img
-            src="@Assets/Services (2).svg"
+            src={servicesImg3}
             alt="icon"
             className="transition-transform duration-300 group-hover:scale-110"
           />
