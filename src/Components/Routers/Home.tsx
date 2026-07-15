@@ -20,8 +20,8 @@ import cellPhone from "@Assets/Dummy/Category-CellPhone.svg";
 import computer from "@Assets/Dummy/Category-Computer.svg";
 import smartWatch from "@Assets/Dummy/Category-SmartWatch.svg";
 import camera from "@Assets/Dummy/Category-Camera.svg";
-import headPhone from "@Assets/Dummy/Category-HeadPhone.svg";
-import gamePad from "@Assets/Dummy/Category-GamePad.svg";
+import headPhone from "@Assets/Dummy/Category-Headphone.svg";
+import gamePad from "@Assets/Dummy/Category-Gamepad.svg";
 
 const dummyCategories = [
   "Phones",
