@@ -29,8 +29,6 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
         const userSnap = await getDoc(userRef);
         
         const data = userSnap.exists() ? userSnap.data() : {};
-        console.log("data: ", data);
-        console.log("firebaseUser: ", firebaseUser);
         updateProfile(firebaseUser, {
           photoURL:
             (data.photoURL as string | undefined) ??
