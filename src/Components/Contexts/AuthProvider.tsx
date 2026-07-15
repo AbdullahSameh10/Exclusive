@@ -3,7 +3,7 @@ import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import AuthContext, { type UserTypes } from "./AuthContext";
 import { auth, db } from "../../Authentication/firebase";
 import UserContext, { type PaymentMethod } from "./UserContext";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import avatarImg from "@Assets/Avatar.png";
 
 export default function AuthProvider(props: { children: React.ReactNode }) {
@@ -38,14 +38,26 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
         if (firebaseUser && userSnap) {
           setVerified(firebaseUser.emailVerified);
 
-          await updateDoc(doc(db, "users", firebaseUser.uid), {
-            email: firebaseUser.email,
-            emailVerified: firebaseUser.emailVerified,
-            preferredPayment:
-              (data.preferredPayment as PaymentMethod | undefined) ||
-              preferredPayment ||
-              null,
-          });
+          if (!userSnap.exists()) {
+            await setDoc(userRef, {
+              name: firebaseUser.displayName ?? "Guest User",
+              email: firebaseUser.email,
+              photoURL: firebaseUser.photoURL ?? avatarImg,
+              phoneNumber: firebaseUser.phoneNumber ?? null,
+              preferredPayment: preferredPayment ?? null,
+              emailVerified: firebaseUser.emailVerified,
+              createdAt: Date.now(),
+            });
+          } else {
+            await updateDoc(userRef, {
+              email: firebaseUser.email,
+              emailVerified: firebaseUser.emailVerified,
+              preferredPayment:
+                (data.preferredPayment as PaymentMethod | undefined) ??
+                preferredPayment ??
+                null,
+            });
+          }
         }
         setUser({
           uid: firebaseUser.uid,
