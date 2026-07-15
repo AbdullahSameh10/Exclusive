@@ -16,6 +16,13 @@ import servicesImg from "@Assets/Services.svg";
 import servicesImg2 from "@Assets/Services (1).svg";
 import servicesImg3 from "@Assets/Services (2).svg";
 
+import cellPhone from "@Assets/Dummy/Category-CellPhone.svg";
+import computer from "@Assets/Dummy/Category-Computer.svg";
+import smartWatch from "@Assets/Dummy/Category-SmartWatch.svg";
+import camera from "@Assets/Dummy/Category-Camera.svg";
+import headPhone from "@Assets/Dummy/Category-HeadPhone.svg";
+import gamePad from "@Assets/Dummy/Category-GamePad.svg";
+
 const dummyCategories = [
   "Phones",
   "Computers",
@@ -25,12 +32,12 @@ const dummyCategories = [
   "Gamming",
 ];
 const dummyIcons = [
-  "@Assets/Dummy/Category-CellPhone.svg",
-  "@Assets/Dummy/Category-Computer.svg",
-  "@Assets/Dummy/Category-SmartWatch.svg",
-  "@Assets/Dummy/Category-Camera.svg",
-  "@Assets/Dummy/Category-HeadPhone.svg",
-  "@Assets/Dummy/Category-GamePad.svg",
+  cellPhone,
+  computer,
+  smartWatch,
+  camera,
+  headPhone,
+  gamePad,
 ];
 
 const SectionButton = <Button>View All</Button>;
