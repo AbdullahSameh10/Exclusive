@@ -1,18 +1,40 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Mail, Phone, CircleCheckBig, CircleAlert } from "lucide-react";
 
 import { useAuth } from "@Hooks/index";
 import UserContext from "@/Components/Contexts/UserContext";
 import { sendEmailVerification } from "firebase/auth";
 import { auth } from "@/Authentication/firebase";
+import { toast } from "react-toastify";
 
 export default function Verification() {
   const { user } = useAuth();
 
   const { verified, phoneVerified } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSendVerification = async () => {
+    try {
+      setIsLoading(true);
+      await sendEmailVerification(auth.currentUser!, {
+        url: `https://exclusive-abdullahsameh10.vercel.app/verify-email?mode=verifyEmail&oobCode=${user?.uid}`,
+        handleCodeInApp: false,
+      });
+      toast.success("Email Sent Successfuly");
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div className="flex h-full flex-col gap-10">
+    <div className="relative flex h-full flex-col gap-10">
+      {isLoading ? (
+        <div className="absolute inset-0 -bottom-10 -left-20 -right-20 -top-10 z-10 flex items-center justify-center rounded-md bg-black/40">
+          <span className="h-20 w-20 animate-spin rounded-full border-4 border-white border-y-red-500" />
+        </div>
+      ) : null}
       <h2 className="text-xl font-semibold text-red-500">Verification</h2>
 
       <section className="rounded-md p-6 shadow-md">
@@ -61,11 +83,11 @@ export default function Verification() {
             {!verified && (
               <button
                 className="rounded-md bg-red-500 px-6 py-2 font-medium text-white transition hover:bg-red-600"
-                onClick={async () => {
-                  await sendEmailVerification(auth.currentUser!);
-                }}
+                onClick={() => handleSendVerification()}
               >
-                Send Verification Email
+                {isLoading
+                  ? "Sending Verification Email..."
+                  : "Send Verification Email"}
               </button>
             )}
           </div>

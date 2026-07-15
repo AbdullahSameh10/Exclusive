@@ -1,16 +1,26 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Button, PasswordStrength } from "@Elements/index";
 import {
   EmailAuthProvider,
+  linkWithCredential,
   reauthenticateWithCredential,
   updatePassword,
 } from "firebase/auth";
 import { auth } from "@/Authentication/firebase";
 import { toast } from "react-toastify";
+import { UserContext } from "@Contexts/index";
 
 export default function Security() {
+  const authUser = auth.currentUser;
+  const { setVerified } = useContext(UserContext);
+
+  const hasPasswordProvider =
+    authUser?.providerData.some(
+      (provider) => provider.providerId === "password",
+    ) ?? false;
+
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -23,10 +33,10 @@ export default function Security() {
   const passwordsMatch = newPassword === confirmPassword;
 
   const canSubmit =
-    currentPassword.trim() !== "" &&
     newPassword.trim() !== "" &&
     confirmPassword.trim() !== "" &&
-    passwordsMatch;
+    passwordsMatch &&
+    (!hasPasswordProvider || currentPassword.trim() !== "");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,17 +47,32 @@ export default function Security() {
 
     try {
       setIsLoading(true);
-     
-      const credential = EmailAuthProvider.credential(
-        authUser.email,
-        currentPassword,
-      );
 
-      await reauthenticateWithCredential(authUser, credential);
+      if (hasPasswordProvider) {
+        const credential = EmailAuthProvider.credential(
+          authUser.email,
+          currentPassword,
+        );
 
-      await updatePassword(authUser, newPassword);
+        await reauthenticateWithCredential(authUser, credential);
 
-      toast.success("Password updated successfully!");
+        await updatePassword(authUser, newPassword);
+
+        toast.success("Password updated successfully!");
+      } else {
+        const credential = EmailAuthProvider.credential(
+          authUser.email,
+          newPassword,
+        );
+        
+        await linkWithCredential(authUser, credential);
+        
+        toast.success(
+          "Password created successfully! You can now sign in using either Google or your email and password.",
+        );
+        toast.info("You Are Now Not Verified, Please Go to Verification Page To Verificate Your Mail Agian!");
+        setVerified(false);
+      }
 
       setCurrentPassword("");
       setNewPassword("");
@@ -71,6 +96,14 @@ export default function Security() {
           );
           break;
 
+        case "auth/email-already-in-use":
+          toast.error("This email is already linked to another account.");
+          break;
+
+        case "auth/provider-already-linked":
+          toast.error("A password has already been created for this account.");
+          break;
+
         case "auth/network-request-failed":
           toast.error("Network error. Please check your internet connection.");
           break;
@@ -79,7 +112,7 @@ export default function Security() {
           console.error(error);
           toast.error("Failed to update password.");
       }
-    }finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -93,30 +126,32 @@ export default function Security() {
         onSubmit={handleSubmit}
       >
         <div className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Current Password</label>
+          {hasPasswordProvider && (
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Current Password</label>
 
-            <div className="relative">
-              <input
-                type={showCurrentPassword ? "text" : "password"}
-                placeholder="Enter your current password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                className="h-12 w-full rounded-md bg-gray-100 px-4 pr-12 outline-none transition focus:ring-2 focus:ring-red-400"
-              />
-
-              <button
-                type="button"
-                onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 transition hover:text-red-500"
-              >
-                <FontAwesomeIcon
-                  icon={showCurrentPassword ? faEyeSlash : faEye}
-                  className="text-gray-500 transition duration-300 hover:text-red-500"
+              <div className="relative">
+                <input
+                  type={showCurrentPassword ? "text" : "password"}
+                  placeholder="Enter your current password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  className="h-12 w-full rounded-md bg-gray-100 px-4 pr-12 outline-none transition focus:ring-2 focus:ring-red-400"
                 />
-              </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 transition hover:text-red-500"
+                >
+                  <FontAwesomeIcon
+                    icon={showCurrentPassword ? faEyeSlash : faEye}
+                    className="text-gray-500 transition duration-300 hover:text-red-500"
+                  />
+                </button>
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="space-y-2">
             <label className="text-sm font-medium">New Password</label>
@@ -168,7 +203,8 @@ export default function Security() {
                 />
               </button>
             </div>
-            {confirmPassword && newPassword !== confirmPassword && (
+
+            {confirmPassword && !passwordsMatch && (
               <p className="text-sm text-red-500">Passwords do not match.</p>
             )}
           </div>
@@ -180,7 +216,7 @@ export default function Security() {
             disabled={!canSubmit || isLoading}
             className="disabled:pointer-events-none disabled:opacity-50"
           >
-            {isLoading? "Saving..." : "Save Changes"}
+            {isLoading ? "Saving..." : "Save Changes"}
           </Button>
         </div>
       </form>
