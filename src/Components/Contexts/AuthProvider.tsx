@@ -4,6 +4,7 @@ import AuthContext, { type UserTypes } from "./AuthContext";
 import { auth, db } from "../../Authentication/firebase";
 import UserContext, { type PaymentMethod } from "./UserContext";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import avatarImg from "@Assets/Avatar.png";
 
 export default function AuthProvider(props: { children: React.ReactNode }) {
   const { children } = props;
@@ -23,17 +24,20 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
           return;
         }
 
+        
         const userRef = doc(db, "users", firebaseUser.uid);
         const userSnap = await getDoc(userRef);
-
+        
         const data = userSnap.exists() ? userSnap.data() : {};
+        console.log("data: ", data);
+        console.log("firebaseUser: ", firebaseUser);
         updateProfile(firebaseUser, {
           photoURL:
-            (data.avatar as string | undefined) ??
+            (data.photoURL as string | undefined) ??
             firebaseUser.photoURL ??
-            "../../../src/Components/Assets/avatar.png",
+            avatarImg,
         });
-        if (firebaseUser) {
+        if (firebaseUser && userSnap) {
           setVerified(firebaseUser.emailVerified);
 
           await updateDoc(doc(db, "users", firebaseUser.uid), {
@@ -56,9 +60,9 @@ export default function AuthProvider(props: { children: React.ReactNode }) {
           email: (data.email as string | undefined) ?? firebaseUser.email ?? "",
 
           avatar:
-            (data.avatar as string | undefined) ??
+            (data.photoURL as string | undefined) ??
             firebaseUser.photoURL ??
-            "../../../src/Components/Assets/avatar.png",
+            avatarImg,
 
           phoneNumber: (data.phoneNumber as string | undefined) ?? null,
 
