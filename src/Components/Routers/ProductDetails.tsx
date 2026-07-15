@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { WishlistIcon } from "@Components/Assets/Assets Elements";
 import deliveryIcon from "@Assets/icon-delivery.svg";
-import returnIcon from "@Assets/icon-return.svg";
+import returnIcon from "@Assets/Icon-return.svg";
 
 type Reviews = {
   rating: number;
