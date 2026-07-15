@@ -51,7 +51,6 @@ export default function SignupForm(props: SignupFormProps) {
 
     try {
       setLoading(true);
-      console.log("Signing up with:", { username, email, password });
       const firebaseUser = await signUp({ username, email, password });
       if (setUser) {
         setUser({

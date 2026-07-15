@@ -21,10 +21,8 @@ export default async function loginWithGoogleOnly() {
 
   if (isNewUser) {
     toast.success("Account created successfully!");
-    console.log("New user created:", user);
   } else {
     toast.success("Logged in successfully!");
-    console.log("Existing user logged in:", user);
   }
 
   return user;

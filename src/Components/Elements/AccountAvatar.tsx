@@ -52,7 +52,6 @@ export default function AvatarSection() {
       });
 
       setPreview(downloadURL);
-      console.log(auth.currentUser?.photoURL);
 
       toast.success("Profile picture updated successfully!");
     } catch (error) {

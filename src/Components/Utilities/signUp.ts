@@ -38,7 +38,5 @@ export default async function signUp(props: SignUpData) {
     createdAt: serverTimestamp(),
   });
 
-  console.log("User created successfully (firebase):", firebaseUser);
-
   return cred.user;
 }
