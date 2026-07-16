@@ -9,7 +9,7 @@ import {
 } from "../Elements";
 import { Section } from "../Layouts";
 import { Link } from "react-router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import useRouteTransition from "../Hooks/useRouteTransition";
 import { shuffleArray } from "../Utilities";
 import servicesImg from "@Assets/Services.svg";
@@ -22,6 +22,8 @@ import smartWatch from "@Assets/Dummy/Category-SmartWatch.svg";
 import camera from "@Assets/Dummy/Category-Camera.svg";
 import headPhone from "@Assets/Dummy/Category-Headphone.svg";
 import gamePad from "@Assets/Dummy/Category-Gamepad.svg";
+import { ProductsContext } from "../Contexts";
+import type { Product } from "../Data.types";
 
 const dummyCategories = [
   "Phones",
@@ -47,30 +49,7 @@ const Column = styled.div`
   gap: 60px;
 `;
 
-type ProductsTypes = {
-  id: number;
-  title: string;
-  price: number;
-  discountPercentage: number;
-  rating: number;
-  images: string[];
-  thumbnail: string;
-  reviews: [
-    {
-      rating: number;
-      comment: string;
-      date: Date;
-      reviewerName: string;
-      reviewerEmail: string;
-    },
-  ];
-};
-
-type UIProduct = ProductsTypes & {
-  isNew: boolean;
-};
-
-const mapProduct = (p: ProductsTypes) => ({
+const mapProduct = (p: Product) => ({
   id: p.id,
   title: p.title,
   price: p.price,
@@ -80,34 +59,18 @@ const mapProduct = (p: ProductsTypes) => ({
 });
 
 export default function Home() {
-  const [products, setProducts] = useState<UIProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const slicedProducts = products.slice(12, 28);
+  const { products, loading } = useContext(ProductsContext);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    transition.end();
-    const loadingProducts = setTimeout(() => {
-      setIsLoading(true);
-    }, 0);
+  const shuffledProducts = shuffleArray(products);
 
-    fetch("https://dummyjson.com/products?limit=0")
-      .then((res) => res.json() as Promise<{ products: ProductsTypes[] }>)
-      .then((data) => {
-        const shuffled = shuffleArray(data.products);
+  const flashSales = shuffledProducts.slice(0, 8);
 
-        const withRandomFlags: UIProduct[] = shuffled.map((p) => ({
-          ...p,
-          isNew: Math.random() > 0.7,
-        }));
+  const bestSelling = shuffledProducts.slice(8, 12);
 
-        setProducts(withRandomFlags);
-      })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
-
-    return () => clearTimeout(loadingProducts);
-  }, []);
+  const exploreProducts = shuffledProducts.slice(12, 28).map((product) => ({
+    ...product,
+    isNew: Math.random() > 0.7,
+  }));
 
   const transition = useRouteTransition();
 
@@ -127,21 +90,19 @@ export default function Home() {
           variant="primary"
         />
         <Section category="Today's" heading="Flash Sales" arrows>
-          {!isLoading
-            ? products
-                .slice(0, 8)
-                .map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    id={product.id}
-                    title={product.title}
-                    price={product.price}
-                    sale={Math.ceil(product.discountPercentage)}
-                    rating={product.rating}
-                    thumbnail={product.thumbnail}
-                    reviewsNo={product.reviews.length}
-                  />
-                ))
+          {!loading
+            ? flashSales.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  title={product.title}
+                  price={product.price}
+                  sale={Math.ceil(product.discountPercentage)}
+                  rating={product.rating}
+                  thumbnail={product.thumbnail}
+                  reviewsNo={product.reviews.length}
+                />
+              ))
             : [...Array(8).keys()].map((i) => <ProductCardLoading key={i} />)}
         </Section>
         <Button className="mx-auto my-[60px]">View All Products</Button>
@@ -171,21 +132,19 @@ export default function Home() {
         button={SectionButton}
         className="mt-[70px]"
       >
-        {!isLoading
-          ? products
-              .slice(8, 12)
-              .map((product) => (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  title={product.title}
-                  price={product.price}
-                  sale={Math.ceil(product.discountPercentage)}
-                  rating={product.rating}
-                  thumbnail={product.thumbnail}
-                  reviewsNo={product.reviews.length}
-                />
-              ))
+        {!loading
+          ? bestSelling.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                title={product.title}
+                price={product.price}
+                sale={Math.ceil(product.discountPercentage)}
+                rating={product.rating}
+                thumbnail={product.thumbnail}
+                reviewsNo={product.reviews.length}
+              />
+            ))
           : [...Array(4).keys()].map((i) => <ProductCardLoading key={i + 8} />)}
       </Section>
       <div className="mb-[71px] mt-[140px] flex h-[500px] w-full items-center justify-between overflow-hidden rounded-2xl bg-black px-6 py-12">
@@ -229,12 +188,12 @@ export default function Home() {
       </div>
 
       <Section category="Our Products" heading="Explore Our Products" arrows>
-        {!isLoading
-          ? slicedProducts.map((_, i) => {
+        {!loading
+          ? exploreProducts.map((_, i) => {
               if (i % 2 !== 0) return null;
 
-              const first = slicedProducts[i];
-              const second = slicedProducts[i + 1];
+              const first = exploreProducts[i];
+              const second = exploreProducts[i + 1];
 
               return (
                 <Column key={first.id}>

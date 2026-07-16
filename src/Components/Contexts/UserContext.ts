@@ -20,6 +20,9 @@ const UserContext = createContext({
 
   preferredPayment: "Cash On Delivery" as PaymentMethod,
   setPreferredPayment: (_value: PaymentMethod) => {},
+
+  userWishlist: [] as string[],
+  setUserWishlist: (_value: string[]) => {},
 });
 
 export default UserContext;

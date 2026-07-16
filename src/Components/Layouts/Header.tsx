@@ -92,7 +92,7 @@ export default function Header() {
             }}
             className="h-8"
           >
-            <WishlistIcon navigating />
+            <WishlistIcon productId="Header" navigating />
           </Link>
           <CartIcon />
 

@@ -6,3 +6,6 @@ export { default as AuthProvider } from "./AuthProvider";
 
 export { default as UserContext } from "./UserContext";
 export { default as UserProvider } from "./UserProvider";
+
+export { default as ProductsContext } from "./ProductsContext";
+export { default as ProductsProvider } from "./ProductsProvider";

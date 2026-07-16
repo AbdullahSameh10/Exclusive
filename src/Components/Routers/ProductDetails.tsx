@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   Breadcrumb,
   Button,
@@ -8,35 +8,14 @@ import {
 } from "@Elements/index";
 import {useRouteTransition} from "@Hooks/index";
 import { useParams } from "react-router";
-import { shuffleArray } from "@Utilities/index";
 import { Section } from "@Layouts/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { WishlistIcon } from "@Components/Assets/Assets Elements";
 import deliveryIcon from "@Assets/icon-delivery.svg";
 import returnIcon from "@Assets/Icon-return.svg";
-
-type Reviews = {
-  rating: number;
-  comment: string;
-  date: string;
-  reviewerName: string;
-  reviewerEmail: string;
-};
-
-type ProductTypes = {
-  id: number;
-  description: string;
-  title: string;
-  price: number;
-  category: string;
-  discountPercentage: number;
-  minimumOrderQuantity: number;
-  rating: number;
-  images: string[];
-  thumbnail: string;
-  reviews: Reviews[];
-};
+import { ProductsContext } from "@Contexts/index";
+import { shuffleArray } from "../Utilities";
 
 const colors = ["#A0BCE0", "#E07575"];
 const sizes = ["XS", "S", "M", "L", "XL"];
@@ -47,12 +26,11 @@ export default function ProductDetails() {
   const [activeColor, setActiveColor] = useState(0);
   const [activeSize, setActiveSize] = useState(2);
   const [counter, setCounter] = useState(1);
-  const [product, setProduct] = useState<ProductTypes | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState<ProductTypes[]>([]);
-  const category = product?.category;
   const [imageSrc, setImageSrc] = useState<string>("");
   const [canScrollUp, setCanScrollUp] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(false);
+  const { products, getProductById } = useContext(ProductsContext);
+  const product = getProductById(Number(id));
 
   const transition = useRouteTransition();
 
@@ -92,29 +70,15 @@ export default function ProductDetails() {
     transition.end();
   }, [transition]);
 
-  useEffect(() => {
-    fetch(`https://dummyjson.com/products/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProduct(data);
-        setCounter(data.minimumOrderQuantity);
-      })
-      .catch((err) => console.error(err));
-  }, [id]);
+  const relatedProducts = useMemo(() => {
+    if (!product) return [];
 
-  useEffect(() => {
-    if (!category) return;
-
-    fetch(`https://dummyjson.com/products/category/${category}`)
-      .then(
-        (response) => response.json() as Promise<{ products: ProductTypes[] }>,
-      )
-      .then((data) => {
-        const shuffled = shuffleArray<ProductTypes>(data.products);
-        setRelatedProducts(shuffled.at(0) ? shuffled.slice(0, 4) : []);
-      })
-      .catch((err) => console.error(err));
-  }, [id, category]);
+    return shuffleArray(
+      products.filter(
+        (p) => p.category === product.category && p.id !== product.id,
+      ),
+    ).slice(0, 4);
+  }, [products, product]);
 
   return (
     <>
@@ -317,7 +281,7 @@ export default function ProductDetails() {
                 </div>
                 <Button className="h-full w-[165px] px-0 py-0">But Now</Button>
                 <div className="flex h-10 w-10 items-center justify-center rounded-md border border-black/50">
-                  <WishlistIcon />
+                  <WishlistIcon productId={String(product?.id) || ""} />
                 </div>
               </div>
             </div>

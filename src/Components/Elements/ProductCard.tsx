@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { EyeIcon, WishlistIcon } from "../Assets/Assets Elements";
+import { EyeIcon, TrashIcon, WishlistIcon } from "@Assets/Assets Elements";
 import { Link } from "react-router";
-import useRouteTransition from "../Hooks/useRouteTransition";
+import {useRouteTransition} from "@Hooks/index";
 import StarRating from "./StarRating";
 
-type ProductCardPropsTypes = {
+export type ProductCardPropsTypes = {
   id: number;
   title: string;
   price: number;
@@ -13,6 +13,8 @@ type ProductCardPropsTypes = {
   sale?: number;
   newProduct?: boolean;
   reviewsNo: number;
+  isTrash?: boolean;
+  trashPage?: boolean;
 };
 
 const StyledDiv = styled.div`
@@ -50,6 +52,8 @@ export default function ProductCard(props: ProductCardPropsTypes) {
     sale = 0,
     newProduct = false,
     reviewsNo,
+    isTrash,
+    trashPage
   } = props;
   return (
     <Link
@@ -59,6 +63,7 @@ export default function ProductCard(props: ProductCardPropsTypes) {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }}
       className="group/card flex w-fit cursor-pointer flex-col gap-4 rounded-[4px] font-poppins"
+      data-id={id}
     >
       <div className="relative overflow-hidden">
         <div className="flex h-[250px] w-[270px] items-center justify-center overflow-hidden rounded-lg bg-[#F5F5F5]">
@@ -71,13 +76,20 @@ export default function ProductCard(props: ProductCardPropsTypes) {
         <FloatCard sale={sale} isNew={newProduct} />
         <div className="absolute right-3 top-3 flex flex-col gap-2">
           <StyledDiv className="active:scale-90">
-            <WishlistIcon size={24} />
+              {!trashPage ? <WishlistIcon size={24} productId={String(id)} /> : null}
+              {isTrash? <TrashIcon productId={String(id)} /> : null}
           </StyledDiv>
-          <StyledDiv className="active:scale-90">
+          {!trashPage ? <StyledDiv className="active:scale-90">
             <EyeIcon />
-          </StyledDiv>
+          </StyledDiv> : null}
         </div>
-        <button onClick={(e) => {e.preventDefault(); e.stopPropagation();}} className="pointer-events-none absolute bottom-0 h-10 w-[270px] z-30 translate-y-[110%] items-center justify-center rounded-bl rounded-br bg-black text-base font-medium text-white opacity-0 transition-all duration-300 group-hover/card:pointer-events-auto group-hover/card:flex group-hover/card:translate-y-0 group-hover/card:opacity-100">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          className="pointer-events-none absolute bottom-0 z-30 h-10 w-[270px] translate-y-[110%] items-center justify-center rounded-bl rounded-br bg-black text-base font-medium text-white opacity-0 transition-all duration-300 group-hover/card:pointer-events-auto group-hover/card:flex group-hover/card:translate-y-0 group-hover/card:opacity-100"
+        >
           Add To Cart
         </button>
       </div>

@@ -14,6 +14,7 @@ export default function UserProvider({
   const [phoneVerified, setPhoneVerified] = useState(false);
   const [preferredPayment, setPreferredPayment] =
     useState<PaymentMethod>("Cash On Delivery");
+  const [userWishlist, setUserWishlist] = useState<string[]>([]);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -47,10 +48,15 @@ export default function UserProvider({
       value={{
         verified,
         setVerified,
+
         phoneVerified,
         setPhoneVerified,
+
         preferredPayment,
         setPreferredPayment,
+
+        userWishlist,
+        setUserWishlist,
       }}
     >
       {children}

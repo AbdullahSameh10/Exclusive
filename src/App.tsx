@@ -22,6 +22,7 @@ import {
   UserProvider,
 } from "@Contexts/index";
 import ProtectedRoute from "@Authentication/ProtectedRoute";
+import { ProductsProvider } from "@Contexts/index";
 
 const router = createBrowserRouter([
   {
@@ -116,13 +117,15 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <UserProvider>
-      <AuthProvider>
-        <RouteTransitionProvider>
-          <RouterProvider router={router} />
-        </RouteTransitionProvider>
-      </AuthProvider>
-    </UserProvider>
+    <ProductsProvider>
+      <UserProvider>
+        <AuthProvider>
+          <RouteTransitionProvider>
+            <RouterProvider router={router} />
+          </RouteTransitionProvider>
+        </AuthProvider>
+      </UserProvider>
+    </ProductsProvider>
   );
 }
 
