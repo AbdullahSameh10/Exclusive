@@ -1,12 +1,13 @@
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { Button, SearchBar } from "@Elements/index";
-import { CartIcon, WishlistIcon } from "../Assets/Assets Elements";
+import { CartIcon, WishlistIcon } from "@Assets/Assets Elements";
 import styles from "@/styles.module.css";
 import {useRouteTransition} from "@Hooks/index";
 import { signOut } from "firebase/auth";
 import { auth } from "@Authentication/firebase";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { useAuth } from "@Hooks/index";
+import { UserContext } from "@Contexts/index";
 
 import avatar from "@Assets/Avatar.png";
 
@@ -16,6 +17,7 @@ export default function Header() {
   const { user, loading } = useAuth();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { userWishlist } = useContext(UserContext)
 
   const isAuthPage = location.pathname === "/auth";
 
@@ -81,7 +83,6 @@ export default function Header() {
           </ul>
         </nav>
 
-        {/* RIGHT SIDE */}
         <div className="flex items-center gap-6">
           <SearchBar />
           <Link
@@ -90,9 +91,21 @@ export default function Header() {
               transition.start();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="h-8"
+            className="relative flex h-8 w-8 items-center justify-center"
           >
             <WishlistIcon productId="Header" navigating />
+
+            {userWishlist.length > 0 && (
+              <div className="absolute -right-1 top-0">
+                {/* Ping Circle */}
+                <span className="absolute inset-0 h-4 w-4 animate-ping rounded-full bg-[#DB4444] opacity-60" />
+
+                {/* Number Circle */}
+                <span className="relative flex h-4 w-4 items-center justify-center rounded-full bg-[#DB4444] px-1 text-[10px] font-bold text-white shadow-lg">
+                  {userWishlist.length > 99 ? "99+" : userWishlist.length}
+                </span>
+              </div>
+            )}
           </Link>
           <CartIcon />
 

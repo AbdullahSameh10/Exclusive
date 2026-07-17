@@ -88,7 +88,7 @@ export default function LoginForm(props: LoginFormPropsTypes) {
         className="flex flex-1 items-center justify-center px-10"
         autoComplete="on"
       >
-        <div className="flex w-full max-w-[800px] flex-col gap-10">
+        <div className="flex w-full max-w-[500px] flex-col gap-10">
           <input
             type="email"
             placeholder="Email"

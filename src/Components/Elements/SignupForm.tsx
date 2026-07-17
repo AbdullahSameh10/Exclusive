@@ -100,7 +100,7 @@ export default function SignupForm(props: SignupFormProps) {
         className="flex flex-1 items-center justify-center px-12"
         autoComplete="on"
       >
-        <div className="flex w-full max-w-[800px] flex-col gap-8">
+        <div className="flex w-full max-w-[500px] flex-col gap-8">
           <input
             placeholder="Username"
             name="username"
