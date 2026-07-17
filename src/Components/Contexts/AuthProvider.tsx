@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import AuthContext, { type UserTypes } from "./AuthContext";
-import { auth, db } from "../../Authentication/firebase";
+import { auth, db } from "@Authentication/firebase";
 import UserContext, { type PaymentMethod } from "./UserContext";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import avatarImg from "@Assets/Avatar.png";

@@ -2,17 +2,21 @@ import { useContext, useMemo } from "react";
 import { Button, ProductCard } from "@Elements/index";
 import { Section } from "@Layouts/index";
 import { UserContext, ProductsContext } from "@Contexts/index";
+import { shuffleArray } from "../Utilities";
 
 export default function Wishlist() {
   const { userWishlist } = useContext(UserContext);
 
   const { products, loading } = useContext(ProductsContext);
 
-  const wishlistProducts = useMemo(() => {
-    return products.filter((product) => userWishlist.includes(String(product.id)));
-  }, [products, userWishlist]);
+  const shuffledProducts = shuffleArray(products);
 
-  const recommendations = products.filter((product) => !userWishlist.includes(String(product.id))).slice(0, 4);
+
+  const wishlistProducts = useMemo(() => {
+    return shuffledProducts.filter((product) => userWishlist.includes(String(product.id)));
+  }, [shuffledProducts, userWishlist]);
+
+  const recommendations = shuffledProducts.filter((product) => !userWishlist.includes(String(product.id))).slice(0, 4);
 
   const moveAllToBag = () => {
     console.log("Move all wishlist items to cart");
