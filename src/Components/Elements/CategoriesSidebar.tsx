@@ -1,6 +1,6 @@
 import styles from "@/styles.module.css";
 import { useEffect } from "react";
-import type { CategoriesTypes } from "../Contexts/ProductsContext";
+import type { CategoriesTypes } from "@Contexts/ProductsContext";
 
 interface Props {
   categories: CategoriesTypes[];
