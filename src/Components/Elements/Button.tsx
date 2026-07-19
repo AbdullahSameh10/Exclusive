@@ -4,7 +4,7 @@ type ButtonPropsTypes = {
   className?: string;
   onClick?: () => void;
   disabled?: boolean;
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: "button" | "submit" | "reset";
 };
 
 export default function Button(props: PropsWithChildren<ButtonPropsTypes>) {

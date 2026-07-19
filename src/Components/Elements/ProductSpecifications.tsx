@@ -88,7 +88,7 @@ export default function ProductSpecifications(props: ProductSpecificationsProps)
               <p className="mb-1 text-sm text-gray-500">{spec.label}</p>
 
               <p className="break-words text-base font-semibold text-gray-900">
-                {spec.value}
+                {spec.value || `No ${spec.label} Available!`}
               </p>
             </div>
           </div>

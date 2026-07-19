@@ -1,12 +1,13 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
+  AmountCounter,
   Breadcrumb,
   Button,
   ProductCard,
   ProductSpecifications,
   StarRating,
 } from "@Elements/index";
-import {useRouteTransition} from "@Hooks/index";
+import { useRouteTransition } from "@Hooks/index";
 import { useParams } from "react-router";
 import { Section } from "@Layouts/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,16 +26,14 @@ export default function ProductDetails() {
 
   const [activeColor, setActiveColor] = useState(0);
   const [activeSize, setActiveSize] = useState(2);
-  const [counter, setCounter] = useState(1);
   const [imageSrc, setImageSrc] = useState<string>("");
   const [canScrollUp, setCanScrollUp] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(false);
+  const [counter, setCounter] = useState(1);
   const { products, getProductById } = useContext(ProductsContext);
   const product = getProductById(Number(id));
 
   const transition = useRouteTransition();
-
-  const interval = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const thumbnailsRef = useRef<HTMLDivElement>(null);
 
@@ -217,68 +216,12 @@ export default function ProductDetails() {
                 </div>
               </div>
               <div className="flex h-11 items-center gap-4">
-                <div className="flex h-full">
-                  <button
-                    onMouseDown={() => {
-                      if (interval.current === null) {
-                        interval.current = setInterval(() => {
-                          setCounter((prev) =>
-                            Math.max(
-                              product?.minimumOrderQuantity || 1,
-                              prev - 1,
-                            ),
-                          );
-                        }, 100);
-                      }
-                    }}
-                    onMouseUp={() => {
-                      if (interval.current !== null) {
-                        clearInterval(interval.current);
-                        interval.current = null;
-                      }
-                    }}
-                    onMouseLeave={() => {
-                      if (interval.current !== null) {
-                        clearInterval(interval.current);
-                        interval.current = null;
-                      }
-                    }}
-                    onClick={() =>
-                      setCounter((prev) =>
-                        Math.max(product?.minimumOrderQuantity || 1, prev - 1),
-                      )
-                    }
-                    className="h-full w-10 rounded-[6px_0_0_6px] border border-black/50 text-3xl font-bold transition-colors duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-white"
-                  >
-                    -
-                  </button>
-                  <span className="flex h-full w-20 items-center justify-center border-y border-black/50 font-poppins text-xl font-bold">
-                    {counter}
-                  </span>
-                  <button
-                    onMouseDown={() => {
-                      interval.current = setInterval(() => {
-                        setCounter((prev) => prev + 1);
-                      }, 100);
-                    }}
-                    onMouseUp={() => {
-                      if (interval.current !== null) {
-                        clearInterval(interval.current);
-                        interval.current = null;
-                      }
-                    }}
-                    onMouseLeave={() => {
-                      if (interval.current !== null) {
-                        clearInterval(interval.current);
-                        interval.current = null;
-                      }
-                    }}
-                    onClick={() => setCounter((prev) => prev + 1)}
-                    className="h-full w-10 rounded-[0_6px_6px_0] border border-black/50 text-3xl font-bold transition-colors duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-white"
-                  >
-                    +
-                  </button>
-                </div>
+                <AmountCounter
+                  minAmount={product?.minimumOrderQuantity || 0}
+                  maxAmount={product?.stock || 0}
+                  counter={counter}
+                  setCounter={setCounter}
+                />
                 <Button className="h-full w-[165px] px-0 py-0">But Now</Button>
                 <div className="flex h-10 w-10 items-center justify-center rounded-md border border-black/50">
                   <WishlistIcon productId={String(product?.id) || ""} />
@@ -288,10 +231,7 @@ export default function ProductDetails() {
 
             <div className="flex w-full flex-col rounded-md border border-black/50">
               <div className="m-[24px_0_16px_16px] flex gap-4">
-                <img
-                  src={deliveryIcon}
-                  alt="delivery icon"
-                />
+                <img src={deliveryIcon} alt="delivery icon" />
                 <div className="flex flex-col gap-2">
                   <span className="font-poppins text-base font-medium">
                     Free Delivery
@@ -303,10 +243,7 @@ export default function ProductDetails() {
               </div>
               <hr className="h-[0.5px] border-0 bg-black/50" />
               <div className="m-[16px_0_24px_16px] flex gap-4">
-                <img
-                  src={returnIcon}
-                  alt="return icon"
-                />
+                <img src={returnIcon} alt="return icon" />
                 <div className="flex flex-col gap-2">
                   <span className="font-poppins text-base font-medium">
                     Return Delivery
@@ -326,7 +263,7 @@ export default function ProductDetails() {
         </Section>
 
         <Section category="Customer Reviews" className="mt-[140px] w-full">
-          <div id="reviews" className="w-full mb-2">
+          <div id="reviews" className="mb-2 w-full">
             <div className="space-y-6">
               {product?.reviews.map((review, index) => (
                 <div
