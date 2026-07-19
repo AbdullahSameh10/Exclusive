@@ -3,7 +3,7 @@ import { Breadcrumb, Button, ProductCard } from "@Elements/index";
 import { Section } from "@Layouts/index";
 import { UserContext, ProductsContext } from "@Contexts/index";
 import { shuffleArray } from "@Utilities/index";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useRouteTransition } from "@Hooks/index";
 
 export default function Wishlist() {
@@ -105,9 +105,17 @@ export default function Wishlist() {
 
         {/* Recommendations */}
         <Section category="Just For You" className="relative">
-          <button className="absolute right-0 top-0 self-start rounded-md border-2 border-black bg-transparent px-12 py-4 font-semibold text-black transition-all duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-white sm:self-auto">
-            See All
-          </button>
+          <Link
+            to="/products"
+            onClick={() => {
+              transition.start();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            <button className="absolute right-0 top-0 self-start rounded-md border-2 border-black bg-transparent px-12 py-4 font-semibold text-black transition-all duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-white sm:self-auto">
+              See All
+            </button>
+          </Link>
           <div className="grid w-full grid-cols-1 justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {recommendations.map((product) => (
               <ProductCard

@@ -10,6 +10,7 @@ import {
   ManageAccount,
   PaymentOptions,
   ProductDetails,
+  Products,
   Security,
   Verification,
   VerifyEmail,
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: "forgot-password",
         element: <ForgotPassword />,
+      },
+      {
+        path: "products",
+        element: <Products />,
       },
       {
         path: "account",

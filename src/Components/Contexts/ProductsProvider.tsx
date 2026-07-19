@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
-import type { Product, ProductsResponse } from "@Components/Data.types";
-import ProductsContext from "./ProductsContext";
+import type { Product } from "@Components/Data.types";
+import ProductsContext, { type CategoriesTypes } from "./ProductsContext";
 
 interface Props {
   children: ReactNode;
@@ -8,31 +8,31 @@ interface Props {
 
 export default function ProductsProvider({ children }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
-
+  const [categories, setCategories] = useState<CategoriesTypes[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-
-        const response = await fetch(
-          "https://dummyjson.com/products?limit=194",
-        );
-
-        const data: ProductsResponse = await response.json();
-
-        setProducts(data.products);
-      } catch {
-        setError("Failed to load products.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
+    try {
+      Promise.all([
+        fetch("https://dummyjson.com/products?limit=0"),
+        fetch("https://dummyjson.com/products/categories"),
+      ])
+        .then(async ([productsRes, categoriesRes]) => ({
+          products: await productsRes.json(),
+          categories: await categoriesRes.json(),
+        }))
+        .then(({ products, categories }) => {
+          setProducts(products.products);
+          setCategories(categories);
+        })
+        .finally(() => setLoading(false));
+    } catch {
+      setError("Failed to load products.");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   const getProductById = (id: number) =>
@@ -42,6 +42,7 @@ export default function ProductsProvider({ children }: Props) {
     <ProductsContext.Provider
       value={{
         products,
+        categories,
         loading,
         error,
         getProductById,

@@ -81,7 +81,7 @@ export default function Footer() {
           <ul className="flex flex-col gap-4 font-normal">
             <li>
               <Link
-                to="/"
+                to="/account"
                 onClick={() => {
                   transition.start();
                   window.scrollTo({ top: 0 });
@@ -129,7 +129,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                to="/"
+                to="/products"
                 onClick={() => {
                   transition.start();
                   window.scrollTo({ top: 0 });

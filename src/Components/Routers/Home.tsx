@@ -42,7 +42,6 @@ const dummyIcons = [
   gamePad,
 ];
 
-const SectionButton = <Button>View All</Button>;
 const Column = styled.div`
   display: flex;
   flex-direction: column;
@@ -105,7 +104,18 @@ export default function Home() {
               ))
             : [...Array(8).keys()].map((i) => <ProductCardLoading key={i} />)}
         </Section>
-        <Button className="mx-auto my-[60px]">View All Products</Button>
+        <Link
+          to="/products"
+          onClick={() => {
+            transition.start();
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          }}
+        >
+          <Button className="mx-auto my-[60px]">View All Products</Button>
+        </Link>
       </div>
       <hr />
       <Section
@@ -129,7 +139,7 @@ export default function Home() {
       <Section
         category="This Month"
         heading="Best Selling Products"
-        button={SectionButton}
+        button={<SectionButton />}
         className="mt-[70px]"
       >
         {!loading
@@ -217,7 +227,18 @@ export default function Home() {
               </Column>
             ))}
       </Section>
-      <Button className="mx-auto my-[60px]">View All Products</Button>
+      <Link
+        to="/products"
+        onClick={() => {
+          transition.start();
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }}
+      >
+        <Button className="mx-auto my-[60px]">View All Products</Button>
+      </Link>
       <Section category="Featured" heading="New Arrival" className="my-[140px]">
         <div className="grid h-[600px] w-full grid-cols-4 grid-rows-2 gap-[30px]">
           <div className="group relative col-span-2 row-span-2 flex cursor-pointer items-end rounded-lg bg-black p-8 text-[#FAFAFA]">
@@ -238,7 +259,7 @@ export default function Home() {
                 </p>
               </div>
               <Link
-                to="/"
+                to="/products"
                 className="relative inline-flex w-fit items-center gap-2 before:absolute before:bottom-0 before:left-0 before:h-[1px] before:w-full before:origin-left before:scale-x-0 before:bg-white before:transition-transform before:duration-300 before:content-[''] after:inline-block after:text-2xl after:text-white after:transition-transform after:duration-300 after:content-['→'] group-hover:before:scale-x-100 group-hover:after:translate-x-2"
               >
                 Shop Now
@@ -263,7 +284,7 @@ export default function Home() {
                 </p>
               </div>
               <Link
-                to="/"
+                to="/products"
                 className="relative inline-flex w-fit items-center gap-2 before:absolute before:bottom-0 before:left-0 before:h-[1px] before:w-full before:origin-left before:scale-x-0 before:bg-white before:transition-transform before:duration-300 before:content-[''] after:inline-block after:text-2xl after:text-white after:transition-transform after:duration-300 after:content-['→'] group-hover:before:scale-x-100 group-hover:after:translate-x-2"
               >
                 Shop Now
@@ -288,7 +309,7 @@ export default function Home() {
                 </p>
               </div>
               <Link
-                to="/"
+                to="/products"
                 className="relative inline-flex w-fit items-center gap-2 before:absolute before:bottom-0 before:left-0 before:h-[1px] before:w-full before:origin-left before:scale-x-0 before:bg-white before:transition-transform before:duration-300 before:content-[''] after:inline-block after:text-2xl after:text-white after:transition-transform after:duration-300 after:content-['→'] group-hover:before:scale-x-100 group-hover:after:translate-x-2"
               >
                 Shop Now
@@ -313,7 +334,7 @@ export default function Home() {
                 </p>
               </div>
               <Link
-                to="/"
+                to="/products"
                 className="relative inline-flex w-fit items-center gap-2 before:absolute before:bottom-0 before:left-0 before:h-[1px] before:w-full before:origin-left before:scale-x-0 before:bg-white before:transition-transform before:duration-300 before:content-[''] after:inline-block after:text-2xl after:text-white after:transition-transform after:duration-300 after:content-['→'] group-hover:before:scale-x-100 group-hover:after:translate-x-2"
               >
                 Shop Now
@@ -368,3 +389,20 @@ export default function Home() {
     </>
   );
 }
+
+const SectionButton = () => {
+  const transition = useRouteTransition();
+  return (
+  <Link
+    to="/products"
+    onClick={() => {
+      transition.start();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }}
+  >
+    <Button>View All</Button>
+  </Link>)
+};

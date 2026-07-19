@@ -10,6 +10,7 @@ export const Wishlist = lazyWithDelay(() => import("./Wishlist"), 1000);
 export const Cart = lazyWithDelay(() => import("./Cart"), 1000);
 export const ForgotPassword = lazyWithDelay(() => import("./ForgotPassword"), 1000);
 export const ManageAccount = lazyWithDelay(() => import("./Settings/ManageAccount"), 1000);
+export const Products = lazyWithDelay(() => import("./Products"), 1000);
 export { default as Verification } from "./Settings/Verification";
 export { default as PaymentOptions } from "./Settings/PaymentOptions";
 export { default as Security } from "./Settings/Security";

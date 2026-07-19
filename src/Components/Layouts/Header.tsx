@@ -64,19 +64,19 @@ export default function Header() {
         {/* NAV */}
         <nav>
           <ul className="flex items-center gap-12 text-sm font-normal">
-            {["/", "/contact", "/about"].map((path, i) => (
+            {["/", "/products", "/contact", "/about"].map((path, i) => (
               <li key={path}>
                 <NavLink
                   to={path}
                   className={({ isActive }) =>
-                    `relative leading-6 transition-colors duration-300 ${isActive ? "text-[#DB4444]" : "text-black dark:text-white"}`
+                    `relative leading-6 transition-colors duration-300 ${isActive ? "text-[#DB4444] font-bold" : "text-black dark:text-white"}`
                   }
                   onClick={() => {
                     transition.start();
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                 >
-                  {["Home", "Contact", "About"][i]}
+                  {["Home", "Products", "Contact", "About"][i]}
                 </NavLink>
               </li>
             ))}

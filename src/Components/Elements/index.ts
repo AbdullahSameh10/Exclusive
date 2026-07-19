@@ -21,3 +21,4 @@ export { default as AccountAvatar } from "./AccountAvatar";
 export { default as PasswordStrength } from "./PasswordStrength";
 export { default as ProductSpecifications } from "./ProductSpecifications";
 export { default as AmountCounter } from "./AmountCounter";
+export { default as CategoriesSidebar } from "./CategoriesSidebar";

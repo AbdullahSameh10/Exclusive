@@ -23,6 +23,18 @@
   scroll-behavior: smooth;
 }
 
+.transparentScrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.transparentScrollbar::-webkit-scrollbar-thumb {
+  background-color: #DB4444;
+}
+
+.transparentScrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #a13333;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }

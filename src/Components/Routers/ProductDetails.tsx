@@ -7,7 +7,7 @@ import {
   ProductSpecifications,
   StarRating,
 } from "@Elements/index";
-import { useRouteTransition } from "@Hooks/index";
+import { useCapitalizeSentence, useRouteTransition } from "@Hooks/index";
 import { useParams } from "react-router";
 import { Section } from "@Layouts/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -82,8 +82,8 @@ export default function ProductDetails() {
   return (
     <>
       <Breadcrumb
-        pages={["Home", "Products", product?.category || ""]}
-        links={["/", "/products", "/products/fragrances"]}
+        pages={["Home", "Products", useCapitalizeSentence(product?.category || "") || ""]}
+        links={["/", "/products", "/products"]}
         currentPage={product?.title || ""}
       />
       <div className="mt-20">
