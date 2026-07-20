@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { EyeIcon, TrashIcon, WishlistIcon } from "@Assets/Assets Elements";
 import { Link } from "react-router";
-import {useRouteTransition} from "@Hooks/index";
+import { useRouteTransition } from "@Hooks/index";
 import StarRating from "./StarRating";
+import { useContext } from "react";
+import { ProductsContext, UserContext } from "../Contexts";
+import { toast } from "react-toastify";
 
 export type ProductCardPropsTypes = {
   id: number;
@@ -11,6 +14,8 @@ export type ProductCardPropsTypes = {
   rating: number;
   thumbnail: string;
   sale?: number;
+  stock: number;
+  minAmount: number;
   newProduct?: boolean;
   reviewsNo: number;
   isTrash?: boolean;
@@ -43,6 +48,8 @@ function FloatCard({ sale, isNew }: { sale: number; isNew: boolean }) {
 
 export default function ProductCard(props: ProductCardPropsTypes) {
   const transition = useRouteTransition();
+  const { setUserCart, userCart } = useContext(UserContext);
+  const { products } = useContext(ProductsContext);
   const {
     id,
     title,
@@ -50,10 +57,12 @@ export default function ProductCard(props: ProductCardPropsTypes) {
     rating,
     thumbnail,
     sale = 0,
+    stock,
+    minAmount,
     newProduct = false,
     reviewsNo,
     isTrash,
-    trashPage
+    trashPage,
   } = props;
   return (
     <Link
@@ -76,17 +85,38 @@ export default function ProductCard(props: ProductCardPropsTypes) {
         <FloatCard sale={sale} isNew={newProduct} />
         <div className="absolute right-3 top-3 flex flex-col gap-2">
           <StyledDiv className="active:scale-90">
-              {!trashPage ? <WishlistIcon size={24} productId={String(id)} /> : null}
-              {isTrash? <TrashIcon productId={String(id)} /> : null}
+            {!trashPage ? (
+              <WishlistIcon size={24} productId={String(id)} />
+            ) : null}
+            {isTrash ? <TrashIcon productId={String(id)} /> : null}
           </StyledDiv>
-          {!trashPage ? <StyledDiv className="active:scale-90">
-            <EyeIcon />
-          </StyledDiv> : null}
+          {!trashPage ? (
+            <StyledDiv className="active:scale-90">
+              <EyeIcon />
+            </StyledDiv>
+          ) : null}
         </div>
         <button
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
+
+            const updatedCart = [...userCart, String(id)];
+            
+            if (
+              [...userCart.filter((product) => product === String(id))]
+                .length >= stock - minAmount
+            ) {
+              toast.error(
+                `${products.find((product) => String(product.id) === String(id))?.title} Is Out Of Stock Now!!`,
+              );
+              return;
+            } else {
+              toast.success(
+                `${products.find((product) => String(product.id) === String(id))?.title} Added To Your Cart Successfully!!`,
+              );
+            }
+            setUserCart(updatedCart);
           }}
           className="pointer-events-none absolute bottom-0 z-30 h-10 w-[270px] translate-y-[110%] items-center justify-center rounded-bl rounded-br bg-black text-base font-medium text-white opacity-0 transition-all duration-300 group-hover/card:pointer-events-auto group-hover/card:flex group-hover/card:translate-y-0 group-hover/card:opacity-100"
         >

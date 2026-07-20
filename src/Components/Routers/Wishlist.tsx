@@ -92,6 +92,8 @@ export default function Wishlist() {
                   title={product.title}
                   price={product.price}
                   sale={Math.ceil(product.discountPercentage)}
+                  stock={product.stock}
+                  minAmount={product.minimumOrderQuantity}
                   rating={product.rating}
                   thumbnail={product.thumbnail}
                   reviewsNo={product.reviews.length}
@@ -124,6 +126,8 @@ export default function Wishlist() {
                 title={product.title}
                 price={product.price}
                 sale={Math.ceil(product.discountPercentage)}
+                stock={product.stock}
+                minAmount={product.minimumOrderQuantity}
                 rating={product.rating}
                 thumbnail={product.thumbnail}
                 reviewsNo={product.reviews.length}

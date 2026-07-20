@@ -53,6 +53,8 @@ const mapProduct = (p: Product) => ({
   title: p.title,
   price: p.price,
   rating: p.rating,
+  stock: p.stock,
+  minAmount: p.minimumOrderQuantity,
   thumbnail: p.thumbnail,
   reviewsNo: p.reviews.length,
 });
@@ -96,6 +98,8 @@ export default function Home() {
                   id={product.id}
                   title={product.title}
                   price={product.price}
+                  stock={product.stock}
+                  minAmount={product.minimumOrderQuantity}
                   sale={Math.ceil(product.discountPercentage)}
                   rating={product.rating}
                   thumbnail={product.thumbnail}
@@ -148,7 +152,9 @@ export default function Home() {
                 key={product.id}
                 id={product.id}
                 title={product.title}
+                stock={product.stock}
                 price={product.price}
+                minAmount={product.minimumOrderQuantity}
                 sale={Math.ceil(product.discountPercentage)}
                 rating={product.rating}
                 thumbnail={product.thumbnail}

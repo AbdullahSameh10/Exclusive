@@ -17,7 +17,7 @@ export default function Header() {
   const { user, loading } = useAuth();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { userWishlist } = useContext(UserContext)
+  const { userWishlist, userCart } = useContext(UserContext)
 
   const isAuthPage = location.pathname === "/auth";
 
@@ -69,7 +69,7 @@ export default function Header() {
                 <NavLink
                   to={path}
                   className={({ isActive }) =>
-                    `relative leading-6 transition-colors duration-300 ${isActive ? "text-[#DB4444] font-bold" : "text-black dark:text-white"}`
+                    `relative leading-6 transition-colors duration-300 ${isActive ? "font-bold text-[#DB4444]" : "text-black dark:text-white"}`
                   }
                   onClick={() => {
                     transition.start();
@@ -96,7 +96,7 @@ export default function Header() {
             <WishlistIcon productId="Header" navigating />
 
             {userWishlist.length > 0 && (
-              <div className="absolute -right-1 top-0">
+              <div className="absolute -right-1 top-0 pointer-events-none">
                 {/* Ping Circle */}
                 <span className="absolute inset-0 h-4 w-4 animate-ping rounded-full bg-[#DB4444] opacity-60" />
 
@@ -107,7 +107,22 @@ export default function Header() {
               </div>
             )}
           </Link>
-          <CartIcon />
+          <div className="relative flex h-8 w-8 items-center justify-center">
+            <CartIcon />
+            {userCart.length > 0 && (
+              <div className="absolute -right-1 top-0 pointer-events-none">
+                {/* Ping Circle */}
+                <span className="absolute inset-0 h-4 w-4 animate-ping rounded-full bg-[#DB4444] opacity-60" />
+
+                {/* Number Circle */}
+                <span className="relative flex h-4 w-4 items-center justify-center rounded-full bg-[#DB4444] px-1 text-[10px] font-bold text-white shadow-lg">
+                  {new Set([...userCart]).size > 99
+                    ? "99+"
+                    : new Set([...userCart]).size}
+                </span>
+              </div>
+            )}
+          </div>
 
           {/* AUTH */}
           {!loading &&

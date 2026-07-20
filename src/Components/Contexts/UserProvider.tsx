@@ -12,15 +12,17 @@ export default function UserProvider({
 }) {
   const [verified, setVerified] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
-  const [preferredPayment, setPreferredPayment] =
-    useState<PaymentMethod>("Cash On Delivery");
+  const [preferredPayment, setPreferredPayment] = useState<PaymentMethod>("Cash On Delivery");
   const [userWishlist, setUserWishlist] = useState<string[]>([]);
-  const { user } = useAuth();
   const [wishlistLoaded, setWishlistLoaded] = useState(false);
+  const [userCart, setUserCart] = useState<string[]>([]);
+  const [cartLoaded, setCartLoaded] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!user?.uid) {
       setUserWishlist([]);
+      setUserCart([]);
       return;
     }
 
@@ -39,7 +41,11 @@ export default function UserProvider({
         if (Array.isArray(data.wishlist)) {
           setUserWishlist(data.wishlist);
         }
+        if(Array.isArray(data.cart)) {
+          setUserCart(data.cart);
+        }
         setWishlistLoaded(true);
+        setCartLoaded(true);
       } catch (error) {
         toast.error((error as Error).message || "Failed to fetch user data");
       }
@@ -52,7 +58,7 @@ export default function UserProvider({
   }, [user]);
 
   useEffect(() => {
-    if (!user?.uid || !wishlistLoaded) return;
+    if (!user?.uid || !wishlistLoaded || !cartLoaded) return;
 
     const syncWishlist = async () => {
       try {
@@ -70,8 +76,24 @@ export default function UserProvider({
       }
     };
 
+    const syncCart = async () => {
+      try {
+        await setDoc(
+          doc(db, "users", user.uid),
+          {
+            cart: userCart,
+          },
+          {
+            merge: true,
+          },
+        );
+      } catch (error) {
+        toast.error((error as Error).message || "Failed to sync cart");
+      }
+    };
+    syncCart();
     syncWishlist();
-  }, [user, userWishlist]);
+  }, [user, userWishlist, userCart]);
 
   return (
     <UserContext.Provider
@@ -87,6 +109,9 @@ export default function UserProvider({
 
         userWishlist,
         setUserWishlist,
+
+        userCart,
+        setUserCart,
       }}
     >
       {children}

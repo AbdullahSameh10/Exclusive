@@ -15,7 +15,7 @@ import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { WishlistIcon } from "@Components/Assets/Assets Elements";
 import deliveryIcon from "@Assets/icon-delivery.svg";
 import returnIcon from "@Assets/Icon-return.svg";
-import { ProductsContext } from "@Contexts/index";
+import { ProductsContext, UserContext } from "@Contexts/index";
 import { shuffleArray } from "../Utilities";
 
 const colors = ["#A0BCE0", "#E07575"];
@@ -31,6 +31,7 @@ export default function ProductDetails() {
   const [canScrollDown, setCanScrollDown] = useState(false);
   const [counter, setCounter] = useState(1);
   const { products, getProductById } = useContext(ProductsContext);
+  const { setUserCart, userCart } = useContext(UserContext);
   const product = getProductById(Number(id));
 
   const transition = useRouteTransition();
@@ -79,10 +80,21 @@ export default function ProductDetails() {
     ).slice(0, 4);
   }, [products, product]);
 
+  const handleBuyNow = (): void => {
+    if (!id) return;
+
+    // setUserCart expects a string[] value (not an updater), provide the new cart array
+    setUserCart([...userCart, ...Array(counter).fill(String(id))]);
+  };
+
   return (
     <>
       <Breadcrumb
-        pages={["Home", "Products", useCapitalizeSentence(product?.category || "") || ""]}
+        pages={[
+          "Home",
+          "Products",
+          useCapitalizeSentence(product?.category || "") || "",
+        ]}
         links={["/", "/products", "/products"]}
         currentPage={product?.title || ""}
       />
@@ -222,7 +234,12 @@ export default function ProductDetails() {
                   counter={counter}
                   setCounter={setCounter}
                 />
-                <Button className="h-full w-[165px] px-0 py-0">But Now</Button>
+                <Button
+                  className="h-full w-[165px] px-0 py-0"
+                  onClick={handleBuyNow}
+                >
+                  Buy Now
+                </Button>
                 <div className="flex h-10 w-10 items-center justify-center rounded-md border border-black/50">
                   <WishlistIcon productId={String(product?.id) || ""} />
                 </div>
@@ -318,6 +335,8 @@ export default function ProductDetails() {
               title={relatedProduct.title}
               price={relatedProduct.price}
               sale={Math.ceil(relatedProduct.discountPercentage)}
+              stock={relatedProduct.stock}
+              minAmount={relatedProduct.minimumOrderQuantity}
               rating={relatedProduct.rating}
               thumbnail={relatedProduct.thumbnail}
               reviewsNo={relatedProduct.reviews.length}

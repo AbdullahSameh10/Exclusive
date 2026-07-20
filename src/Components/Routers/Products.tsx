@@ -85,6 +85,8 @@ export default function Products() {
                       key={product.id}
                       id={product.id}
                       title={product.title}
+                      stock={product.stock}
+                      minAmount={product.minimumOrderQuantity}
                       price={product.price}
                       rating={product.rating}
                       thumbnail={product.thumbnail}

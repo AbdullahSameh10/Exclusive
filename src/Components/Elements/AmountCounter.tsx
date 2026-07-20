@@ -21,6 +21,10 @@ export default function AmountCounter(props: AmountCounterPropsTypes) {
       <button
         onMouseDown={() => {
           if (interval.current === null) {
+            if (counter <= minAmount) {
+              setCounter(minAmount);
+              return;
+            }
             interval.current = setInterval(() => {
               setCounter((prev) => Math.max(minAmount, prev - 1));
             }, 100);
@@ -48,6 +52,10 @@ export default function AmountCounter(props: AmountCounterPropsTypes) {
       </span>
       <button
         onMouseDown={() => {
+          if(counter >= maxAmount) {
+            setCounter(maxAmount);
+            return;
+          }
           interval.current = setInterval(() => {
             setCounter((prev) => Math.min(maxAmount, prev + 1));
           }, 100);

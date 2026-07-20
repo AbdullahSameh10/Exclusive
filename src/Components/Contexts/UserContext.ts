@@ -23,6 +23,9 @@ const UserContext = createContext({
 
   userWishlist: [] as string[],
   setUserWishlist: (_value: string[]) => {},
+
+  userCart: [] as string[],
+  setUserCart: (_value: string[]) => {},
 });
 
 export default UserContext;

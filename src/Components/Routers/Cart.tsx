@@ -1,50 +1,87 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AmountCounter, Breadcrumb, Button } from "@Elements/index";
 import { useAuth, useRouteTransition } from "@Hooks/index";
 import { toast } from "react-toastify";
+import { ProductsContext, UserContext } from "@Contexts/index";
+import type { Product } from "../Data.types";
 
-interface CartProduct {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
+interface CartProduct extends Product {
   quantity: number;
 }
 
-const initialCart: CartProduct[] = [
-  {
-    id: 1,
-    title: "LCD Monitor",
-    image: "https://dummyjson.com/image/300x300/e8e8e8/000?text=Monitor",
-    price: 650,
-    quantity: 1,
-  },
-  {
-    id: 2,
-    title: "H1 Gamepad",
-    image: "https://dummyjson.com/image/300x300/e8e8e8/000?text=Gamepad",
-    price: 550,
-    quantity: 2,
-  },
-];
+interface ProductsContextState {
+  products: Product[];
+}
+
+interface UserCartContextState {
+  userCart: string[];
+  setUserCart: React.Dispatch<React.SetStateAction<string[]>>;
+}
 
 export default function Cart() {
   const transition = useRouteTransition();
   const { user } = useAuth();
-  const promoInputRef = useRef<HTMLInputElement>(null);
+
+  const { products } = useContext(ProductsContext) as ProductsContextState;
+
+  const { userCart, setUserCart } = useContext(
+    UserContext,
+  ) as UserCartContextState;
+
+  const promoInputRef = useRef<HTMLInputElement | null>(null);
+
   const [discount, setDiscount] = useState<number>(0);
+
+  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
 
   useEffect(() => {
     transition.end();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, []);
 
-  const [cart, setCart] = useState<CartProduct[]>(initialCart);
+  /**
+   * Build grouped cartProducts from duplicated IDs stored in userCart.
+   *
+   * Example:
+   * userCart = ["5","5","5","8","8"]
+   *
+   * =>
+   *
+   * cartProducts = [
+   *   { ...product5, quantity:3 },
+   *   { ...product8, quantity:2 }
+   * ]
+   */
+  useEffect(() => {
+    if (!products.length) return;
 
-  const subtotal = cart.reduce(
+    const grouped = new Map<number, CartProduct>();
+
+    userCart.forEach((id) => {
+      const product = products[Number(id) - 1];
+
+      if (!product) return;
+
+      if (grouped.has(product.id)) {
+        grouped.get(product.id)!.quantity++;
+      } else {
+        grouped.set(product.id, {
+          ...product,
+          quantity: 1,
+        });
+      }
+    });
+
+    setCartProducts(Array.from(grouped.values()));
+  }, [products, userCart]);
+
+  const subtotal = cartProducts.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
@@ -53,27 +90,57 @@ export default function Cart() {
 
   const total = (subtotal + shipping) * (1 - discount);
 
+  /**
+   * Remove ALL duplicates of one product.
+   *
+   * Example:
+   *
+   * ["5","5","5","8"]
+   *
+   * removeItem(5)
+   *
+   * =>
+   *
+   * ["8"]
+   */
   const removeItem = (id: number) => {
-    setCart((items) => items.filter((item) => item.id !== id));
+    setUserCart((prev) => prev.filter((item) => item !== String(id)));
   };
 
-  const updateQuantity = (
-    id: number,
-    updater: number | ((prev: number) => number),
-  ) => {
-    setCart((prev) =>
-      prev.map((item) => {
-        if (item.id !== id) return item;
+  /**
+   * Increase / decrease quantity.
+   *
+   * userCart remains the source of truth.
+   */
 
-        const newQuantity =
-          typeof updater === "function" ? updater(item.quantity) : updater;
-
-        return {
-          ...item,
-          quantity: Math.max(1, newQuantity),
-        };
-      }),
+  const updateQuantity = (id: number, quantity: number) => {
+    setCartProducts((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity } : item)),
     );
+    setUserCart((prev) => {
+      const idString = String(id);
+      const currentCount = prev.filter((item) => item === idString).length;
+
+      if (quantity === currentCount) return prev;
+      if (quantity > currentCount) {
+        return [...prev, ...Array(quantity - currentCount).fill(idString)];
+      }
+
+      let removed = 0;
+      return prev.filter((item) => {
+        if (item !== idString) return true;
+        if (removed < currentCount - quantity) {
+          removed += 1;
+          return false;
+        }
+        return true;
+      });
+    });
+  };
+
+  const clearCart = () => {
+    setUserCart([]);
+    toast.success("Cart Cleared Successfully!!");
   };
 
   const updateDiscount = () => {
@@ -81,6 +148,7 @@ export default function Cart() {
       toast.error("Please Write The Promocode First!");
       return;
     }
+
     if (
       promoInputRef.current.value.toUpperCase() !==
         user?.name.toUpperCase().split(" ").at(0) &&
@@ -95,19 +163,23 @@ export default function Cart() {
       case user?.name.toUpperCase().split(" ").at(0):
         setDiscount(0.5);
         break;
+
       case "SAVE10":
         setDiscount(0.1);
         break;
+
       case "FIFA26":
         setDiscount(0.25);
         break;
+
       default:
         toast.success("Promocode Applied Successfully!!");
-      }
-      promoInputRef.current.value = "";
+    }
+
+    promoInputRef.current.value = "";
   };
 
-  if (cart.length === 0) {
+  if (userCart.length === 0) {
     return (
       <>
         <Breadcrumb pages={["Home"]} links={["/"]} currentPage="Cart" />
@@ -141,6 +213,7 @@ export default function Cart() {
   return (
     <>
       <Breadcrumb pages={["Home"]} links={["/"]} currentPage="Cart" />
+
       <section className="mx-auto mb-[140px] mt-5 px-4">
         <div className="overflow-x-auto">
           <table className="w-full border-separate border-spacing-y-6">
@@ -161,7 +234,7 @@ export default function Cart() {
             </thead>
 
             <tbody>
-              {cart.map((item) => (
+              {cartProducts.map((item) => (
                 <tr
                   key={item.id}
                   className="bg-white shadow transition hover:-translate-y-1 hover:shadow-lg"
@@ -176,7 +249,7 @@ export default function Cart() {
                       </button>
 
                       <img
-                        src={item.image}
+                        src={item.thumbnail}
                         alt={item.title}
                         className="h-20 w-20 object-contain"
                       />
@@ -189,10 +262,17 @@ export default function Cart() {
 
                   <td className="px-6 py-5">
                     <AmountCounter
-                      minAmount={1}
-                      maxAmount={100}
-                      counter={item.quantity}
-                      setCounter={(updater) => updateQuantity(item.id, updater)}
+                      minAmount={item.minimumOrderQuantity}
+                      maxAmount={item.stock}
+                      counter={item.minimumOrderQuantity + Math.abs(item.quantity - item.minimumOrderQuantity)}
+                      setCounter={(value) =>
+                        updateQuantity(
+                          item.id,
+                          typeof value === "function"
+                            ? value(item.quantity)
+                            : value,
+                        )
+                      }
                     />
                   </td>
 
@@ -207,7 +287,7 @@ export default function Cart() {
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
           <Link
-            to="/"
+            to="/products"
             onClick={() => {
               transition.start();
               window.scrollTo({
@@ -216,14 +296,20 @@ export default function Cart() {
               });
             }}
           >
-            <button className="bg-transparent border-2 border-black/30 px-8 py-4 rounded-md font-semibold hover:bg-[#DB4444] hover:text-white hover:border-[#DB4444] active:scale-95 transition duration-300">Return To Shop</button>
+            <button className="rounded-md border-2 border-black/30 bg-transparent px-8 py-4 font-semibold transition duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-white active:scale-95">
+              Return To Shop
+            </button>
           </Link>
 
-          <button className="bg-transparent border-2 border-black/30 px-8 py-4 rounded-md font-semibold hover:bg-[#DB4444] hover:text-white hover:border-[#DB4444] active:scale-95 transition duration-300">Clear Cart</button>
+          <button
+            onClick={clearCart}
+            className="rounded-md border-2 border-black/30 bg-transparent px-8 py-4 font-semibold transition duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-white active:scale-95"
+          >
+            Clear Cart
+          </button>
         </div>
-        <div className="mt-20 grid gap-10 lg:grid-cols-2 lg:items-start">
-          {/* Coupon */}
 
+        <div className="mt-20 grid gap-10 lg:grid-cols-2 lg:items-start">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4 sm:flex-row">
               <input
@@ -237,6 +323,7 @@ export default function Cart() {
                 Apply Coupon
               </Button>
             </div>
+
             {discount === 0 ? (
               <p>
                 You Can Use{" "}
@@ -278,10 +365,8 @@ export default function Cart() {
             ) : (
               <p>
                 You Are Now Enjoy With {discount * 100}% Sale Off{" "}
-                <button 
-                  onClick={() => {
-                    setDiscount(0);
-                  }}
+                <button
+                  onClick={() => setDiscount(0)}
                   className="cursor-pointer font-bold text-red-600 underline-offset-2 transition-all hover:text-red-700 hover:underline active:scale-95"
                 >
                   [REMOVE]
@@ -289,8 +374,6 @@ export default function Cart() {
               </p>
             )}
           </div>
-
-          {/* Cart Total */}
 
           <div className="w-full max-w-md justify-self-end rounded-lg border-2 border-black p-8">
             <h2 className="text-2xl font-semibold">Cart Total</h2>
@@ -316,17 +399,17 @@ export default function Cart() {
 
               <hr />
 
-              {discount !== 0 ? (
+              {discount !== 0 && (
                 <>
                   <div className="flex items-center justify-between">
-                    <span>Discount:</span>
+                    <span>Discount</span>
 
                     <span className="font-medium">{discount * 100}%</span>
                   </div>
 
                   <hr />
                 </>
-              ) : null}
+              )}
 
               <div className="flex items-center justify-between text-lg font-semibold">
                 <span>Total</span>
