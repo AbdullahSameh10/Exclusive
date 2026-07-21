@@ -7,7 +7,7 @@ import {
 } from "@Elements/index";
 import { ProductsContext } from "@Contexts/index";
 import { shuffleArray } from "@Utilities/index";
-import type { Product } from "@Components/Data.types";
+import type { Product } from "@/Components/Types/Data.types";
 import { useCapitalizeSentence, useRouteTransition } from "@Hooks/index";
 
 export default function Products() {

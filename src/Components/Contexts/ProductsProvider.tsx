@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import type { Product } from "@Components/Data.types";
+import type { Product } from "@/Components/Types/Data.types";
 import ProductsContext, { type CategoriesTypes } from "./ProductsContext";
 
 interface Props {

@@ -23,7 +23,7 @@ import camera from "@Assets/Dummy/Category-Camera.svg";
 import headPhone from "@Assets/Dummy/Category-Headphone.svg";
 import gamePad from "@Assets/Dummy/Category-Gamepad.svg";
 import { ProductsContext } from "../Contexts";
-import type { Product } from "../Data.types";
+import type { Product } from "../Types/Data.types";
 
 const dummyCategories = [
   "Phones",
@@ -399,16 +399,17 @@ export default function Home() {
 const SectionButton = () => {
   const transition = useRouteTransition();
   return (
-  <Link
-    to="/products"
-    onClick={() => {
-      transition.start();
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }}
-  >
-    <Button>View All</Button>
-  </Link>)
+    <Link
+      to="/products"
+      onClick={() => {
+        transition.start();
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }}
+    >
+      <Button>View All</Button>
+    </Link>
+  );
 };

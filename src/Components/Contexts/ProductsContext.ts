@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { Product } from "@Components/Data.types";
+import type { Product } from "@/Components/Types/Data.types";
 
 export type CategoriesTypes = {
   slug: string;
@@ -19,6 +19,8 @@ type ProductsContextType = {
   getProductById: (id: number) => Product | undefined;
 };
 
-const ProductsContext = createContext<ProductsContextType>({} as ProductsContextType);
+const ProductsContext = createContext<ProductsContextType>(
+  {} as ProductsContextType,
+);
 
 export default ProductsContext;

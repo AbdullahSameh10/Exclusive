@@ -6,7 +6,7 @@ import { AmountCounter, Breadcrumb, Button } from "@Elements/index";
 import { useAuth, useRouteTransition } from "@Hooks/index";
 import { toast } from "react-toastify";
 import { ProductsContext, UserContext } from "@Contexts/index";
-import type { Product } from "../Data.types";
+import type { Product } from "../Types/Data.types";
 
 interface CartProduct extends Product {
   quantity: number;
@@ -375,7 +375,9 @@ export default function Cart() {
                   <div className="flex items-center justify-between">
                     <span>Discount ({discount * 100}%)</span>
 
-                    <span className="font-medium">-{(subtotal- (subtotal * discount)).toFixed(2)}</span>
+                    <span className="font-medium">
+                      -{(subtotal - subtotal * discount).toFixed(2)}
+                    </span>
                   </div>
 
                   <hr />
