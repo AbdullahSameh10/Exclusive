@@ -176,8 +176,12 @@ export default function ProductDetails() {
               </div>
 
               <span className="text-black/50">|</span>
-              <span className="font-poppins text-sm font-normal text-[#00FF66]/60">
-                In Stock
+              <span
+                className={`font-poppins text-sm font-normal ${(product?.minimumOrderQuantity || 0) < (product?.stock || 0) ? "text-[#00FF66]/60" : "text-[#FF0000]/60"}`}
+              >
+                {(product?.minimumOrderQuantity || 0) < (product?.stock || 0)
+                  ? "In Stock"
+                  : "Out Of Stock"}
               </span>
             </div>
 
@@ -235,7 +239,10 @@ export default function ProductDetails() {
                   setCounter={setCounter}
                 />
                 <Button
-                  className="h-full w-[165px] px-0 py-0"
+                  className="h-full w-[165px] px-0 py-0 disabled:opacity-50 disabled:pointer-events-none"
+                  disabled={
+                    (product?.minimumOrderQuantity || 0) > (product?.stock || 0)
+                  }
                   onClick={handleBuyNow}
                 >
                   Buy Now

@@ -25,7 +25,7 @@ export default function CategoriesSidebar({
       <h2 className="mx-6 mb-6 text-xl font-semibold">Categories</h2>
 
       <div
-        className={`${styles.transparentScrollbar} h-full space-y-2 overflow-auto px-6 pb-12`}
+        className={`${styles.transparentScrollbar} ${styles.redScrollbar} h-full space-y-2 overflow-auto px-6 pb-12`}
       >
         {[
           {

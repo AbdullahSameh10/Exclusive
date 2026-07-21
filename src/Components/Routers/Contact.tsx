@@ -19,13 +19,10 @@ export default function Contact() {
       <Breadcrumb pages={["Home"]} links={["/"]} currentPage="Contact" />
       {!state.succeeded ? (
         <div className="mt-20 flex h-[457px] gap-[30px]">
-          <div className="flex h-full w-[340px] flex-col gap-8 rounded-lg px-[35px] py-[45px] shadow-[0px_1px_13px_0px_#00000020]">
+          <div className="flex h-full w-[340px] flex-col gap-8 rounded-lg px-[35px] py-[45px] shadow-[0px_1px_13px_0px_#44a9db50]">
             <div className="flex flex-col gap-6">
               <div className="flex items-center gap-4">
-                <img
-                  src={phoneIcon}
-                  alt="phone icon"
-                />
+                <img src={phoneIcon} alt="phone icon" />
                 <span className="font-poppins text-base font-medium text-black">
                   Call To Us
                 </span>
@@ -46,10 +43,7 @@ export default function Contact() {
             <hr className="border-[#00000080]" />
             <div className="flex flex-col gap-6">
               <div className="flex items-center gap-4">
-                <img
-                  src={emailIcon}
-                  alt="phone icon"
-                />
+                <img src={emailIcon} alt="phone icon" />
                 <span className="font-poppins text-base font-medium text-black">
                   Write To US
                 </span>
@@ -81,7 +75,7 @@ export default function Contact() {
           </div>
           <form
             onSubmit={handleSubmit}
-            className="flex h-full w-[800px] flex-col gap-8 rounded-lg px-[31px] py-10 shadow-[0px_1px_13px_0px_#00000020]"
+            className="flex h-full w-[800px] flex-col gap-8 rounded-lg px-[31px] py-10 shadow-[0px_1px_13px_0px_#44a9db50]"
           >
             <input type="hidden" name="_subject" value="New Contact Message" />
             <input type="hidden" name="_replyto" />

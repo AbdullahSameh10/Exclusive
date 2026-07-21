@@ -17,6 +17,7 @@ export default function UserProvider({
   const [wishlistLoaded, setWishlistLoaded] = useState(false);
   const [userCart, setUserCart] = useState<string[]>([]);
   const [cartLoaded, setCartLoaded] = useState(false);
+  const [discount, setDiscount] = useState<number>(0);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -112,6 +113,9 @@ export default function UserProvider({
 
         userCart,
         setUserCart,
+
+        discount,
+        setDiscount,
       }}
     >
       {children}

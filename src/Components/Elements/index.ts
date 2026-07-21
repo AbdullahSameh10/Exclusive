@@ -22,3 +22,8 @@ export { default as PasswordStrength } from "./PasswordStrength";
 export { default as ProductSpecifications } from "./ProductSpecifications";
 export { default as AmountCounter } from "./AmountCounter";
 export { default as CategoriesSidebar } from "./CategoriesSidebar";
+export { default as BillingForm } from "./Checkout/BillingForm"; 
+export { default as OrderSummary } from "./Checkout/OrderSummary"; 
+export { default as OrderTotals } from "./Checkout/OrderTotals"; 
+export { default as PaymentMethod } from "./Checkout/PaymentMethod"; 
+export { default as PromoCode } from "./Checkout/PromoCode"; 

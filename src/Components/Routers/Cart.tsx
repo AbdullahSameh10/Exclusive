@@ -19,6 +19,8 @@ interface ProductsContextState {
 interface UserCartContextState {
   userCart: string[];
   setUserCart: React.Dispatch<React.SetStateAction<string[]>>;
+  discount: number;
+  setDiscount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Cart() {
@@ -27,13 +29,11 @@ export default function Cart() {
 
   const { products } = useContext(ProductsContext) as ProductsContextState;
 
-  const { userCart, setUserCart } = useContext(
+  const { userCart, setUserCart, discount, setDiscount } = useContext(
     UserContext,
   ) as UserCartContextState;
 
   const promoInputRef = useRef<HTMLInputElement | null>(null);
-
-  const [discount, setDiscount] = useState<number>(0);
 
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
 
@@ -45,19 +45,6 @@ export default function Cart() {
     });
   }, []);
 
-  /**
-   * Build grouped cartProducts from duplicated IDs stored in userCart.
-   *
-   * Example:
-   * userCart = ["5","5","5","8","8"]
-   *
-   * =>
-   *
-   * cartProducts = [
-   *   { ...product5, quantity:3 },
-   *   { ...product8, quantity:2 }
-   * ]
-   */
   useEffect(() => {
     if (!products.length) return;
 
@@ -90,28 +77,9 @@ export default function Cart() {
 
   const total = (subtotal + shipping) * (1 - discount);
 
-  /**
-   * Remove ALL duplicates of one product.
-   *
-   * Example:
-   *
-   * ["5","5","5","8"]
-   *
-   * removeItem(5)
-   *
-   * =>
-   *
-   * ["8"]
-   */
   const removeItem = (id: number) => {
     setUserCart((prev) => prev.filter((item) => item !== String(id)));
   };
-
-  /**
-   * Increase / decrease quantity.
-   *
-   * userCart remains the source of truth.
-   */
 
   const updateQuantity = (id: number, quantity: number) => {
     setCartProducts((prev) =>
@@ -264,7 +232,10 @@ export default function Cart() {
                     <AmountCounter
                       minAmount={item.minimumOrderQuantity}
                       maxAmount={item.stock}
-                      counter={item.minimumOrderQuantity + Math.abs(item.quantity - item.minimumOrderQuantity)}
+                      counter={
+                        item.minimumOrderQuantity +
+                        Math.abs(item.quantity - item.minimumOrderQuantity)
+                      }
                       setCounter={(value) =>
                         updateQuantity(
                           item.id,
@@ -402,9 +373,9 @@ export default function Cart() {
               {discount !== 0 && (
                 <>
                   <div className="flex items-center justify-between">
-                    <span>Discount</span>
+                    <span>Discount ({discount * 100}%)</span>
 
-                    <span className="font-medium">{discount * 100}%</span>
+                    <span className="font-medium">-{(subtotal- (subtotal * discount)).toFixed(2)}</span>
                   </div>
 
                   <hr />
@@ -414,11 +385,18 @@ export default function Cart() {
               <div className="flex items-center justify-between text-lg font-semibold">
                 <span>Total</span>
 
-                <span>${total.toLocaleString()}</span>
+                <span>${total.toFixed(2)}</span>
               </div>
             </div>
-
-            <Button className="mt-8 h-14 w-full">Proceed To Checkout</Button>
+            <Link
+              to="/checkout"
+              onClick={() => {
+                transition.start();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              <Button className="mt-8 h-14 w-full">Proceed To Checkout</Button>
+            </Link>
           </div>
         </div>
       </section>

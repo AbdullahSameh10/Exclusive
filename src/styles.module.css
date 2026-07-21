@@ -27,12 +27,20 @@
   background: transparent;
 }
 
-.transparentScrollbar::-webkit-scrollbar-thumb {
+.redScrollbar::-webkit-scrollbar-thumb {
   background-color: #DB4444;
 }
 
-.transparentScrollbar::-webkit-scrollbar-thumb:hover {
+.redScrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #a13333;
+}
+
+.greenScrollbar::-webkit-scrollbar-thumb {
+  background-color: #059669;
+}
+
+.greenScrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #057b56;
 }
 
 ::-webkit-scrollbar {

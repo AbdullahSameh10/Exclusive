@@ -10,13 +10,15 @@ import CountrySelector from "./CountrySelector";
 interface PhoneFieldProps {
   defaultCountry?: CountryCode;
   value?: string;
-  onChange: (phone: string) => void;
+  onChange?: (phone: string) => void;
+  className?: string;
 }
 
 export default function PhoneField({
   defaultCountry = "EG",
   value,
   onChange,
+  className,
 }: PhoneFieldProps) {
   const parsedPhone = useMemo(() => {
     if (!value) return null;
@@ -30,21 +32,22 @@ export default function PhoneField({
 
   const callingCode = `+${getCountryCallingCode(country)}`;
 
-
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
     const national = e.target.value.replace(/\D/g, "");
 
-    onChange(`${callingCode}${national}`);
+    onChange?.(`${callingCode}${national}`);
   }
 
   function handleCountryChange(newCountry: CountryCode) {
     const code = `+${getCountryCallingCode(newCountry)}`;
 
-    onChange(`${code}${nationalNumber}`);
+    onChange?.(`${code}${nationalNumber}`);
   }
 
   return (
-    <div className="flex h-12 overflow-hidden rounded-md border bg-gray-100 transition-all focus-within:ring-2 focus-within:ring-red-400">
+    <div
+      className={`flex h-12 overflow-hidden rounded-md border bg-gray-100 transition-all focus-within:ring-2 focus-within:ring-red-400 ${className}`}
+    >
       <CountrySelector value={country} onChange={handleCountryChange} />
 
       <div className="flex flex-1 items-center">
@@ -52,6 +55,8 @@ export default function PhoneField({
 
         <input
           type="tel"
+          id="phone"
+          name="phone"
           defaultValue={nationalNumber}
           onChange={handlePhoneChange}
           placeholder="Phone number"

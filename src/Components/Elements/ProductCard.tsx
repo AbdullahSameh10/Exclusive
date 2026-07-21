@@ -102,10 +102,11 @@ export default function ProductCard(props: ProductCardPropsTypes) {
             e.stopPropagation();
 
             const updatedCart = [...userCart, String(id)];
-            
+
             if (
               [...userCart.filter((product) => product === String(id))]
-                .length >= stock - minAmount
+                .length >=
+              stock - minAmount
             ) {
               toast.error(
                 `${products.find((product) => String(product.id) === String(id))?.title} Is Out Of Stock Now!!`,

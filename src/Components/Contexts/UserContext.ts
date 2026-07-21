@@ -26,6 +26,9 @@ const UserContext = createContext({
 
   userCart: [] as string[],
   setUserCart: (_value: string[]) => {},
+
+  discount: 0 as number,
+  setDiscount: (_value: number) => {},
 });
 
 export default UserContext;

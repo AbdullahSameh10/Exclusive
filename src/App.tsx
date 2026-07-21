@@ -3,6 +3,7 @@ import {
   About,
   Authentication,
   Cart,
+  Checkout,
   Contact,
   Error,
   ForgotPassword,
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: "products",
         element: <Products />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
       {
         path: "account",
