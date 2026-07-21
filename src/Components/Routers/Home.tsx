@@ -1,4 +1,12 @@
 import styled from "styled-components";
+import { Section } from "../Layouts";
+import { Link } from "react-router";
+import { useContext, useEffect } from "react";
+import useRouteTransition from "../Hooks/useRouteTransition";
+import { shuffleArray } from "../Utilities";
+import { ProductsContext } from "@Contexts/index";
+import type { Product } from "@Types/Data.types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Banner,
   Button,
@@ -7,39 +15,49 @@ import {
   ProductCardLoading,
   SideBar,
 } from "../Elements";
-import { Section } from "../Layouts";
-import { Link } from "react-router";
-import { useContext, useEffect } from "react";
-import useRouteTransition from "../Hooks/useRouteTransition";
-import { shuffleArray } from "../Utilities";
+import {
+  faMobileScreenButton,
+  faLaptop,
+  faClock,
+  faSprayCanSparkles,
+  faPersonBiking,
+  faGlasses,
+} from "@fortawesome/free-solid-svg-icons";
 import servicesImg from "@Assets/Services.svg";
 import servicesImg2 from "@Assets/Services (1).svg";
 import servicesImg3 from "@Assets/Services (2).svg";
 
-import cellPhone from "@Assets/Dummy/Category-CellPhone.svg";
-import computer from "@Assets/Dummy/Category-Computer.svg";
-import smartWatch from "@Assets/Dummy/Category-SmartWatch.svg";
-import camera from "@Assets/Dummy/Category-Camera.svg";
-import headPhone from "@Assets/Dummy/Category-Headphone.svg";
-import gamePad from "@Assets/Dummy/Category-Gamepad.svg";
-import { ProductsContext } from "../Contexts";
-import type { Product } from "../Types/Data.types";
-
-const dummyCategories = [
-  "Phones",
-  "Computers",
-  "SmartWatches",
-  "Camera",
-  "HeadPhones",
-  "Gamming",
-];
-const dummyIcons = [
-  cellPhone,
-  computer,
-  smartWatch,
-  camera,
-  headPhone,
-  gamePad,
+const homeCategories = [
+  {
+    name: "Phones",
+    slug: "smartphones",
+    icon: faMobileScreenButton,
+  },
+  {
+    name: "Laptops",
+    slug: "laptops",
+    icon: faLaptop,
+  },
+  {
+    name: "Watches",
+    slug: "mens-watches",
+    icon: faClock,
+  },
+  {
+    name: "Fragrances",
+    slug: "fragrances",
+    icon: faSprayCanSparkles,
+  },
+  {
+    name: "Motorcycles",
+    slug: "motorcycle",
+    icon: faPersonBiking,
+  },
+  {
+    name: "Sunglasses",
+    slug: "sunglasses",
+    icon: faGlasses,
+  },
 ];
 
 const Column = styled.div`
@@ -127,16 +145,29 @@ export default function Home() {
         heading="Browse By Category"
         className="mb-[70px] mt-20"
       >
-        {dummyCategories.map((category, i) => (
-          <div
-            key={i}
-            className="flex h-[145px] w-[170px] cursor-pointer flex-col items-center justify-center gap-4 rounded-[4px] border border-[#0000004D] transition-all duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-[#FAFAFA] active:scale-95"
+        {homeCategories.map((category) => (
+          <Link
+            key={category.slug}
+            to={`/products?category=${category.slug}`}
+            onClick={() => {
+              transition.start();
+
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              });
+            }}
+            className="group flex h-[145px] w-[170px] flex-col items-center justify-center gap-4 rounded-[4px] border border-[#0000004D] transition-all duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] active:scale-95"
           >
-            <img src={dummyIcons[i]} alt={`${category} icon`} />
-            <span className="font-poppins text-base font-normal">
-              {category}
+            <FontAwesomeIcon
+              icon={category.icon}
+              className="text-[48px] text-black transition-colors duration-300 group-hover:text-white"
+            />
+
+            <span className="font-poppins text-base transition-colors duration-300 group-hover:text-white">
+              {category.name}
             </span>
-          </div>
+          </Link>
         ))}
       </Section>
       <hr />

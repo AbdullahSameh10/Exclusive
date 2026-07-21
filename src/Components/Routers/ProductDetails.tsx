@@ -95,7 +95,7 @@ export default function ProductDetails() {
           "Products",
           useCapitalizeSentence(product?.category || "") || "",
         ]}
-        links={["/", "/products", "/products"]}
+        links={["/", "/products", `/products?category=${product?.category}`]}
         currentPage={product?.title || ""}
       />
       <div className="mt-20">

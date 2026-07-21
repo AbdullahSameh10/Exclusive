@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 import {
   Breadcrumb,
   ProductCard,
@@ -13,8 +14,11 @@ import { useCapitalizeSentence, useRouteTransition } from "@Hooks/index";
 export default function Products() {
   const transition = useRouteTransition();
   const { products, loading, categories } = useContext(ProductsContext);
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [shuffledProducts, setShuffledProducts] = useState<Product[]>([]);
+
+  const [searchParams] = useSearchParams();
+
+  const selectedCategory = searchParams.get("category") || "all";
 
   useEffect(() => {
     transition.end();
@@ -60,7 +64,6 @@ export default function Products() {
         <CategoriesSidebar
           categories={categories}
           selectedCategory={selectedCategory}
-          onSelect={setSelectedCategory}
           setCurrentPage={setCurrentPage}
         />
 
