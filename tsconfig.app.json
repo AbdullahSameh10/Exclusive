@@ -18,7 +18,8 @@
       "@Layouts/*": ["./src/Components/Layouts/*"],
       "@Routers/*": ["./src/Components/Routers/*"],
       "@Utilities/*": ["./src/Components/Utilities/*"],
-      "@Assets/*": ["./src/Components/Assets/*"]
+      "@Assets/*": ["./src/Components/Assets/*"],
+      "@Types/*": ["./src/Components/Types/*"]
     },
 
     /* Bundler mode */
