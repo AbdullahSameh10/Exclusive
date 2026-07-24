@@ -16,6 +16,7 @@ export { default as Verification } from "./Settings/Verification";
 export { default as PaymentOptions } from "./Settings/PaymentOptions";
 export { default as Security } from "./Settings/Security";
 export { default as Orders } from "./Settings/Orders";
+export { default as Cancellations } from "./Settings/Cancellations";
 
 export const Error = lazy(() => import("./Error"));
 

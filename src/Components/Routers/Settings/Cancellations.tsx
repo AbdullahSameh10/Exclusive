@@ -1,30 +1,24 @@
+import { getOrders } from "@Utilities/index";
+import { useAuth, useRouteTransition } from "@Hooks/index";
+import type { Order } from "@Types/Order.types";
+import { CircleCheckBig, CircleX, Clock3, CreditCard, DollarSign, Package, PackageOpen, ShoppingBag, Truck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import {
-  Package,
-  PackageOpen,
-  CreditCard,
-  ShoppingBag,
-  CircleCheckBig,
-  Truck,
-  Clock3,
-  CircleX,
-  DollarSign,
-} from "lucide-react";
-import { Button, ReceiptModal } from "@Elements/index";
-import { useAuth } from "@Hooks/index";
-import { cancelOrder, getOrders } from "@Utilities/index";
-import type { Order } from "@Types/Order.types";
 import { toast } from "react-toastify";
+import { Button, ReceiptModal } from "@Elements/index";
 
-export default function Orders() {
+export default function Cancellations() {
   const { user } = useAuth();
-
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [receiptOpen, setReceiptOpen] = useState(false);
+  const transition = useRouteTransition();
+
+  useEffect(() => {
+    transition.end();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   useEffect(() => {
     const loadOrders = async () => {
@@ -38,7 +32,7 @@ export default function Orders() {
             b.createdAt.toDate().getTime() - a.createdAt.toDate().getTime(),
         );
 
-        setOrders(data.filter((order) => order.status !== "Cancelled"));
+        setOrders(data.filter((order) => order.status === "Cancelled"));
       } catch (error: any) {
         toast.error(error.message);
       } finally {
@@ -83,34 +77,6 @@ export default function Orders() {
     }
   };
 
-  const handleCancelOrder = async (orderId: string) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to cancel this order?",
-    );
-
-    if (!confirmed) return;
-
-    try {
-      await cancelOrder(orderId);
-
-      setOrders((prev) =>
-        prev.map((order) =>
-          order.id === orderId
-            ? {
-                ...order,
-                status: "Cancelled",
-              }
-            : order,
-        ),
-      );
-
-      toast.success("Order cancelled successfully.");
-    } catch (error: any) {
-      console.error(error);
-      toast.error(error.message ?? "Failed to cancel order.");
-    }
-  };
-
   return (
     <>
       <div className="relative flex h-full flex-col gap-10">
@@ -123,7 +89,7 @@ export default function Orders() {
 
         {/* Header */}
 
-        <h2 className="text-xl font-semibold text-red-500">My Orders</h2>
+        <h2 className="text-xl font-semibold text-red-500">My Cancellations</h2>
 
         {/* Empty */}
 
@@ -133,18 +99,20 @@ export default function Orders() {
               <PackageOpen className="text-red-500" size={36} />
             </div>
 
-            <h3 className="mt-6 text-xl font-semibold">No Orders Yet</h3>
+            <h3 className="mt-6 text-xl font-semibold">No Cancellations Yet</h3>
 
             <p className="mt-2 text-gray-500">
-              Looks like you haven't placed any orders yet.
+              Looks like you haven't cancelled any orders yet.
             </p>
 
-            <Link to="/products">
-              <Button className="mt-8">Start Shopping</Button>
+            <Link to="/products" onClick={() => {
+              transition.start();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}>
+              <Button className="mx-auto mt-8">Return To Shop</Button>
             </Link>
           </section>
         )}
-
         {/* Orders */}
 
         {!loading &&
@@ -223,15 +191,6 @@ export default function Orders() {
                       >
                         View Receipt
                       </button>
-
-                      {order.status === "Pending" && (
-                        <Button
-                          onClick={() => handleCancelOrder(order.id)}
-                          className="bg-red-500 hover:bg-red-600"
-                        >
-                          Cancel Order
-                        </Button>
-                      )}
                     </div>
                   </div>
                 </div>

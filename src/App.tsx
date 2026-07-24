@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import {
   About,
   Authentication,
+  Cancellations,
   Cart,
   Checkout,
   Contact,
@@ -114,7 +115,7 @@ const router = createBrowserRouter([
           },
           {
             path: "cancellations",
-            element: <h1>My Cancellations</h1>,
+            element: <Cancellations />,
           },
         ],
       },
