@@ -1,74 +1,23 @@
 import { useContext, useEffect, useMemo, useState } from "react";
-import {
-  BillingForm,
-  Breadcrumb,
-  Button,
-  OrderSummary,
-  OrderTotals,
-  PaymentMethod,
-  PromoCode,
-} from "@Elements/index";
+import { BillingForm, Breadcrumb, Button, OrderSummary, OrderTotals, PaymentMethod, PromoCode } from "@Elements/index";
 import { useAuth, useRouteTransition } from "@Hooks/index";
 import { ProductsContext, UserContext } from "@Contexts/index";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "@Authentication/firebase";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-
-export type BillingDetails = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  country: string;
-  city: string;
-  streetAddress: string;
-  apartment: string;
-  orderNotes: string;
-};
-
-export type BillingErrors = Partial<Record<keyof BillingDetails, string>>;
+import type { BillingDetails, BillingErrors } from "@Types/Checkout.types";
+import { loadBillingInfo, saveBillingInformation } from "@Utilities/Checkout/billing";
+import { buildOrder, validateBillingDetails } from "@Utilities/index";
+import { toast } from "react-toastify";
+import {createOrder} from "@Utilities/index";
 
 export default function Checkout() {
-  const { userCart, discount, setUserCart } = useContext(UserContext);
+  const { userCart, discount, setUserCart, preferredPayment } = useContext(UserContext);
   const { getProductById } = useContext(ProductsContext);
   const transition = useRouteTransition();
   const { user } = useAuth();
-
   const navigate = useNavigate();
-
-  const saveBillingInformation = async () => {
-    if (!user) return;
-    console.log("saveBillingInformation works !!!");
-
-    try {
-      await updateDoc(doc(db, "users", user.uid), {
-        billingInfo: billingDetails,
-      });
-
-      toast.success("Billing information saved successfully.");
-    } catch (error) {
-      console.error(error);
-
-      toast.error("Failed to save billing information.");
-    }
-  };
-
-  useEffect(() => {
-    const loadBillingInfo = async () => {
-      try {
-        if (!user) return;
-
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        setBillingDetails(userDoc.data()?.billingInfo);
-      } catch (err: any) {
-        toast.error(err?.message ?? String(err));
-      }
-    };
-
-    loadBillingInfo();
-  }, [user]);
-
+  const [errors, setErrors] = useState<BillingErrors>({});
+  const [saveBillingInfo, setSaveBillingInfo] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [billingDetails, setBillingDetails] = useState<BillingDetails>({
     firstName: user?.name?.split(" ")[0] ?? "",
     lastName: user?.name?.split(" ").slice(1).join(" ") ?? "",
@@ -80,10 +29,15 @@ export default function Checkout() {
     apartment: "",
     orderNotes: "",
   });
+  
+  useEffect(() => {
+    transition.end();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-  const [errors, setErrors] = useState<BillingErrors>({});
-
-  const [saveBillingInfo, setSaveBillingInfo] = useState(false);
+  useEffect(() => {
+    loadBillingInfo(user, setBillingDetails);
+  }, [user]);
 
   useEffect(() => {
     setBillingDetails({
@@ -98,11 +52,6 @@ export default function Checkout() {
       orderNotes: "",
     });
   }, [user]);
-
-  useEffect(() => {
-    transition.end();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
 
   const cartProducts = useMemo(() => {
     const quantities = new Map<number, number>();
@@ -124,7 +73,7 @@ export default function Checkout() {
       })
       .filter((item): item is NonNullable<typeof item> => item !== null);
   }, [userCart, getProductById]);
-
+  
   const subtotal = useMemo(() => {
     return cartProducts.reduce(
       (total, product) => total + product.price * product.quantity,
@@ -138,61 +87,46 @@ export default function Checkout() {
 
   const total = subtotal - discountAmount + shipping;
 
-  const validateBillingDetails = () => {
-    const newErrors: BillingErrors = {};
-
-    if (!billingDetails.firstName.trim()) {
-      newErrors.firstName = "First name is required.";
-    }
-
-    if (!billingDetails.lastName.trim()) {
-      newErrors.lastName = "Last name is required.";
-    }
-
-    if (!billingDetails.email.trim()) {
-      newErrors.email = "Email is required.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(billingDetails.email)) {
-      newErrors.email = "Please enter a valid email.";
-    }
-
-    if (!billingDetails.phone.trim()) {
-      newErrors.phone = "Phone number is required.";
-    }
-
-    if (!billingDetails.country.trim()) {
-      newErrors.country = "Country is required.";
-    }
-
-    if (!billingDetails.city.trim()) {
-      newErrors.city = "City is required.";
-    }
-
-    if (!billingDetails.streetAddress.trim()) {
-      newErrors.streetAddress = "Street address is required.";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handlePlaceOrder = async () => {
-    if (!validateBillingDetails()) return;
+    if (!validateBillingDetails(billingDetails, setErrors)) return;
 
-    if (saveBillingInfo) {
-      await saveBillingInformation();
+    if (!user) {
+      toast.error("Please sign in first.");
+      return;
     }
 
-    console.log(billingDetails);
+    try {
+      setLoading(true);
 
-    console.log(cartProducts);
+      if (saveBillingInfo) {
+        await saveBillingInformation(user, billingDetails);
+      }
 
-    console.log(total);
+      const order = buildOrder({
+        userId: user.uid,
+        billing: billingDetails,
+        items: cartProducts,
+        paymentMethod: preferredPayment,
+        subtotal,
+        discount,
+        shipping,
+        total,
+      });
 
-    setTimeout(() => {
-      setUserCart([]);
-      navigate("/", { replace: true });
-    }, 1000);
+      await createOrder(order);
+
+      setTimeout(() => {
+        transition.start();
+        setUserCart([]);
+        toast.success("Your Order Has Been Submitted Successfully!!");
+        navigate("/", { replace: true });
+      }, 1000);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to place your order.");
+    }finally{
+      setLoading(false);
+    }
   };
 
   return (
@@ -216,6 +150,8 @@ export default function Checkout() {
           <aside className="space-y-6 xl:self-start">
             <OrderSummary products={cartProducts} />
 
+            <PromoCode />
+
             <OrderTotals
               subtotal={subtotal}
               shipping={shipping}
@@ -223,15 +159,14 @@ export default function Checkout() {
               total={total}
             />
 
-            <PromoCode />
-
             <PaymentMethod />
 
             <Button
               onClick={handlePlaceOrder}
-              className="h-14 w-full text-base"
+              disabled={loading}
+              className="h-14 w-full text-base disabled:pointer-events-none disabled:opacity-50"
             >
-              Place Order
+              {!loading? "Place Order": "Placing Order..."}
             </Button>
           </aside>
         </div>

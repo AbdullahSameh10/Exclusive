@@ -1,8 +1,8 @@
 import type { Dispatch, SetStateAction } from "react";
 import { PhoneField } from "../Phone";
 import CheckoutInput from "./CheckoutInput";
-import type { BillingDetails, BillingErrors } from "@Routers/Checkout";
 import { useAuth } from "@Hooks/index";
+import type { BillingDetails, BillingErrors } from "@Types/Checkout.types";
 
 interface BillingFormProps {
   billingDetails: BillingDetails;

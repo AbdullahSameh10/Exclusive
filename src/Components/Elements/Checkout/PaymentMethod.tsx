@@ -94,7 +94,7 @@ export default function PaymentMethod() {
             <img
               src={selectedPayment.image}
               alt={selectedPayment.name}
-              className="max-h-12 object-contain"
+              className="max-h-12 max-w-16 object-contain"
             />
           </div>
 

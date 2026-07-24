@@ -6,3 +6,8 @@ export { default as signUp } from "./signUp";
 export { default as signInWithGoogle } from "./signInWithGoogle";
 export { default as signUpWithGoogle } from "./signupWithGoogle";
 export { default as uploadImage } from "./uploadImage";
+export { default as generateOrderNumber } from "./Checkout/generateOrderNumber";
+export { default as billing } from "./Checkout/billing";
+export { default as validateBillingDetails } from "./Checkout/validation";
+export { default as createOrder } from "./Checkout/createOrder";
+export { default as buildOrder } from "./Checkout/buildOrder";
