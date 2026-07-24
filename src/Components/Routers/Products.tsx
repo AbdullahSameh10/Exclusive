@@ -19,6 +19,7 @@ export default function Products() {
   const [searchParams] = useSearchParams();
 
   const selectedCategory = searchParams.get("category") || "all";
+  const searchQuery = searchParams.get("search")?.trim().toLowerCase() ?? "";
 
   useEffect(() => {
     transition.end();
@@ -29,14 +30,27 @@ export default function Products() {
     setShuffledProducts(shuffleArray(products));
   }, [products]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchQuery]);
+
   const PRODUCTS_PER_PAGE = 15;
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredProducts =
-    selectedCategory === "all"
-      ? shuffledProducts
-      : shuffledProducts.filter((p) => p.category === selectedCategory);
+  const filteredProducts = shuffledProducts.filter((product) => {
+    const matchesCategory =
+      selectedCategory === "all" || product.category === selectedCategory;
+
+    const matchesSearch =
+      searchQuery === "" ||
+      product.title.toLowerCase().includes(searchQuery) ||
+      product.description.toLowerCase().includes(searchQuery) ||
+      product.brand?.toLowerCase().includes(searchQuery) ||
+      product.category.toLowerCase().includes(searchQuery);
+
+    return matchesCategory && matchesSearch;
+  });
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
 
@@ -71,35 +85,47 @@ export default function Products() {
           <div className="mb-8 flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold">
-                {useCapitalizeSentence(selectedCategory)} Products
+                {searchQuery
+                  ? `Search Results for "${searchQuery}"`
+                  : `${useCapitalizeSentence(selectedCategory)} Products`}
               </h1>
 
               <p className="text-gray-500">
-                Showing {start}–{end} of {filteredProducts.length} products
+                {searchQuery
+                  ? `${filteredProducts.length} result${
+                      filteredProducts.length !== 1 ? "s" : ""
+                    } found`
+                  : `Showing ${start}–${end} of ${filteredProducts.length} products`}
               </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-            {products.length !== 0
-              ? paginatedProducts.map((product, i) =>
-                  !loading ? (
-                    <ProductCard
-                      key={product.id}
-                      id={product.id}
-                      title={product.title}
-                      stock={product.stock}
-                      minAmount={product.minimumOrderQuantity}
-                      price={product.price}
-                      rating={product.rating}
-                      thumbnail={product.thumbnail}
-                      reviewsNo={product.reviews.length}
-                    />
-                  ) : (
-                    <ProductCardLoading key={i} />
-                  ),
-                )
-              : [...Array(15)].map((i) => <ProductCardLoading key={i} />)}
+            {loading ? (
+              [...Array(15)].map((_, i) => <ProductCardLoading key={i} />)
+            ) : filteredProducts.length === 0 ? (
+              <div className="col-span-full py-20 text-center">
+                <h2 className="text-2xl font-semibold">No products found</h2>
+
+                <p className="mt-2 text-gray-500">
+                  Try another search keyword.
+                </p>
+              </div>
+            ) : (
+              paginatedProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  title={product.title}
+                  stock={product.stock}
+                  minAmount={product.minimumOrderQuantity}
+                  price={product.price}
+                  rating={product.rating}
+                  thumbnail={product.thumbnail}
+                  reviewsNo={product.reviews.length}
+                />
+              ))
+            )}
           </div>
           <div className="mt-12 flex justify-center gap-2">
             <button
