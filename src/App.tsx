@@ -9,6 +9,7 @@ import {
   ForgotPassword,
   Home,
   ManageAccount,
+  Orders,
   PaymentOptions,
   ProductDetails,
   Products,
@@ -18,11 +19,7 @@ import {
   Wishlist,
 } from "@Routers/index";
 import { AccountLayout, Layout } from "@Layouts/index";
-import {
-  AuthProvider,
-  RouteTransitionProvider,
-  UserProvider,
-} from "@Contexts/index";
+import { AuthProvider, RouteTransitionProvider, UserProvider } from "@Contexts/index";
 import ProtectedRoute from "@Authentication/ProtectedRoute";
 import { ProductsProvider } from "@Contexts/index";
 
@@ -106,6 +103,10 @@ const router = createBrowserRouter([
           {
             path: "security",
             element: <Security />,
+          },
+          {
+            path: "orders",
+            element: <Orders />,
           },
           {
             path: "returns",

@@ -27,3 +27,4 @@ export { default as OrderSummary } from "./Checkout/OrderSummary";
 export { default as OrderTotals } from "./Checkout/OrderTotals"; 
 export { default as PaymentMethod } from "./Checkout/PaymentMethod"; 
 export { default as PromoCode } from "./Checkout/PromoCode"; 
+export { default as ReceiptModal } from "./Checkout/ReceiptModal"; 

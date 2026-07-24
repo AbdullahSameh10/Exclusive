@@ -1,4 +1,6 @@
-export type OrderStatus = "Pending" | "Confirmed" | "Preparing" | "Shipped" | "Delivered" | "Cancelled";
+import type { Timestamp } from "firebase/firestore";
+
+export type OrderStatus = "Pending" | "Processing" | "Shipped" | "Delivered" | "Cancelled";
 
 export interface OrderItem {
   id: number;
@@ -22,12 +24,12 @@ export interface BillingInfo {
 
 export interface Order {
   id: string;
-  
+
   userId: string;
 
   orderNumber: string;
 
-  createdAt: number;
+  createdAt: Timestamp;
 
   status: OrderStatus;
 

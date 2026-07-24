@@ -52,6 +52,6 @@ export default function buildOrder({
 
     status: "Pending",
 
-    createdAt: Date.now(),
+    createdAt: null as unknown as Order["createdAt"],
   };
 }

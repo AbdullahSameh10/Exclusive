@@ -91,3 +91,40 @@
 .country-select__indicator-separator {
   display: none;
 }
+
+@media print {
+
+  body {
+    background: white !important;
+  }
+
+  body * {
+    display: none;
+  }
+
+  .receipt,
+  .receipt * {
+    display: block;
+  }
+
+  .receipt {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+
+  .receipt-overlay{
+      position: static !important;
+      inset: auto !important;
+      background: white !important;
+      display:block !important;
+      margin: auto;
+  }
+
+  button {
+    display: none !important;
+  }
+
+}

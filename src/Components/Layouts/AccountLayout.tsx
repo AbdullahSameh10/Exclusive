@@ -2,7 +2,7 @@ import { Link, Outlet, useLocation } from "react-router";
 import { Breadcrumb } from "@Elements/index";
 import { useAuth, useRouteTransition } from "@Hooks/index";
 import { useEffect } from "react";
-import { faAddressBook, faCreditCard, faExchangeAlt, faShieldAlt, faTimesCircle, faUserCheck } from "@fortawesome/free-solid-svg-icons";
+import { faAddressBook, faCreditCard, faExchangeAlt, faShieldAlt, faTimesCircle, faUserCheck, faTruckArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function AccountLayout() {
@@ -34,7 +34,7 @@ export default function AccountLayout() {
             <li>
               <Link
                 to="/account"
-                className={`items-center flex gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account" ? "!text-[#DB4444]" : ""}`}
+                className={`flex items-center gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account" ? "!text-[#DB4444]" : ""}`}
               >
                 <FontAwesomeIcon icon={faAddressBook} />
                 My Profile
@@ -43,7 +43,7 @@ export default function AccountLayout() {
             <li>
               <Link
                 to="/account/payments"
-                className={`items-center flex gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/payments" ? "!text-[#DB4444]" : ""}`}
+                className={`flex items-center gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/payments" ? "!text-[#DB4444]" : ""}`}
               >
                 <FontAwesomeIcon icon={faCreditCard} />
                 Payment Options
@@ -52,7 +52,7 @@ export default function AccountLayout() {
             <li>
               <Link
                 to="/account/security"
-                className={`items-center flex gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/security" ? "!text-[#DB4444]" : ""}`}
+                className={`flex items-center gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/security" ? "!text-[#DB4444]" : ""}`}
               >
                 <FontAwesomeIcon icon={faShieldAlt} />
                 Security
@@ -61,7 +61,7 @@ export default function AccountLayout() {
             <li>
               <Link
                 to="/account/verification"
-                className={`items-center flex gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/verification" ? "!text-[#DB4444]" : ""}`}
+                className={`flex items-center gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/verification" ? "!text-[#DB4444]" : ""}`}
               >
                 <FontAwesomeIcon icon={faUserCheck} />
                 Verification
@@ -72,8 +72,17 @@ export default function AccountLayout() {
           <ul className="ml-[35px] flex flex-col gap-2">
             <li>
               <Link
+                to="/account/orders"
+                className={`flex items-center gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/orders" ? "!text-[#DB4444]" : ""}`}
+              >
+                <FontAwesomeIcon icon={faTruckArrowRight} />
+                My Orders
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/account/returns"
-                className={`items-center flex gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/returns" ? "!text-[#DB4444]" : ""}`}
+                className={`flex items-center gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/returns" ? "!text-[#DB4444]" : ""}`}
               >
                 <FontAwesomeIcon icon={faExchangeAlt} />
                 My Returns
@@ -82,7 +91,7 @@ export default function AccountLayout() {
             <li>
               <Link
                 to="/account/cancellations"
-                className={`items-center flex gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/cancellations" ? "!text-[#DB4444]" : ""}`}
+                className={`flex items-center gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/cancellations" ? "!text-[#DB4444]" : ""}`}
               >
                 <FontAwesomeIcon icon={faTimesCircle} />
                 My Cancellations

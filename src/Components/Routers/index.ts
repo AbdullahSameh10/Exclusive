@@ -15,6 +15,7 @@ export const Checkout = lazyWithDelay(() => import("./Checkout"), 1000);
 export { default as Verification } from "./Settings/Verification";
 export { default as PaymentOptions } from "./Settings/PaymentOptions";
 export { default as Security } from "./Settings/Security";
+export { default as Orders } from "./Settings/Orders";
 
 export const Error = lazy(() => import("./Error"));
 

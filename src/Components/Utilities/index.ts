@@ -11,3 +11,4 @@ export { default as billing } from "./Checkout/billing";
 export { default as validateBillingDetails } from "./Checkout/validation";
 export { default as createOrder } from "./Checkout/createOrder";
 export { default as buildOrder } from "./Checkout/buildOrder";
+export { default as getOrders } from "./getOrders";
