@@ -5,9 +5,10 @@ import { UserContext, ProductsContext } from "@Contexts/index";
 import { shuffleArray } from "@Utilities/index";
 import { Link, useNavigate } from "react-router";
 import { useRouteTransition } from "@Hooks/index";
+import { toast } from "react-toastify";
 
 export default function Wishlist() {
-  const { userWishlist } = useContext(UserContext);
+  const { userWishlist, userCart, setUserCart, setUserWishlist } = useContext(UserContext);
 
   const { products, loading } = useContext(ProductsContext);
 
@@ -30,7 +31,13 @@ export default function Wishlist() {
   const recommendations = shuffledProducts.slice(0, 4);
 
   const moveAllToBag = () => {
-    console.log("Move all wishlist items to cart");
+    if (userWishlist.length === 0) return;
+    
+    setUserCart([...userCart, ...userWishlist]);
+
+    setUserWishlist([]);
+
+    toast.success("All wishlist items have been moved to your cart.");
   };
 
   if (loading) {
@@ -53,7 +60,7 @@ export default function Wishlist() {
                 onClick={moveAllToBag}
                 className="self-start rounded-md border-2 border-black bg-transparent px-12 py-4 font-semibold text-black transition-all duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-white sm:self-auto"
               >
-                Move All To Bag
+                Move All To Cart
               </button>
             )}
           </div>
