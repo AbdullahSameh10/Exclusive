@@ -195,28 +195,6 @@ Optimized for
 
 ---
 
-# 📂 Project Structure
-
-```
-src/
-│
-├── Assets/
-├── Authentication/
-├── Components/
-│   ├── Elements/
-│   ├── Layouts/
-│   └── Pages/
-├── Context/
-├── Hooks/
-├── Types/
-├── Utils/
-│
-├── App.tsx
-└── main.tsx
-```
-
----
-
 # 🚀 Getting Started
 
 Clone the repository
