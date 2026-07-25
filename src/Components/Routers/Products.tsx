@@ -13,17 +13,28 @@ import { useCapitalizeSentence, useRouteTransition } from "@Hooks/index";
 
 export default function Products() {
   const transition = useRouteTransition();
+
   const { products, loading, categories } = useContext(ProductsContext);
+
   const [shuffledProducts, setShuffledProducts] = useState<Product[]>([]);
 
   const [searchParams] = useSearchParams();
 
   const selectedCategory = searchParams.get("category") || "all";
+
   const searchQuery = searchParams.get("search")?.trim().toLowerCase() ?? "";
+
+  const PRODUCTS_PER_PAGE = 15;
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     transition.end();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, []);
 
   useEffect(() => {
@@ -33,10 +44,6 @@ export default function Products() {
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategory, searchQuery]);
-
-  const PRODUCTS_PER_PAGE = 15;
-
-  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredProducts = shuffledProducts.filter((product) => {
     const matchesCategory =
@@ -70,11 +77,12 @@ export default function Products() {
   );
 
   const pages = getPagination(currentPage, totalPages);
+
   return (
     <>
       <Breadcrumb pages={["Home"]} links={["/"]} currentPage="Products" />
 
-      <section className="mx-auto flex max-w-[1170px] gap-8 py-10">
+      <section className="mx-auto flex w-full max-w-[1170px] flex-col gap-8 px-4 py-10 sm:px-6 lg:flex-row lg:px-0">
         <CategoriesSidebar
           categories={categories}
           selectedCategory={selectedCategory}
@@ -82,15 +90,15 @@ export default function Products() {
         />
 
         <div className="flex-1">
-          <div className="mb-8 flex items-center justify-between">
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h1 className="text-3xl font-bold">
+              <h1 className="text-2xl font-bold text-black dark:text-white sm:text-3xl">
                 {searchQuery
                   ? `Search Results for "${searchQuery}"`
                   : `${useCapitalizeSentence(selectedCategory)} Products`}
               </h1>
 
-              <p className="text-gray-500">
+              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 sm:text-base">
                 {searchQuery
                   ? `${filteredProducts.length} result${
                       filteredProducts.length !== 1 ? "s" : ""
@@ -100,14 +108,16 @@ export default function Products() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+          <div className="grid mx-auto w-fit grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {loading ? (
               [...Array(15)].map((_, i) => <ProductCardLoading key={i} />)
             ) : filteredProducts.length === 0 ? (
-              <div className="col-span-full py-20 text-center">
-                <h2 className="text-2xl font-semibold">No products found</h2>
+              <div className="col-span-full flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-black/10 bg-gray-50 px-5 text-center dark:border-white/10 dark:bg-white/5">
+                <h2 className="text-2xl font-semibold text-black dark:text-white">
+                  No products found
+                </h2>
 
-                <p className="mt-2 text-gray-500">
+                <p className="mt-2 text-gray-500 dark:text-gray-400">
                   Try another search keyword.
                 </p>
               </div>
@@ -127,14 +137,18 @@ export default function Products() {
               ))
             )}
           </div>
-          <div className="mt-12 flex justify-center gap-2">
+          <div className="mt-12 flex flex-wrap justify-center gap-2">
             <button
               disabled={currentPage === 1}
               onClick={() => {
                 setCurrentPage((p) => p - 1);
-                window.scrollTo({ top: 170, behavior: "smooth" });
+
+                window.scrollTo({
+                  top: 170,
+                  behavior: "smooth",
+                });
               }}
-              className="h-10 w-10 rounded-lg border disabled:opacity-40"
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-black/20 text-black transition-all duration-300 hover:bg-[#DB4444] hover:text-white disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/20 dark:text-white dark:hover:bg-[#DB4444]"
             >
               ←
             </button>
@@ -143,7 +157,7 @@ export default function Products() {
               page === "..." ? (
                 <span
                   key={index}
-                  className="flex h-10 w-10 items-center justify-center"
+                  className="flex h-10 w-10 items-center justify-center text-black dark:text-white"
                 >
                   ...
                 </span>
@@ -152,13 +166,17 @@ export default function Products() {
                   key={index}
                   onClick={() => {
                     setCurrentPage(Number(page));
-                    window.scrollTo({ top: 170, behavior: "smooth" });
+
+                    window.scrollTo({
+                      top: 170,
+                      behavior: "smooth",
+                    });
                   }}
-                  className={`h-10 w-10 rounded-lg transition ${
+                  className={`flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-300 ${
                     currentPage === page
                       ? "bg-[#DB4444] text-white"
-                      : "border hover:bg-gray-100"
-                  }`}
+                      : `border border-black/20 text-black hover:bg-black/5 dark:border-white/20 dark:text-white dark:hover:bg-white/10`
+                  } `}
                 >
                   {page}
                 </button>
@@ -169,9 +187,13 @@ export default function Products() {
               disabled={currentPage === totalPages}
               onClick={() => {
                 setCurrentPage((p) => p + 1);
-                window.scrollTo({ top: 170, behavior: "smooth" });
+
+                window.scrollTo({
+                  top: 170,
+                  behavior: "smooth",
+                });
               }}
-              className="h-10 w-10 rounded-lg border disabled:opacity-40"
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-black/20 text-black transition-all duration-300 hover:bg-[#DB4444] hover:text-white disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/20 dark:text-white dark:hover:bg-[#DB4444]"
             >
               →
             </button>
@@ -184,6 +206,7 @@ export default function Products() {
 
 function getPagination(current: number, total: number) {
   const delta = 1;
+
   const pages: (number | string)[] = [];
 
   const range: number[] = [];

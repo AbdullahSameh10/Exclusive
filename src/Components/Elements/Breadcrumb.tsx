@@ -17,7 +17,7 @@ export default function Breadcrumb({
   return (
     <nav
       aria-label="Breadcrumb"
-      className="mb-8 mt-8 overflow-x-auto md:mt-12 lg:mt-20"
+      className="mb-8 ml-4 sm:ml-0 mt-8 overflow-x-auto md:mt-12 lg:mt-20"
     >
       <div className="flex min-w-max items-center font-poppins text-sm">
         {pages.map((page, i) => (
