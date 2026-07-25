@@ -92,15 +92,7 @@ export default function Banner() {
 
   return (
     <div
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        width: "100%",
-        maxWidth: "892px",
-        aspectRatio: "892 / 344",
-        borderRadius: "16px",
-        marginTop: "40px",
-      }}
+      className="relative flex justify-center overflow-hidden w-[calc(100%-40px)] max-w-[892px] aspect-[892/344] rounded-2xl mt-5 mx-5 sm:mt-10 sm:mr-0 sm:ml-10"
     >
       {/* Slider */}
 

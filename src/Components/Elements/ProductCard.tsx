@@ -83,11 +83,11 @@ export default function ProductCard(props: ProductCardPropsTypes) {
       {/* IMAGE */}
 
       <div className="relative overflow-hidden rounded-lg">
-        <div className="flex h-[200px] w-full items-center justify-center overflow-hidden rounded-lg bg-[#F5F5F5] sm:h-[220px] lg:h-[250px]">
+        <div className="flex h-[200px] w-full items-center justify-center overflow-hidden rounded-lg bg-[#F5F5F5] dark:bg-neutral-800 sm:h-[220px] lg:h-[250px]">
           <img
             src={thumbnail}
             alt="product image"
-            className="max-h-[80%] max-w-[80%] object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.25)] transition-transform duration-300 group-hover/card:scale-110"
+            className="max-h-[80%] max-w-[80%] object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.25)] transition-transform duration-300 group-hover/card:scale-110 dark:drop-shadow-[0_10px_15px_rgba(255,255,255,0.5)]"
           />
         </div>
 
@@ -96,14 +96,14 @@ export default function ProductCard(props: ProductCardPropsTypes) {
         {/* ACTIONS */}
 
         <div className="absolute right-3 top-3 flex flex-col gap-2">
-          <StyledDiv className="active:scale-90">
+          <StyledDiv className="active:scale-90 dark:bg-neutral-900">
             {!trashPage && <WishlistIcon size={22} productId={String(id)} />}
 
             {isTrash && <TrashIcon productId={String(id)} />}
           </StyledDiv>
 
           {!trashPage && (
-            <StyledDiv className="active:scale-90">
+            <StyledDiv className="active:scale-90 dark:bg-neutral-900">
               <EyeIcon />
             </StyledDiv>
           )}
@@ -148,7 +148,7 @@ export default function ProductCard(props: ProductCardPropsTypes) {
       {/* INFO */}
 
       <div className="flex flex-col gap-2">
-        <span className="text-sm font-medium transition-colors text-black dark:text-white/90 duration-300 group-hover/card:text-[#DB4444] sm:text-base">
+        <span className="text-sm font-medium text-black transition-colors duration-300 group-hover/card:text-[#DB4444] dark:text-white/90 sm:text-base">
           {title.length > 30 ? title.slice(0, 30) + "..." : title}
         </span>
 
@@ -158,14 +158,16 @@ export default function ProductCard(props: ProductCardPropsTypes) {
           </span>
 
           {sale > 0 && (
-            <del className="text-black dark:text-white opacity-50">${price.toFixed(2)}</del>
+            <del className="text-black opacity-50 dark:text-white">
+              ${price.toFixed(2)}
+            </del>
           )}
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           <StarRating rating={rating} />
 
-          <span className="text-sm font-semibold text-black opacity-50">
+          <span className="text-sm font-semibold text-black dark:text-white opacity-50">
             ({reviewsNo})
           </span>
         </div>

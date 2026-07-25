@@ -7,30 +7,45 @@ type BreadcrumbPropsTypes = {
   currentPage: string;
 };
 
-export default function Breadcrumb(props: BreadcrumbPropsTypes) {
-  const { pages, links, currentPage } = props;
+export default function Breadcrumb({
+  pages,
+  links,
+  currentPage,
+}: BreadcrumbPropsTypes) {
   const transition = useRouteTransition();
+
   return (
-    <div className="mt-20 flex font-poppins">
-      {pages.map((page, i) => (
-        <div key={`${page}Wrapper`} className="mr-3 flex h-5 gap-3">
-          <Link
-            to={links[i]}
-            key={page}
-            onClick={() => {
-              transition.start();
-              window.scrollTo({ top: 0 });
-            }}
-            className="text-sm text-[#00000080] transition-colors duration-300 hover:text-black"
-          >
-            {page}
-          </Link>
-          <span className="text-sm text-[#00000080]" key={i}>
-            /
-          </span>
-        </div>
-      ))}
-      <span className="text-sm text-black">{currentPage}</span>
-    </div>
+    <nav
+      aria-label="Breadcrumb"
+      className="mb-8 mt-8 overflow-x-auto md:mt-12 lg:mt-20"
+    >
+      <div className="flex min-w-max items-center font-poppins text-sm">
+        {pages.map((page, i) => (
+          <div key={page} className="flex items-center">
+            <Link
+              to={links[i]}
+              onClick={() => {
+                transition.start();
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }}
+              className="whitespace-nowrap text-neutral-500 transition-colors duration-300 hover:text-[#DB4444] dark:text-neutral-400 dark:hover:text-[#DB4444]"
+            >
+              {page}
+            </Link>
+
+            <span className="mx-3 text-neutral-400 dark:text-neutral-600">
+              /
+            </span>
+          </div>
+        ))}
+
+        <span className="whitespace-nowrap font-medium text-black dark:text-white">
+          {currentPage}
+        </span>
+      </div>
+    </nav>
   );
 }

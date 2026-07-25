@@ -373,7 +373,11 @@ export default function Header() {
                 <>
                   {/* User Info */}
 
-                  <div className="mb-6 flex items-center gap-3">
+                  <Link to="/account" onClick={() => {
+                    transition.start();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    setMobileMenuOpen(false);
+                  }} className="mb-6 flex items-center gap-3">
                     <img
                       src={user.avatar || avatar}
                       alt="Avatar"
@@ -391,7 +395,7 @@ export default function Header() {
                           : user.email}
                       </p>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Logout */}
 

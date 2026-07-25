@@ -2,7 +2,7 @@ import { Link, Outlet, useLocation } from "react-router";
 import { Breadcrumb } from "@Elements/index";
 import { useAuth, useRouteTransition } from "@Hooks/index";
 import { useEffect } from "react";
-import { faAddressBook, faCreditCard, faExchangeAlt, faShieldAlt, faTimesCircle, faUserCheck, faTruckArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faAddressBook, faCreditCard, faShieldAlt, faTimesCircle, faUserCheck, faTruckArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function AccountLayout() {
@@ -77,15 +77,6 @@ export default function AccountLayout() {
               >
                 <FontAwesomeIcon icon={faTruckArrowRight} />
                 My Orders
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/account/returns"
-                className={`flex items-center gap-3 text-base text-black/50 transition duration-300 hover:text-[#DB4444] ${location.pathname === "/account/returns" ? "!text-[#DB4444]" : ""}`}
-              >
-                <FontAwesomeIcon icon={faExchangeAlt} />
-                My Returns
               </Link>
             </li>
             <li>

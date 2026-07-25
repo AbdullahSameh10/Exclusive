@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { JSX, ReactNode } from "react";
-import rightArrowImg from "@Assets/right arrow.svg";
-import leftArrowImg from "@Assets/left arrow.svg";
 import styles from "@/styles.module.css";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 type SectionPropsTypes = {
   category: string;
@@ -85,7 +84,7 @@ export default function Section(props: SectionPropsTypes) {
       {/* Heading + Actions */}
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4 lg:mb-[31px]">
         {heading && (
-          <h3 className="font-inter text-2xl font-semibold text-black dark:text-white/90 leading-tight sm:text-3xl lg:mt-6 lg:text-4xl">
+          <h3 className="font-inter text-2xl font-semibold leading-tight text-black dark:text-white/90 sm:text-3xl lg:mt-6 lg:text-4xl">
             {heading}
           </h3>
         )}
@@ -96,25 +95,17 @@ export default function Section(props: SectionPropsTypes) {
               <button
                 onClick={scrollLeft}
                 disabled={isAtStart}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F5F5F5] transition-all duration-300 hover:bg-[#E5E5E5] active:scale-95 disabled:cursor-not-allowed disabled:opacity-20 lg:h-[46px] lg:w-[46px]"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F5F5F5] transition-all duration-300 hover:bg-[#E5E5E5] active:scale-95 disabled:cursor-not-allowed disabled:opacity-20 dark:bg-neutral-600 lg:h-[46px] lg:w-[46px]"
               >
-                <img
-                  src={leftArrowImg}
-                  alt="left arrow"
-                  className="w-4 lg:w-auto"
-                />
+                <ArrowLeft size={20} className="text-black dark:text-white" />
               </button>
 
               <button
                 onClick={scrollRight}
                 disabled={isAtEnd}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F5F5F5] transition-all duration-300 hover:bg-[#E5E5E5] active:scale-95 disabled:cursor-not-allowed disabled:opacity-20 lg:h-[46px] lg:w-[46px]"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F5F5F5] transition-all duration-300 hover:bg-[#E5E5E5] active:scale-95 disabled:cursor-not-allowed disabled:opacity-20 dark:bg-neutral-600 lg:h-[46px] lg:w-[46px]"
               >
-                <img
-                  src={rightArrowImg}
-                  alt="right arrow"
-                  className="w-4 lg:w-auto"
-                />
+                <ArrowRight size={20} className="text-black dark:text-white" />
               </button>
             </>
           )}

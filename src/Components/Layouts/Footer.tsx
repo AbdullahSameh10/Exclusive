@@ -27,7 +27,7 @@ import linkedInIcon from "@Assets/Footer/linkedin.svg";
 export default function Footer() {
   const transition = useRouteTransition();
   return (
-    <footer className="max-h-fit min-h-[440px] bg-black">
+    <footer className="max-h-fit min-h-[440px] bg-black px-4">
       <div className="mx-auto mb-[60px] flex max-w-[1170px] flex-wrap gap-[87px] pt-20 text-[#a7a7a7]">
         <StyledRow className="max-w-[217px]">
           <h3 className="font-inter text-2xl font-bold leading-6 text-[#FAFAFA]">

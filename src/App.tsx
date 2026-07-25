@@ -110,10 +110,6 @@ const router = createBrowserRouter([
             element: <Orders />,
           },
           {
-            path: "returns",
-            element: <h1>My Returns</h1>,
-          },
-          {
             path: "cancellations",
             element: <Cancellations />,
           },
