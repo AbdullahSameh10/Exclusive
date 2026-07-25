@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { EyeIcon, TrashIcon, WishlistIcon } from "@Assets/Assets Elements";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useRouteTransition } from "@Hooks/index";
 import StarRating from "./StarRating";
 import { useContext } from "react";
@@ -52,6 +52,8 @@ export default function ProductCard(props: ProductCardPropsTypes) {
   const { setUserCart, userCart } = useContext(UserContext);
   const { products } = useContext(ProductsContext);
 
+  const location = useLocation();
+
   const {
     id,
     title,
@@ -78,7 +80,7 @@ export default function ProductCard(props: ProductCardPropsTypes) {
           behavior: "smooth",
         });
       }}
-      className="group/card flex w-[220px] shrink-0 flex-col gap-4 rounded font-poppins sm:w-[240px] lg:w-[270px]"
+      className={`group/card flex ${(location.pathname === "/products" || location.pathname === "/wishlist")? "w-full" : "w-[220px]"} shrink-0 flex-col gap-4 rounded font-poppins sm:w-[240px] lg:w-[270px]`}
     >
       {/* IMAGE */}
 

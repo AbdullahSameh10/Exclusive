@@ -49,16 +49,16 @@ export default function Wishlist() {
       <Breadcrumb pages={["Home"]} links={["/"]} currentPage="Wishlist" />
       <div className="flex flex-col gap-20 py-20 pt-10">
         {/* Wishlist */}
-        <div className="flex flex-col gap-8">
+        <div className="mx-4 flex flex-col gap-8">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-medium">
+            <h1 className="text-xl font-medium text-black dark:text-white/90">
               Wishlist ({wishlistProducts.length})
             </h1>
 
             {wishlistProducts.length > 0 && (
               <button
                 onClick={moveAllToBag}
-                className="self-start rounded-md border-2 border-black bg-transparent px-12 py-4 font-semibold text-black transition-all duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-white sm:self-auto"
+                className="self-start rounded-md border-2 border-black dark:border-white/90 bg-transparent px-12 py-4 font-semibold text-black dark:text-white/90 dark:hover:border-[#DB4444] transition-all duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-white sm:self-auto"
               >
                 Move All To Cart
               </button>
@@ -66,7 +66,7 @@ export default function Wishlist() {
           </div>
 
           {wishlistProducts.length === 0 ? (
-            <div className="flex min-h-[420px] flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-[#FAFAFA] px-6 text-center">
+            <div className="transition-all flex min-h-[420px] flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-[#F5F5F5] dark:bg-neutral-800 dark:border-gray-800 px-6 text-center">
               <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#DB4444]/10">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@ export default function Wishlist() {
                 </svg>
               </div>
 
-              <h2 className="mb-3 font-inter text-3xl font-semibold">
+              <h2 className="mb-3 font-inter text-3xl font-semibold text-black dark:text-white/90">
                 Your wishlist is empty
               </h2>
 
@@ -121,7 +121,7 @@ export default function Wishlist() {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            <button className="absolute right-0 top-0 self-start rounded-md border-2 border-black bg-transparent px-12 py-4 font-semibold text-black transition-all duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-white sm:self-auto">
+            <button className="absolute right-0 top-0 self-start rounded-md border-2 border-black dark:border-white/90 bg-transparent px-12 py-4 font-semibold text-black dark:text-white/90 dark:hover:border-[#DB4444] transition-all duration-300 hover:border-[#DB4444] hover:bg-[#DB4444] hover:text-white sm:self-auto">
               See All
             </button>
           </Link>

@@ -19,7 +19,7 @@ export default function ProtectedRoute({
 
   if (loading || showLoader) {
     return (
-      <div className="p-80 text-center text-4xl font-bold text-[#DB4444]">
+      <div className="sm:p-80 py-80 text-center text-4xl font-bold text-[#DB4444]">
         Loading...
       </div>
     );

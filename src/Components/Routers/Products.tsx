@@ -108,7 +108,7 @@ export default function Products() {
             </div>
           </div>
 
-          <div className="grid mx-auto w-fit grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid mx-auto w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {loading ? (
               [...Array(15)].map((_, i) => <ProductCardLoading key={i} />)
             ) : filteredProducts.length === 0 ? (
