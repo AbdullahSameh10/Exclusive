@@ -72,25 +72,28 @@ export default function PaymentMethod() {
     paymentMethods[0];
 
   return (
-    <section className="overflow-hidden rounded-3xl bg-white shadow-[0px_0_13px_0px] shadow-emerald-300/30">
+    <section className="overflow-hidden rounded-3xl bg-white shadow-[0px_1px_13px_0px] shadow-emerald-300/30 transition-colors duration-300 dark:bg-neutral-900">
       {/* Header */}
 
-      <div className="border-b border-emerald-300/30 px-6 py-5">
-        <h2 className="flex items-center gap-2 text-xl font-bold text-neutral-900">
-          <CreditCard className="text-emerald-600" size={22} />
+      <div className="border-b border-emerald-300/30 px-6 py-5 dark:border-emerald-500/20">
+        <h2 className="flex items-center gap-2 text-xl font-bold text-neutral-900 dark:text-white">
+          <CreditCard
+            className="text-emerald-600 dark:text-emerald-400"
+            size={22}
+          />
           Payment Method
         </h2>
 
-        <p className="mt-1 text-sm text-neutral-500">
+        <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
           This payment method will be used for your order.
         </p>
       </div>
 
       {/* Selected Payment */}
 
-      <div className="space-y-5 p-6">
-        <div className="flex items-center gap-5 rounded-2xl border border-emerald-100 bg-emerald-50 p-5">
-          <div className="flex h-20 w-24 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
+      <div className="space-y-5 p-4 sm:p-6">
+        <div className="flex flex-col items-start gap-5 rounded-2xl border border-emerald-100 bg-emerald-50 p-5 dark:border-emerald-500/20 dark:bg-emerald-500/10 sm:flex-row sm:items-center">
+          <div className="flex h-20 w-24 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm dark:bg-neutral-800">
             <img
               src={selectedPayment.image}
               alt={selectedPayment.name}
@@ -100,17 +103,17 @@ export default function PaymentMethod() {
 
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="text-lg font-semibold text-neutral-900">
+              <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">
                 {selectedPayment.name}
               </h3>
 
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400">
                 <BadgeCheck size={14} />
                 Preferred
               </span>
             </div>
 
-            <p className="mt-2 text-sm text-neutral-500">
+            <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
               {selectedPayment.description}
             </p>
           </div>
@@ -122,10 +125,13 @@ export default function PaymentMethod() {
             transition.start();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="group flex h-12 items-center justify-center gap-2 rounded-xl border border-emerald-200 font-medium text-emerald-700 transition-all duration-300 hover:bg-emerald-50 active:scale-[0.98]"
+          className="group flex h-12 items-center justify-center gap-2 rounded-xl border border-emerald-200 font-medium text-emerald-700 transition-all duration-300 hover:bg-emerald-50 active:scale-[0.98] dark:border-emerald-500/30 dark:text-emerald-400 dark:hover:bg-emerald-500/10"
         >
           Change Payment Method
-          <ArrowRight size={18} className="group-hover:translate-x-1 transition duration-300"/>
+          <ArrowRight
+            size={18}
+            className="transition duration-300 group-hover:translate-x-1"
+          />
         </Link>
       </div>
     </section>

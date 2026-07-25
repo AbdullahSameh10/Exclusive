@@ -20,18 +20,19 @@ export default function BillingForm({
   setSaveBillingInfo,
 }: BillingFormProps) {
   const { user } = useAuth();
+
   return (
-    <section className="max-h-fit rounded-3xl bg-white p-6 shadow-[0px_1px_13px_0px] shadow-emerald-300/30 md:p-8 xl:sticky xl:top-28">
+    <section className="max-h-fit rounded-3xl bg-white p-6 shadow-[0px_1px_13px_0px] shadow-emerald-300/30 transition-colors duration-300 dark:bg-neutral-900 md:p-8 xl:sticky xl:top-28">
       <div className="mb-8">
-        <p className="text-sm font-medium uppercase tracking-widest text-emerald-600">
+        <p className="text-sm font-medium uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
           Checkout
         </p>
 
-        <h2 className="mt-1 text-3xl font-bold text-neutral-900">
+        <h2 className="mt-1 text-3xl font-bold text-neutral-900 dark:text-white">
           Billing Details
         </h2>
 
-        <p className="mt-2 text-neutral-500">
+        <p className="mt-2 text-neutral-500 dark:text-neutral-400">
           Please fill in your billing information to complete your order.
         </p>
       </div>
@@ -88,7 +89,7 @@ export default function BillingForm({
         {/* Phone */}
 
         <div className="md:col-span-2">
-          <label className="mb-2 block text-sm font-medium text-neutral-700">
+          <label className="mb-2 block text-sm font-medium text-neutral-700 dark:text-neutral-300">
             Phone Number
             <span className="ml-1 text-emerald-500">*</span>
           </label>
@@ -101,8 +102,10 @@ export default function BillingForm({
                 phone: value,
               }))
             }
-            className={`bg-white focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 ${
-              errors.phone ? "!border-red-500" : "border-neutral-300"
+            className={`bg-white focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-100 dark:bg-neutral-800 dark:focus-within:ring-emerald-900 ${
+              errors.phone
+                ? "!border-red-500"
+                : "border-neutral-300 dark:border-neutral-700"
             }`}
           />
 
@@ -183,7 +186,7 @@ export default function BillingForm({
         {/* Order Notes */}
 
         <div className="flex flex-col gap-2 md:col-span-2">
-          <label className="text-sm font-medium text-neutral-700">
+          <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
             Order Notes
             <span className="ml-1 text-xs font-normal text-neutral-400">
               (Optional)
@@ -200,7 +203,7 @@ export default function BillingForm({
               }))
             }
             placeholder="Notes about your order..."
-            className="resize-none rounded-lg border border-neutral-300 px-4 py-3 outline-none transition-all duration-200 placeholder:text-neutral-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+            className="resize-none rounded-lg border border-neutral-300 bg-white px-4 py-3 text-neutral-900 outline-none transition-all duration-200 placeholder:text-neutral-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder:text-neutral-500 dark:focus:ring-emerald-900"
           />
         </div>
 
@@ -214,9 +217,9 @@ export default function BillingForm({
             className="peer sr-only"
           />
 
-          <span className="relative flex h-5 w-5 items-center justify-center rounded-md border-2 border-gray-300 transition-all duration-200 after:scale-50 after:text-sm after:font-bold after:text-white after:opacity-0 after:transition-all after:duration-200 after:content-['✓'] peer-checked:border-emerald-500 peer-checked:bg-emerald-500 peer-checked:after:scale-100 peer-checked:after:opacity-100" />
+          <span className="relative flex h-5 w-5 items-center justify-center rounded-md border-2 border-gray-300 transition-all duration-200 after:scale-50 after:text-sm after:font-bold after:text-white after:opacity-0 after:transition-all after:duration-200 after:content-['✓'] peer-checked:border-emerald-500 peer-checked:bg-emerald-500 peer-checked:after:scale-100 peer-checked:after:opacity-100 dark:border-neutral-600" />
 
-          <span className="text-sm text-neutral-600">
+          <span className="text-sm text-neutral-600 dark:text-neutral-400">
             Save this information for future orders.
           </span>
         </label>

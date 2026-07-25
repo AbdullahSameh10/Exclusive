@@ -133,7 +133,7 @@ export default function Checkout() {
     <>
       <Breadcrumb pages={["Home"]} links={["/"]} currentPage="Checkout" />
 
-      <section className="py-12 lg:py-20">
+      <section className="px-4 py-12 transition-colors duration-300 sm:px-0 lg:py-20">
         <div className="grid grid-cols-1 gap-12 xl:grid-cols-[1.45fr_0.95fr]">
           {/* LEFT COLUMN */}
 
@@ -166,7 +166,7 @@ export default function Checkout() {
               disabled={loading}
               className="h-14 w-full text-base disabled:pointer-events-none disabled:opacity-50"
             >
-              {!loading? "Place Order": "Placing Order..."}
+              {!loading ? "Place Order" : "Placing Order..."}
             </Button>
           </aside>
         </div>

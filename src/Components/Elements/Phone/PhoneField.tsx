@@ -60,7 +60,7 @@ export default function PhoneField({
           defaultValue={nationalNumber}
           onChange={handlePhoneChange}
           placeholder="Phone number"
-          className="flex-1 bg-transparent outline-none"
+          className="flex-1 bg-transparent text-black outline-none dark:text-white/90"
         />
       </div>
     </div>
