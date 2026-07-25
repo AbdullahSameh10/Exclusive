@@ -118,17 +118,20 @@ export default function Security() {
   };
 
   return (
-    <div className="flex h-full flex-col gap-8">
-      <h2 className="text-xl font-semibold text-red-500">Security</h2>
+    <div className="flex h-full flex-col">
+      <h2 className="text-2xl font-bold text-red-500">Security</h2>
 
       <form
-        className="flex flex-1 flex-col justify-between"
+        className="mt-8 flex flex-1 flex-col justify-between"
         onSubmit={handleSubmit}
       >
-        <div className="space-y-6">
+        <div className="space-y-8">
+          {/* Current Password */}
           {hasPasswordProvider && (
             <div className="space-y-2">
-              <label className="text-sm font-medium">Current Password</label>
+              <label className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+                Current Password
+              </label>
 
               <div className="relative">
                 <input
@@ -136,25 +139,27 @@ export default function Security() {
                   placeholder="Enter your current password"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="h-12 w-full rounded-md bg-gray-100 px-4 pr-12 outline-none transition focus:ring-2 focus:ring-red-400"
+                  className="h-12 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 pr-12 text-zinc-800 outline-none transition-all duration-300 placeholder:text-zinc-400 focus:border-red-500 focus:bg-white focus:ring-4 focus:ring-red-500/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-500 dark:focus:bg-zinc-800"
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 transition hover:text-red-500"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 transition hover:text-red-500"
                 >
                   <FontAwesomeIcon
                     icon={showCurrentPassword ? faEyeSlash : faEye}
-                    className="text-gray-500 transition duration-300 hover:text-red-500"
                   />
                 </button>
               </div>
             </div>
           )}
 
+          {/* New Password */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">New Password</label>
+            <label className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+              New Password
+            </label>
 
             <div className="relative">
               <input
@@ -162,26 +167,31 @@ export default function Security() {
                 placeholder="Enter your new password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="h-12 w-full rounded-md bg-gray-100 px-4 pr-12 outline-none transition focus:ring-2 focus:ring-red-400"
+                className="h-12 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 pr-12 text-zinc-800 outline-none transition-all duration-300 placeholder:text-zinc-400 focus:border-red-500 focus:bg-white focus:ring-4 focus:ring-red-500/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-500 dark:focus:bg-zinc-800"
               />
 
               <button
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 transition hover:text-red-500"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 transition hover:text-red-500"
               >
-                <FontAwesomeIcon
-                  icon={showNewPassword ? faEyeSlash : faEye}
-                  className="text-gray-500 transition duration-300 hover:text-red-500"
-                />
+                <FontAwesomeIcon icon={showNewPassword ? faEyeSlash : faEye} />
               </button>
             </div>
           </div>
 
-          {newPassword && <PasswordStrength password={newPassword} />}
+          {/* Password Strength */}
+          {newPassword && (
+            <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-700 dark:bg-zinc-900">
+              <PasswordStrength password={newPassword} />
+            </div>
+          )}
 
+          {/* Confirm Password */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Confirm Password</label>
+            <label className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+              Confirm Password
+            </label>
 
             <div className="relative">
               <input
@@ -189,32 +199,38 @@ export default function Security() {
                 placeholder="Confirm your new password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="h-12 w-full rounded-md bg-gray-100 px-4 pr-12 outline-none transition focus:ring-2 focus:ring-red-400"
+                className={`h-12 w-full rounded-xl border bg-zinc-50 px-4 pr-12 text-zinc-800 outline-none transition-all duration-300 placeholder:text-zinc-400 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-500 ${
+                  confirmPassword && !passwordsMatch
+                    ? "border-red-500 focus:ring-4 focus:ring-red-500/10"
+                    : "border-zinc-200 focus:border-red-500 focus:ring-4 focus:ring-red-500/10 dark:border-zinc-700"
+                }`}
               />
 
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 transition hover:text-red-500"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 transition hover:text-red-500"
               >
                 <FontAwesomeIcon
                   icon={showConfirmPassword ? faEyeSlash : faEye}
-                  className="text-gray-500 transition duration-300 hover:text-red-500"
                 />
               </button>
             </div>
 
             {confirmPassword && !passwordsMatch && (
-              <p className="text-sm text-red-500">Passwords do not match.</p>
+              <p className="flex items-center gap-2 text-sm font-medium text-red-500">
+                Passwords do not match.
+              </p>
             )}
           </div>
         </div>
 
-        <div className="mt-10 flex justify-end gap-8">
+        {/* Buttons */}
+        <div className="mt-12 flex flex-col-reverse gap-4 sm:flex-row sm:justify-end">
           <Button
             type="submit"
             disabled={!canSubmit || isLoading}
-            className="disabled:pointer-events-none disabled:opacity-50"
+            className="w-full disabled:pointer-events-none disabled:opacity-50 sm:w-auto"
           >
             {isLoading ? "Saving..." : "Save Changes"}
           </Button>

@@ -29,131 +29,168 @@ export default function Verification() {
   };
 
   return (
-    <div className="relative flex h-full flex-col gap-10">
-      {isLoading ? (
-        <div className="absolute inset-0 -bottom-10 -left-20 -right-20 -top-10 z-10 flex items-center justify-center rounded-md bg-black/40">
+    <div className="relative flex h-full flex-col">
+      {/* Loading */}
+      {isLoading && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center rounded-3xl bg-black/40 backdrop-blur-sm">
           <span className="h-20 w-20 animate-spin rounded-full border-4 border-white border-y-red-500" />
         </div>
-      ) : null}
-      <h2 className="text-xl font-semibold text-red-500">Verification</h2>
+      )}
 
-      <section className="rounded-md p-6 shadow-md">
-        <div className="mb-8 flex items-center gap-4">
-          <div className="rounded-full bg-red-100 p-3">
-            <Mail className="text-red-500" size={22} />
-          </div>
+      <h2 className="text-2xl font-bold text-red-500">Verification</h2>
 
-          <div>
-            <h3 className="text-lg font-semibold">Email Verification</h3>
+      <div className="mt-8 flex flex-col gap-8">
+        {/* ================= EMAIL ================= */}
 
-            <p className="text-sm text-gray-500">Verify your email address.</p>
-          </div>
-        </div>
+        <section className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm transition-all duration-300 dark:border-zinc-700 dark:bg-zinc-900">
+          <div className="mb-8 flex items-center gap-5">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-100 dark:bg-red-500/10">
+              <Mail className="text-red-500" size={26} />
+            </div>
 
-        <div className="space-y-6">
-          <div>
-            <label className="text-sm font-medium">Current Email</label>
+            <div>
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
+                Email Verification
+              </h3>
 
-            <div className="mt-2 flex h-12 items-center rounded-md bg-gray-100 px-4 text-gray-500">
-              {user?.email}
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                Verify your email address to secure your account.
+              </p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between rounded-md bg-gray-50 p-4">
-            <div className="flex items-center gap-3">
-              {verified ? (
-                <>
-                  <CircleCheckBig size={22} className="text-green-500" />
+          <div className="space-y-6">
+            {/* Email */}
 
-                  <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
-                    Verified
-                  </span>
-                </>
-              ) : (
-                <>
-                  <CircleAlert size={22} className="text-yellow-500" />
+            <div>
+              <label className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+                Current Email
+              </label>
 
-                  <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm font-medium text-yellow-700">
-                    Pending Verification
-                  </span>
-                </>
-              )}
+              <div className="mt-2 flex h-12 items-center overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 px-4 text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                {user?.email}
+              </div>
             </div>
 
-            {!verified && (
-              <button
-                className="rounded-md bg-red-500 px-6 py-2 font-medium text-white transition hover:bg-red-600"
-                onClick={() => handleSendVerification()}
-              >
-                {isLoading
-                  ? "Sending Verification Email..."
-                  : "Send Verification Email"}
-              </button>
-            )}
-          </div>
-        </div>
-      </section>
+            {/* Status */}
 
-      <section className="relative rounded-md p-6 shadow-md">
-        <div className="absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center rounded-md bg-red-500/50 shadow-md backdrop-blur-[2px]">
-          <h1 className="rotate-[20deg] text-4xl font-black uppercase italic text-red-800">
-            Coming Soon ( Need paying 😅 )
-          </h1>
-        </div>
-        <div className="mb-8 flex select-none items-center gap-4">
-          <div className="rounded-full bg-red-100 p-3">
-            <Phone className="text-red-500" size={22} />
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold">Phone Verification</h3>
-
-            <p className="text-sm text-gray-500">Verify your phone number.</p>
-          </div>
-        </div>
-
-        <div className="select-none space-y-6">
-          <div>
-            <label className="text-sm font-medium">Current Phone Number</label>
-
-            <div
-              className={`mt-2 flex h-12 items-center rounded-md bg-gray-100 px-4 ${user?.phoneNumber ? "text-gray-500" : "uppercase italic text-red-500"}`}
-            >
-              {user?.phoneNumber || "No phone number added"}
-            </div>
-          </div>
-
-          {user?.phoneNumber && (
-            <div className="flex items-center justify-between rounded-md bg-gray-50 p-4">
+            <div className="flex flex-col gap-5 rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-700 dark:bg-zinc-800 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex items-center gap-3">
-                {phoneVerified ? (
+                {verified ? (
                   <>
-                    <CircleCheckBig size={22} className="text-green-500" />
+                    <CircleCheckBig size={24} className="text-green-500" />
 
-                    <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
+                    <span className="rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 dark:bg-green-500/20 dark:text-green-400">
                       Verified
                     </span>
                   </>
                 ) : (
                   <>
-                    <CircleAlert size={22} className="text-yellow-500" />
+                    <CircleAlert size={24} className="text-yellow-500" />
 
-                    <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm font-medium text-yellow-700">
+                    <span className="rounded-full bg-yellow-100 px-4 py-2 text-sm font-semibold text-yellow-700 dark:bg-yellow-500/20 dark:text-yellow-400">
                       Pending Verification
                     </span>
                   </>
                 )}
               </div>
 
-              {!phoneVerified && user?.phoneNumber && (
-                <button className="rounded-md bg-red-500 px-6 py-2 font-medium text-white transition hover:bg-red-600">
-                  Send Verification SMS
+              {!verified && (
+                <button
+                  onClick={handleSendVerification}
+                  className="rounded-xl bg-red-500 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-red-600 hover:shadow-lg"
+                >
+                  {isLoading
+                    ? "Sending Verification Email..."
+                    : "Send Verification Email"}
                 </button>
               )}
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+
+        {/* ================= PHONE ================= */}
+
+        <section className="relative overflow-hidden rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+          {/* Coming Soon Overlay */}
+
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 backdrop-blur-[3px]">
+            <div className="rotate-[-8deg] rounded-2xl border-2 border-red-500 bg-red-500 px-10 py-5 shadow-2xl">
+              <h1 className="text-center text-2xl font-black uppercase tracking-widest text-white sm:text-3xl">
+                Coming Soon 🚀
+              </h1>
+
+              <p className="mt-2 text-center text-md font-medium text-red-100">
+                Requires Billing 😅
+              </p>
+            </div>
+          </div>
+
+          <div className="mb-8 flex select-none items-center gap-5 opacity-50">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-100 dark:bg-red-500/10">
+              <Phone className="text-red-500" size={26} />
+            </div>
+
+            <div>
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
+                Phone Verification
+              </h3>
+
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                Verify your phone number for extra protection.
+              </p>
+            </div>
+          </div>
+
+          <div className="select-none space-y-6 opacity-50">
+            <div>
+              <label className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+                Current Phone Number
+              </label>
+
+              <div
+                className={`mt-2 flex h-12 items-center rounded-xl border border-zinc-200 bg-zinc-50 px-4 dark:border-zinc-700 dark:bg-zinc-800 ${
+                  user?.phoneNumber
+                    ? "text-zinc-600 dark:text-zinc-300"
+                    : "uppercase italic text-red-500"
+                }`}
+              >
+                {user?.phoneNumber || "No phone number added"}
+              </div>
+            </div>
+
+            {user?.phoneNumber && (
+              <div className="flex flex-col gap-5 rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-700 dark:bg-zinc-800 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex items-center gap-3">
+                  {phoneVerified ? (
+                    <>
+                      <CircleCheckBig size={24} className="text-green-500" />
+
+                      <span className="rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 dark:bg-green-500/20 dark:text-green-400">
+                        Verified
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <CircleAlert size={24} className="text-yellow-500" />
+
+                      <span className="rounded-full bg-yellow-100 px-4 py-2 text-sm font-semibold text-yellow-700 dark:bg-yellow-500/20 dark:text-yellow-400">
+                        Pending Verification
+                      </span>
+                    </>
+                  )}
+                </div>
+
+                {!phoneVerified && (
+                  <button className="rounded-xl bg-red-500 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-red-600 hover:shadow-lg">
+                    Send Verification SMS
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 export { default as SearchBar } from "./SearchBar";
 export { default as LanguageSelect } from "./LanguageSelect";
-export { default as TopHeader } from "./TopHeader";
 export { default as SideBar } from "./SideBar";
 export { default as Banner } from "./Banner";
 export { default as ProductCard } from "./ProductCard";

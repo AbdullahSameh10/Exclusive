@@ -100,53 +100,85 @@ export default function PaymentOptions() {
       setIsLoading(false);
     }
   };
-  return (
-    <div className="relative flex h-full flex-col">
-      {isLoading ? <div className="absolute inset-0 -bottom-10 -left-20 -right-20 -top-10 z-10 flex items-center justify-center rounded-md bg-black/40">
-        <span className="h-20 w-20 animate-spin rounded-full border-4 border-white border-y-red-500"/>
-      </div> : null}
-      <h2 className="text-xl font-semibold text-red-500">Payment Options</h2>
+ return (
+   <div className="relative flex h-full flex-col">
+     {/* Loading */}
+     {isLoading && (
+       <div className="absolute inset-0 -bottom-10 -left-5 -right-5 -top-5 z-10 flex items-center justify-center rounded-3xl bg-black/40 sm:-left-8 sm:-right-8 sm:-top-8 lg:-left-10 lg:-right-10 lg:-top-10 xl:-left-12 xl:-right-12 xl:-top-12">
+         <span className="h-20 w-20 animate-spin rounded-full border-4 border-white border-y-red-500" />
+       </div>
+     )}
 
-      <div className="mt-10 grid grid-cols-3 gap-7">
-        {paymentMethods.map((method) => {
-          const Icon = method.icon;
+     {/* Header */}
+     <div>
+       <h2 className="text-2xl font-bold text-red-500">Payment Options</h2>
 
-          return (
-            <div
-              key={method.name}
-              onClick={async () => {
-                await handlePaymentMethodChange(method.name as PaymentMethod);
-              }}
-              className="group cursor-pointer select-none rounded-xl border bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-red-300 hover:shadow-lg"
-            >
-              <div className="flex h-24 items-center justify-center rounded-lg bg-gray-50">
-                <img
-                  src={method.image}
-                  alt={method.name}
-                  className="max-h-14 max-w-24 object-contain transition duration-300 group-hover:scale-105"
-                />
-              </div>
+       <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+         Choose your preferred payment method for future orders.
+       </p>
+     </div>
 
-              <div className="mt-6 flex items-center gap-2">
-                <Icon size={18} className="text-red-500" />
+     {/* Payment Cards */}
+     <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+       {paymentMethods.map((method) => {
+         const Icon = method.icon;
 
-                <h3 className="font-semibold">{method.name}</h3>
-              </div>
+         const selected = preferredPayment === method.name;
 
-              <p className="mt-2 text-sm text-gray-500">{method.description}</p>
+         return (
+           <div
+             key={method.name}
+             onClick={async () => {
+               await handlePaymentMethodChange(method.name as PaymentMethod);
+             }}
+             className={`group relative cursor-pointer overflow-hidden rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-zinc-900 ${
+               selected
+                 ? "border-red-500 ring-2 ring-red-500/10 dark:border-red-500"
+                 : "border-zinc-200 hover:border-red-300 dark:border-zinc-700"
+             }`}
+           >
+             {/* Selected Badge */}
+             {selected && (
+               <div className="absolute right-4 top-4 flex items-center gap-2 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
+                 <BadgeCheck size={14} />
+                 Selected
+               </div>
+             )}
 
-              <div className="mt-4 flex h-4 items-center gap-2 text-green-600">
-                {preferredPayment === method.name && (
-                  <>
-                    <BadgeCheck size={16} />
-                    <span className="text-sm font-medium">Selected</span>
-                  </>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
+             {/* Logo */}
+             <div className="flex h-28 items-center justify-center rounded-xl bg-zinc-50 transition-colors duration-300 dark:bg-zinc-800">
+               <img
+                 src={method.image}
+                 alt={method.name}
+                 className="max-h-16 max-w-28 object-contain transition duration-300 group-hover:scale-105"
+               />
+             </div>
+
+             {/* Title */}
+             <div className="mt-6 flex items-center gap-3">
+               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-100 text-red-500 dark:bg-red-500/20">
+                 <Icon size={18} />
+               </div>
+
+               <div>
+                 <h3 className="font-semibold text-zinc-900 dark:text-white">
+                   {method.name}
+                 </h3>
+
+                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                   Payment Method
+                 </p>
+               </div>
+             </div>
+
+             {/* Description */}
+             <p className="mt-5 leading-6 text-zinc-600 dark:text-zinc-300">
+               {method.description}
+             </p>
+           </div>
+         );
+       })}
+     </div>
+   </div>
+ );
 }

@@ -1,7 +1,17 @@
 import { getOrders } from "@Utilities/index";
 import { useAuth, useRouteTransition } from "@Hooks/index";
 import type { Order } from "@Types/Order.types";
-import { CircleCheckBig, CircleX, Clock3, CreditCard, DollarSign, Package, PackageOpen, ShoppingBag, Truck } from "lucide-react";
+import {
+  CircleCheckBig,
+  CircleX,
+  Clock3,
+  CreditCard,
+  DollarSign,
+  Package,
+  PackageOpen,
+  ShoppingBag,
+  Truck,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { toast } from "react-toastify";
@@ -82,9 +92,9 @@ export default function Cancellations() {
       <div className="relative flex h-full flex-col gap-10">
         {/* Loading */}
         {loading ? (
-          <div className="absolute inset-0 -bottom-10 -left-20 -right-20 -top-10 z-10 flex items-center justify-center rounded-md bg-black/40">
-            <span className="h-20 w-20 animate-spin rounded-full border-4 border-white border-y-red-500" />
-          </div>
+            <div className="absolute inset-0 -bottom-10 -left-5 -right-5 -top-5 z-10 flex items-center justify-center rounded-3xl bg-black/40 sm:-left-8 sm:-right-8 sm:-top-8 lg:-left-10 lg:-right-10 lg:-top-10 xl:-left-12 xl:-right-12 xl:-top-12">
+              <span className="h-20 w-20 animate-spin rounded-full border-4 border-white border-y-red-500" />
+            </div>
         ) : null}
 
         {/* Header */}
@@ -105,10 +115,13 @@ export default function Cancellations() {
               Looks like you haven't cancelled any orders yet.
             </p>
 
-            <Link to="/products" onClick={() => {
-              transition.start();
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}>
+            <Link
+              to="/products"
+              onClick={() => {
+                transition.start();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
               <Button className="mx-auto mt-8">Return To Shop</Button>
             </Link>
           </section>
@@ -122,21 +135,23 @@ export default function Cancellations() {
             return (
               <section
                 key={order.id}
-                className="rounded-md p-6 shadow-md transition-all duration-300 hover:scale-[102%]"
+                className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-zinc-700 dark:bg-zinc-900 sm:p-6"
               >
-                <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex flex-col gap-8 xl:flex-row xl:items-center xl:justify-between">
                   {/* Left */}
 
                   <div>
                     <div className="mb-5 flex items-center gap-4">
-                      <div className="rounded-full bg-red-100 p-3">
+                      <div className="rounded-2xl bg-red-100 p-3 dark:bg-red-500/20">
                         <Package className="text-red-500" size={22} />
                       </div>
 
                       <div>
-                        <h3 className="font-semibold">{order.orderNumber}</h3>
+                        <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
+                          {order.orderNumber}
+                        </h3>
 
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">
                           {order.createdAt?.toDate
                             ? order.createdAt
                                 .toDate()
@@ -153,26 +168,32 @@ export default function Cancellations() {
                       <div className="flex items-center gap-3">
                         <ShoppingBag size={18} className="text-red-500" />
 
-                        <span>{order.items.length} Products</span>
+                        <span className="text-zinc-700 dark:text-zinc-300">
+                          {order.items.length} Products
+                        </span>
                       </div>
 
                       <div className="flex items-center gap-3">
                         <CreditCard size={18} className="text-red-500" />
 
-                        <span>{order.paymentMethod}</span>
+                        <span className="text-zinc-700 dark:text-zinc-300">
+                          {order.paymentMethod}
+                        </span>
                       </div>
 
                       <div className="flex items-center gap-3">
                         <DollarSign size={18} className="text-red-500" />
 
-                        <span>${order.total.toFixed(2)}</span>
+                        <span className="text-zinc-700 dark:text-zinc-300">
+                          ${Number(order.total.toFixed(0)).toLocaleString()}
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   {/* Right */}
 
-                  <div className="flex flex-col items-start gap-5 lg:items-end">
+                  <div className="flex flex-col gap-5 xl:items-end">
                     <span
                       className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${status?.className}`}
                     >
@@ -181,13 +202,13 @@ export default function Cancellations() {
                       {order.status}
                     </span>
 
-                    <div className="flex justify-end ml-auto max-h-fit w-[393px] flex-shrink flex-grow flex-wrap gap-3">
+                    <div className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-end xl:w-auto">
                       <button
                         onClick={() => {
                           setSelectedOrder(order);
                           setReceiptOpen(true);
                         }}
-                        className="rounded-md border-2 border-black bg-white px-11 py-4 font-bold text-black/60 transition-all duration-300 hover:border-amber-500 hover:bg-amber-500 hover:text-white"
+                        className="w-full rounded-xl border-2 border-zinc-300 bg-white px-8 py-3 font-semibold text-zinc-700 transition-all duration-300 hover:border-red-500 hover:bg-red-500 hover:text-white dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 sm:w-auto"
                       >
                         View Receipt
                       </button>

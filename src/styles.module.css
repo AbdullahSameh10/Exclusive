@@ -130,7 +130,7 @@
       inset: auto !important;
       background: white !important;
       display:block !important;
-      margin: auto;
+      margin: none;
   }
 
   button {

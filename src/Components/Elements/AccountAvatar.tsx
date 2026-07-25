@@ -63,53 +63,59 @@ export default function AvatarSection() {
   }
 
   return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium text-black">Profile Picture</label>
+    <div className="space-y-3 w-full">
+      <label className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+        Profile Picture
+      </label>
 
-      <div className="flex items-center gap-6 rounded-md bg-gray-100 p-5">
-        {/* Avatar */}
-        <div className="relative">
-          <img
-            src={preview}
-            alt="Avatar"
-            className="h-24 w-24 rounded-full border-2 border-white object-cover shadow"
-          />
+      <div className="rounded-2xl border border-zinc-200 bg-white w-full p-6 shadow-sm transition-all duration-300 dark:border-zinc-700 dark:bg-zinc-900">
+        <div className="flex flex-col w-full items-center gap-6 lg:flex-row">
+          {/* Avatar */}
+          <div className="relative shrink-0">
+            <img
+              src={preview}
+              alt="Avatar"
+              className="h-32 w-32 rounded-full border-4 border-white object-cover shadow-lg dark:border-zinc-800"
+            />
 
-          <button
-            type="button"
-            onClick={() => inputRef.current?.click()}
-            className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-white transition hover:bg-red-600"
-          >
-            <Camera size={16} />
-          </button>
-        </div>
+            <button
+              type="button"
+              onClick={() => inputRef.current?.click()}
+              className="absolute bottom-1 right-1 flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white shadow-lg transition-all duration-300 hover:scale-110 hover:bg-red-600 active:scale-95"
+            >
+              <Camera size={18} />
+            </button>
+          </div>
 
-        {/* Right Side */}
-        <div className="flex flex-col">
-          <h3 className="font-semibold text-gray-900">
-            Change Profile Picture
-          </h3>
+          {/* Information */}
+          <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
+            <h3 className="text-xl font-bold text-zinc-900 dark:text-white">
+              Change Profile Picture
+            </h3>
 
-          <p className="mt-1 text-sm text-gray-500">
-            PNG, JPG or WEBP (Maximum 5MB)
-          </p>
+            <p className="mt-2 max-w-md text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+              Upload a PNG, JPG or WEBP image.
+              <br />
+              Maximum file size: <span className="font-semibold">5 MB</span>.
+            </p>
 
-          <button
-            type="button"
-            disabled={loading}
-            onClick={() => inputRef.current?.click()}
-            className="mt-4 w-fit rounded-md border border-red-500 px-5 py-2 font-medium text-red-500 transition hover:bg-red-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {loading ? "Uploading..." : "Choose Image"}
-          </button>
+              <button
+                type="button"
+                disabled={loading}
+                onClick={() => inputRef.current?.click()}
+                className="rounded-xl mt-6 bg-red-500 px-6 py-3 font-semibold text-white transition-all duration-300 hover:bg-red-600 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {loading ? "Uploading..." : "Choose Image"}
+              </button>
 
-          <input
-            ref={inputRef}
-            type="file"
-            accept="image/png,image/jpeg,image/webp"
-            className="hidden"
-            onChange={handleImageChange}
-          />
+            <input
+              ref={inputRef}
+              type="file"
+              accept="image/png,image/jpeg,image/webp"
+              className="hidden"
+              onChange={handleImageChange}
+            />
+          </div>
         </div>
       </div>
     </div>
