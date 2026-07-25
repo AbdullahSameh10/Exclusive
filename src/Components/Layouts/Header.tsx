@@ -100,7 +100,7 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(true)}
               className="rounded-lg p-2 transition hover:bg-gray-100 dark:hover:bg-neutral-800 lg:hidden"
             >
-              <Menu size={26} className="text-black dark:text-white/90"/>
+              <Menu size={26} className="text-black dark:text-white/90" />
             </button>
 
             <Link
@@ -289,7 +289,7 @@ export default function Header() {
                   }}
                 >
                   <button
-                    className={`rounded-full border-2 border-[#DB4444] bg-transparent px-5 py-2 max-h-10 text-sm !text-[#DB4444] transition hover:!bg-[#DB4444] hover:!text-white ${
+                    className={`max-h-10 rounded-full border-2 border-[#DB4444] bg-transparent px-5 py-2 text-sm !text-[#DB4444] transition hover:!bg-[#DB4444] hover:!text-white ${
                       isAuthPage && "!bg-[#DB4444] !text-white"
                     }`}
                   >
@@ -373,11 +373,15 @@ export default function Header() {
                 <>
                   {/* User Info */}
 
-                  <Link to="/account" onClick={() => {
-                    transition.start();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                    setMobileMenuOpen(false);
-                  }} className="mb-6 flex items-center gap-3">
+                  <Link
+                    to="/account"
+                    onClick={() => {
+                      transition.start();
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      setMobileMenuOpen(false);
+                    }}
+                    className="mb-6 flex items-center gap-3"
+                  >
                     <img
                       src={user.avatar || avatar}
                       alt="Avatar"

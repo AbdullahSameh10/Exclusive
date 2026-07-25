@@ -73,21 +73,25 @@ export default function ProductSpecifications(props: ProductSpecificationsProps)
   ];
 
   return (
-    <section className="rounded-3xl w-full border border-gray-200 bg-white p-6 shadow-sm">
-      <div className="grid gap-5 sm:grid-cols-2">
+    <section className="w-full rounded-3xl border border-zinc-200 bg-white p-4 shadow-sm transition-colors dark:border-zinc-700 dark:bg-zinc-900 sm:p-6 lg:p-8">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-5">
         {specs.map((spec) => (
           <div
             key={spec.label}
-            className="group flex items-start gap-4 rounded-2xl border border-gray-200 bg-gray-50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-red-500 hover:bg-white hover:shadow-lg"
+            className="group flex items-start gap-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-red-500 hover:bg-white hover:shadow-xl dark:border-zinc-700 dark:bg-zinc-800/50 dark:hover:border-red-500 dark:hover:bg-zinc-800"
           >
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-500 transition-colors group-hover:bg-red-500 group-hover:text-white">
+            {/* Icon */}
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-100 text-red-500 transition-all duration-300 group-hover:scale-110 group-hover:bg-red-500 group-hover:text-white dark:bg-violet-500/20 dark:text-red-500 dark:group-hover:bg-red-500 dark:group-hover:text-white">
               <FontAwesomeIcon icon={spec.icon} />
             </div>
 
+            {/* Content */}
             <div className="min-w-0 flex-1">
-              <p className="mb-1 text-sm text-gray-500">{spec.label}</p>
+              <p className="mb-1 text-sm font-medium text-zinc-500 dark:text-zinc-400">
+                {spec.label}
+              </p>
 
-              <p className="break-words text-base font-semibold text-gray-900">
+              <p className="break-words text-base font-semibold leading-relaxed text-zinc-900 dark:text-zinc-100">
                 {spec.value || `No ${spec.label} Available!`}
               </p>
             </div>

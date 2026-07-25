@@ -80,7 +80,7 @@ export default function ProductCard(props: ProductCardPropsTypes) {
           behavior: "smooth",
         });
       }}
-      className={`group/card flex ${(location.pathname === "/products" || location.pathname === "/wishlist")? "w-full" : "w-[220px]"} shrink-0 flex-col gap-4 rounded font-poppins sm:w-[240px] lg:w-[270px]`}
+      className={`group/card flex ${location.pathname === "/products" || location.pathname.includes("/product") || location.pathname === "/wishlist" ? "w-full" : "w-[220px]"} shrink-0 flex-col gap-4 rounded font-poppins sm:w-[240px] lg:w-[270px]`}
     >
       {/* IMAGE */}
 
@@ -169,7 +169,7 @@ export default function ProductCard(props: ProductCardPropsTypes) {
         <div className="flex flex-wrap items-center gap-2">
           <StarRating rating={rating} />
 
-          <span className="text-sm font-semibold text-black dark:text-white opacity-50">
+          <span className="text-sm font-semibold text-black opacity-50 dark:text-white">
             ({reviewsNo})
           </span>
         </div>

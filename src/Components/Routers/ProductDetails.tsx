@@ -98,86 +98,98 @@ export default function ProductDetails() {
         links={["/", "/products", `/products?category=${product?.category}`]}
         currentPage={product?.title || ""}
       />
-      <div className="mt-20">
-        <div className="flex gap-[70px]">
-          <div className="flex gap-[30px]">
-            <div className="relative flex flex-col items-center">
+      <div className="mx-auto mt-10 w-full max-w-[1400px] px-4 sm:px-6 lg:mt-20 lg:px-8">
+        <div className="flex flex-col gap-12 xl:flex-row xl:items-start xl:gap-16">
+          <div className="flex w-full flex-col gap-8 lg:flex-row xl:flex-1 xl:gap-8">
+            {/* ================= Thumbnails ================= */}
+            <div className="order-2 flex w-full flex-col items-center lg:order-1 lg:w-auto">
+              {/* Up Button */}
               <button
                 onClick={() => scrollThumbnails("up")}
-                className={`absolute -top-14 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white/90 shadow-lg backdrop-blur transition-all duration-300 ${
+                className={`mb-4 hidden h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-lg transition-all duration-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white lg:flex ${
                   canScrollUp
-                    ? "pointer-events-auto opacity-100 hover:-translate-y-1 hover:shadow-xl"
+                    ? "pointer-events-auto opacity-100 hover:-translate-y-1 hover:border-red-500 hover:text-red-500 hover:shadow-xl"
                     : "pointer-events-none opacity-0"
                 }`}
               >
                 <FontAwesomeIcon icon={faArrowUp} />
               </button>
 
+              {/* Thumbnails */}
               <div
                 ref={thumbnailsRef}
                 onScroll={updateScrollButtons}
-                className="scrollbar-hide flex max-h-[600px] flex-col gap-4 overflow-hidden scroll-smooth px-1"
+                className="scrollbar-hide flex w-full gap-3 overflow-x-auto overflow-y-hidden scroll-smooth py-1 lg:max-h-[600px] lg:w-[170px] lg:flex-col lg:gap-4 lg:overflow-y-auto lg:overflow-x-hidden"
               >
                 {product?.images.map((image) => (
                   <div
                     key={image}
                     onClick={() => setImageSrc(image)}
-                    className={`group flex max-h-[138px] min-h-[138px] w-[170px] cursor-pointer items-center justify-center rounded-xl border-2 bg-[#F8F8F8] transition-all duration-300 hover:scale-[1.03] hover:shadow-lg active:scale-95 ${
+                    className={`group flex h-24 min-h-24 min-w-24 cursor-pointer items-center justify-center rounded-2xl border-2 bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-xl dark:border-zinc-700 dark:bg-zinc-900 sm:h-28 sm:min-h-28 sm:min-w-28 lg:h-[138px] lg:min-h-[138px] lg:w-[170px] lg:min-w-[170px] ${
                       imageSrc === image
-                        ? "border-red-500 shadow-lg"
+                        ? "border-red-500 shadow-xl"
                         : "border-transparent"
-                    }`}
+                    } `}
                   >
                     <img
                       src={image}
-                      alt="product overview"
-                      className="w-[120px] transition-transform duration-300 group-hover:scale-110"
+                      alt="Product"
+                      className="max-h-[75%] max-w-[75%] object-contain transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
                 ))}
               </div>
 
+              {/* Down Button */}
               <button
                 onClick={() => scrollThumbnails("down")}
-                className={`absolute -bottom-14 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white/90 shadow-lg backdrop-blur transition-all duration-300 ${
+                className={`mt-4 hidden h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-lg transition-all duration-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white lg:flex ${
                   canScrollDown
-                    ? "pointer-events-auto opacity-100 hover:translate-y-1 hover:shadow-xl"
+                    ? "pointer-events-auto opacity-100 hover:translate-y-1 hover:border-red-500 hover:text-red-500 hover:shadow-xl"
                     : "pointer-events-none opacity-0"
                 }`}
               >
                 <FontAwesomeIcon icon={faArrowDown} />
               </button>
             </div>
-            <div className="flex h-[600px] w-[500px] items-center justify-center rounded-lg bg-[#F5F5F5]">
+
+            {/* ================= Main Image ================= */}
+            <div className="order-1 flex h-[320px] w-full items-center justify-center overflow-hidden rounded-2xl border border-gray-200 bg-gray-100 p-6 dark:border-zinc-700 dark:bg-zinc-900 sm:h-[420px] lg:order-2 lg:h-[600px] lg:w-[500px]">
               <img
                 src={imageSrc || product?.images[0]}
-                alt="product thumbnail"
-                className="w-[446px]"
+                alt="Product"
+                className="max-h-full max-w-full object-contain transition-all duration-500 hover:scale-105 lg:w-[446px]"
               />
             </div>
           </div>
-          <div className="w-[400px]">
-            <h1 className="font-inter text-2xl font-semibold leading-6">
+
+          <div className="w-full xl:max-w-[420px] xl:flex-shrink-0">
+            {/* Product Title */}
+            <h1 className="font-inter text-3xl font-bold leading-tight text-zinc-900 dark:text-white">
               {product?.title}
             </h1>
 
-            <div className="my-4 flex w-full items-center gap-4">
+            {/* Rating */}
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-2">
-                <div className="flex gap-1">
-                  <StarRating rating={product ? product?.rating : 0} />
-                </div>
+                <StarRating rating={product ? product.rating : 0} />
 
                 <a
                   href="#reviews"
-                  className="font-poppins text-sm font-normal text-black/50"
+                  className="font-poppins text-sm text-zinc-500 transition hover:text-red-500 dark:text-zinc-400"
                 >
                   ({product?.reviews.length} Reviews)
                 </a>
               </div>
 
-              <span className="text-black/50">|</span>
+              <span className="hidden text-zinc-400 sm:block">|</span>
+
               <span
-                className={`font-poppins text-sm font-normal ${(product?.minimumOrderQuantity || 0) < (product?.stock || 0) ? "text-[#00FF66]/60" : "text-[#FF0000]/60"}`}
+                className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                  (product?.minimumOrderQuantity || 0) < (product?.stock || 0)
+                    ? "bg-green-100 text-green-600 dark:bg-green-500/20 dark:text-green-400"
+                    : "bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400"
+                }`}
               >
                 {(product?.minimumOrderQuantity || 0) < (product?.stock || 0)
                   ? "In Stock"
@@ -185,61 +197,82 @@ export default function ProductDetails() {
               </span>
             </div>
 
-            <span className="font-inter text-2xl font-normal leading-6 text-black">
-              ${product?.price.toFixed(2)}
-            </span>
+            {/* Price */}
+            <div className="mt-6">
+              <span className="font-inter text-4xl font-bold text-red-600 dark:text-red-400">
+                ${product?.price.toFixed(2)}
+              </span>
+            </div>
 
-            <p className="my-6 font-poppins text-sm">{product?.description}</p>
+            {/* Description */}
+            <p className="mt-6 border-b border-zinc-200 pb-8 font-poppins leading-7 text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">
+              {product?.description}
+            </p>
 
-            <hr />
-
-            <div className="mb-10 mt-6 flex flex-col gap-6">
-              <div className="flex gap-6">
-                <span className="font-inter text-xl font-normal leading-5">
-                  Colours:
+            {/* Options */}
+            <div className="mt-8 flex flex-col gap-8">
+              {/* Colors */}
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                <span className="font-inter text-lg font-semibold text-zinc-900 dark:text-white">
+                  Colours
                 </span>
-                <div className="flex gap-2">
+
+                <div className="flex gap-3">
                   {colors.map((color, index) => (
                     <div
                       key={index}
                       onClick={() => setActiveColor(index)}
-                      className={`flex h-5 w-5 cursor-pointer items-center justify-center rounded-full transition-all duration-300 ${activeColor === index && "border-4 border-black"} `}
+                      className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full transition-all duration-300 ${
+                        activeColor === index
+                          ? "border-2 border-red-500"
+                          : "border-2 border-transparent"
+                      }`}
                     >
                       <div
-                        className={`h-5 !min-h-5 w-5 !min-w-5 rounded-full transition-transform duration-300 ${activeColor === index ? "scale-50" : "scale-100"} `}
+                        className={`h-5 w-5 rounded-full transition ${
+                          activeColor === index ? "scale-90" : "scale-100"
+                        }`}
                         style={{ backgroundColor: color }}
                       />
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="flex items-center gap-6">
-                <span className="font-inter text-xl font-normal leading-5">
-                  Size:
+
+              {/* Sizes */}
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                <span className="font-inter text-lg font-semibold text-zinc-900 dark:text-white">
+                  Size
                 </span>
-                <div className="flex gap-4">
+
+                <div className="flex flex-wrap gap-3">
                   {sizes.map((size, i) => (
-                    <div
+                    <button
                       key={i}
                       onClick={() => setActiveSize(i)}
-                      className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-2 border-black/50 transition-colors duration-300 ${activeSize === i && "!border-[#DB4444] bg-[#DB4444] text-white"}`}
+                      className={`flex h-10 w-10 items-center justify-center rounded-lg border font-medium transition-all duration-300 ${
+                        activeSize === i
+                          ? "border-red-500 bg-red-500 text-white shadow-lg"
+                          : "border-zinc-300 bg-white text-zinc-700 hover:border-red-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+                      }`}
                     >
-                      <span className="font-poppins text-sm font-medium">
-                        {size}
-                      </span>
-                    </div>
+                      {size}
+                    </button>
                   ))}
                 </div>
               </div>
-              <div className="flex h-11 items-center gap-4">
+
+              {/* Buy Section */}
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <AmountCounter
                   minAmount={product?.minimumOrderQuantity || 0}
                   maxAmount={product?.stock || 0}
                   counter={counter}
                   setCounter={setCounter}
                 />
+
                 <Button
-                  className="h-full w-[165px] px-0 py-0 disabled:opacity-50 disabled:pointer-events-none"
+                  className="h-12 flex-1 rounded-xl px-6 disabled:pointer-events-none disabled:opacity-50"
                   disabled={
                     (product?.minimumOrderQuantity || 0) > (product?.stock || 0)
                   }
@@ -247,59 +280,81 @@ export default function ProductDetails() {
                 >
                   Buy Now
                 </Button>
-                <div className="flex h-10 w-10 items-center justify-center rounded-md border border-black/50">
+
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-zinc-300 transition hover:border-red-500 dark:border-zinc-700">
                   <WishlistIcon productId={String(product?.id) || ""} />
                 </div>
               </div>
             </div>
 
-            <div className="flex w-full flex-col rounded-md border border-black/50">
-              <div className="m-[24px_0_16px_16px] flex gap-4">
-                <img src={deliveryIcon} alt="delivery icon" />
-                <div className="flex flex-col gap-2">
-                  <span className="font-poppins text-base font-medium">
+            {/* Delivery Card */}
+            <div className="mt-10 w-full overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
+              <div className="flex gap-4 p-6">
+                <img
+                  src={deliveryIcon}
+                  alt="delivery icon"
+                  className="h-10 w-10 shrink-0"
+                />
+
+                <div>
+                  <h3 className="font-poppins text-base font-semibold text-zinc-900 dark:text-white">
                     Free Delivery
-                  </span>
-                  <span className="cursor-pointer font-poppins text-xs font-medium leading-[18px] underline">
+                  </h3>
+
+                  <p className="mt-1 cursor-pointer text-sm text-red-600 underline dark:text-red-400">
                     Enter your postal code for Delivery Availability
-                  </span>
+                  </p>
                 </div>
               </div>
-              <hr className="h-[0.5px] border-0 bg-black/50" />
-              <div className="m-[16px_0_24px_16px] flex gap-4">
-                <img src={returnIcon} alt="return icon" />
-                <div className="flex flex-col gap-2">
-                  <span className="font-poppins text-base font-medium">
+
+              <div className="border-t border-zinc-200 dark:border-zinc-700" />
+
+              <div className="flex gap-4 p-6">
+                <img
+                  src={returnIcon}
+                  alt="return icon"
+                  className="h-10 w-10 shrink-0"
+                />
+
+                <div>
+                  <h3 className="font-poppins text-base font-semibold text-zinc-900 dark:text-white">
                     Return Delivery
-                  </span>
-                  <span className="font-poppins text-xs font-medium leading-[18px]">
+                  </h3>
+
+                  <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
                     Free 30 Days Delivery Returns.{" "}
-                    <u className="cursor-pointer">Details</u>
-                  </span>
+                    <span className="cursor-pointer font-semibold text-red-600 underline dark:text-red-400">
+                      Details
+                    </span>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <Section category="Specifications" className="mt-32">
+        <Section
+          category="Specifications"
+          className="mx-auto mt-20 w-full lg:mt-32"
+        >
           <ProductSpecifications product={product as any} />
         </Section>
 
-        <Section category="Customer Reviews" className="mt-[140px] w-full">
-          <div id="reviews" className="mb-2 w-full">
-            <div className="space-y-6">
+        <Section
+          category="Customer Reviews"
+          className="mx-auto mt-20 w-full lg:mt-32"
+        >
+          <div id="reviews" className="w-full">
+            <div className="mx-auto max-w-5xl space-y-6">
               {product?.reviews.map((review, index) => (
                 <div
                   key={index}
-                  className="rounded-xl border border-gray-200 bg-white p-6 transition-shadow duration-300 hover:shadow-md"
+                  className="overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-zinc-700 dark:bg-zinc-900"
                 >
-                  {/* Header */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-4">
-                      {/* Avatar */}
                       <div
-                        className="flex h-14 w-14 items-center justify-center rounded-full text-2xl font-bold text-white"
+                        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-2xl font-bold text-white shadow-md"
                         style={{
                           backgroundColor: getAvatarColor(review.reviewerName),
                         }}
@@ -308,11 +363,11 @@ export default function ProductDetails() {
                       </div>
 
                       <div>
-                        <h3 className="font-poppins text-lg font-semibold">
+                        <h3 className="font-poppins text-lg font-semibold text-zinc-900 dark:text-white">
                           {review.reviewerName}
                         </h3>
 
-                        <p className="font-poppins text-sm text-gray-500">
+                        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
                           {new Date(review.date).toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "long",
@@ -321,11 +376,15 @@ export default function ProductDetails() {
                         </p>
                       </div>
                     </div>
-                    <StarRating rating={review.rating} />
+
+                    <div className="self-start sm:self-center">
+                      <StarRating rating={review.rating} />
+                    </div>
                   </div>
 
-                  {/* Comment */}
-                  <p className="mt-6 border-t pt-6 font-poppins leading-7 text-gray-700">
+                  <div className="border-t border-zinc-200 dark:border-zinc-700" />
+
+                  <p className="p-6 font-poppins leading-8 text-zinc-600 dark:text-zinc-300">
                     {review.comment}
                   </p>
                 </div>
@@ -334,21 +393,26 @@ export default function ProductDetails() {
           </div>
         </Section>
 
-        <Section category="Related Item" className="my-[140px]">
-          {relatedProducts.map((relatedProduct) => (
-            <ProductCard
-              key={relatedProduct.id}
-              id={relatedProduct.id}
-              title={relatedProduct.title}
-              price={relatedProduct.price}
-              sale={Math.ceil(relatedProduct.discountPercentage)}
-              stock={relatedProduct.stock}
-              minAmount={relatedProduct.minimumOrderQuantity}
-              rating={relatedProduct.rating}
-              thumbnail={relatedProduct.thumbnail}
-              reviewsNo={relatedProduct.reviews.length}
-            />
-          ))}
+        <Section
+          category="Related Products"
+          className="mx-auto my-20 w-full lg:my-32 px-0"
+        >
+          <div className="grid grid-cols-1 w-full gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard
+                key={relatedProduct.id}
+                id={relatedProduct.id}
+                title={relatedProduct.title}
+                price={relatedProduct.price}
+                sale={Math.ceil(relatedProduct.discountPercentage)}
+                stock={relatedProduct.stock}
+                minAmount={relatedProduct.minimumOrderQuantity}
+                rating={relatedProduct.rating}
+                thumbnail={relatedProduct.thumbnail}
+                reviewsNo={relatedProduct.reviews.length}
+              />
+            ))}
+          </div>
         </Section>
       </div>
     </>

@@ -52,23 +52,28 @@ export default function Authentication() {
   };
 
   return (
-    <div className="relative left-1/2 right-1/2 max-h-[850px] w-[calc(100vw-7px)] -translate-x-1/2 overflow-hidden bg-gradient-to-br from-[#0F1424] via-[#141A33] to-[#0F1424]">
-      <AuthIllustrations isSignup={isSignup} />
+    <div className="relative left-1/2 right-1/2 min-h-screen w-[calc(100vw-7px)] -translate-x-1/2 overflow-hidden bg-gradient-to-br from-slate-100 via-white to-slate-200 transition-colors duration-300 dark:from-[#0F1424] dark:via-[#141A33] dark:to-[#0F1424]">
+      {/* Desktop only */}
+      <div className="hidden lg:block">
+        <AuthIllustrations isSignup={isSignup} />
+      </div>
 
-      <div className="relative z-10 flex h-[850px] items-center">
-        <AuthPanel show={!isSignup} side="right">
-          <LoginForm
-            onSwitch={() => setIsSignup(true)}
-            onGoogleLogin={handleGoogleLogin}
-          />
-        </AuthPanel>
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-5">
+        <div className="w-full max-w-md lg:max-w-none">
+          <AuthPanel show={!isSignup} side="right">
+            <LoginForm
+              onSwitch={() => setIsSignup(true)}
+              onGoogleLogin={handleGoogleLogin}
+            />
+          </AuthPanel>
 
-        <AuthPanel show={isSignup} side="left">
-          <SignupForm
-            onSwitch={() => setIsSignup(false)}
-            onGoogleSignUp={handleGoogleSignUp}
-          />
-        </AuthPanel>
+          <AuthPanel show={isSignup} side="left">
+            <SignupForm
+              onSwitch={() => setIsSignup(false)}
+              onGoogleSignUp={handleGoogleSignUp}
+            />
+          </AuthPanel>
+        </div>
       </div>
     </div>
   );
