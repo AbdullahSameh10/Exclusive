@@ -14,7 +14,7 @@ export default function AmountCounter(props: AmountCounterPropsTypes) {
 
   useEffect(() => {
     setCounter(minAmount);
-  }, [minAmount, setCounter]);
+  }, [minAmount]);
 
   const clearCounterInterval = () => {
     if (interval.current !== null) {

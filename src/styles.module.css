@@ -26,6 +26,9 @@
 .hiddenScrollbar::-webkit-scrollbar-thumb {
   background: transparent;
 }
+.hiddenScrollbar::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+}
 .hiddenScrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
