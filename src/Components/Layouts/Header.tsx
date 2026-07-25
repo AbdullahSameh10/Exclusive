@@ -288,13 +288,13 @@ export default function Header() {
                     });
                   }}
                 >
-                  <Button
-                    className={`rounded-full border-2 !border-[#DB4444] bg-transparent px-5 py-2 text-sm !text-[#DB4444] transition hover:!bg-[#DB4444] hover:!text-white ${
+                  <button
+                    className={`rounded-full border-2 border-[#DB4444] bg-transparent px-5 py-2 max-h-10 text-sm !text-[#DB4444] transition hover:!bg-[#DB4444] hover:!text-white ${
                       isAuthPage && "!bg-[#DB4444] !text-white"
                     }`}
                   >
                     Login
-                  </Button>
+                  </button>
                 </Link>
               ))}
           </div>
