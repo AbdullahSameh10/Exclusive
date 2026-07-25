@@ -105,7 +105,7 @@ export default function Home() {
       </div>
       <div className="relative">
         <CounterDown
-          className="absolute left-[298px] top-[53px]"
+          className="hidden top-[53px] left-[298px] sm:absolute"
           variant="primary"
         />
         <Section category="Today's" heading="Flash Sales" arrows>

@@ -5,27 +5,23 @@ import banner2 from "@Assets/Banner/banner2.png";
 import banner3 from "@Assets/Banner/banner3.png";
 import banner4 from "@Assets/Banner/banner4.png";
 
-const images = [
-  banner1,
-  banner2,
-  banner3,
-  banner4,
-];
+const images = [banner1, banner2, banner3, banner4];
 
 const colors = ["#0000FF", "#883399", "#c46d02", "#02aba5"];
 
 const interval = 8000;
-
 
 export default function Banner() {
   const extendedImages = [images[images.length - 1], ...images, images[0]];
 
   const [index, setIndex] = useState(1);
   const [transition, setTransition] = useState(true);
+
   const sliderRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<number | null>(null);
 
-  // Auto slide
+  /* ---------------- Auto Slide ---------------- */
+
   const stopAutoSlide = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -35,25 +31,32 @@ export default function Banner() {
 
   const startAutoSlide = useCallback(() => {
     stopAutoSlide();
+
     intervalRef.current = window.setInterval(() => {
-      setIndex((prev) => prev + 1);
       setTransition(true);
+      setIndex((prev) => prev + 1);
     }, interval);
   }, []);
 
   useEffect(() => {
     startAutoSlide();
+
     return stopAutoSlide;
   }, [startAutoSlide]);
 
+  /* ---------------- Dots ---------------- */
+
   const handleDotClick = (dotIndex: number) => {
-    stopAutoSlide(); // stop auto sliding
-    setTransition(true); // ensure animation
-    setIndex(dotIndex + 1); // move to correct slide
-    startAutoSlide(); // restart auto sliding
+    stopAutoSlide();
+
+    setTransition(true);
+    setIndex(dotIndex + 1);
+
+    startAutoSlide();
   };
 
-  // Infinite loop fix
+  /* ---------------- Infinite Loop ---------------- */
+
   useEffect(() => {
     if (!sliderRef.current) return;
 
@@ -70,6 +73,7 @@ export default function Banner() {
     };
 
     const node = sliderRef.current;
+
     node.addEventListener("transitionend", handleTransitionEnd);
 
     return () => {
@@ -77,7 +81,8 @@ export default function Banner() {
     };
   }, [index, extendedImages.length]);
 
-  // Calculate active dot (0 → images.length - 1)
+  /* ---------------- Active Dot ---------------- */
+
   const activeDot =
     index === 0
       ? images.length - 1
@@ -90,53 +95,70 @@ export default function Banner() {
       style={{
         position: "relative",
         overflow: "hidden",
-        height: "344px",
-        width: "892px",
-        borderRadius: "16px",
+        width: "100%",
         maxWidth: "892px",
-        margin: "40px 0 0 45px",
+        aspectRatio: "892 / 344",
+        borderRadius: "16px",
+        marginTop: "40px",
       }}
     >
-      {/* SLIDER */}
+      {/* Slider */}
+
       <div
         ref={sliderRef}
         style={{
           display: "flex",
           transform: `translateX(-${index * 100}%)`,
-          transition: transition ? "transform 0.6s ease-in-out" : "none",
+          transition: transition ? "transform .6s ease-in-out" : "none",
+          width: "100%",
+          height: "100%",
         }}
       >
         {extendedImages.map((img, i) => (
-          <div key={i} style={{ minWidth: "100%", height: "344px" }}>
+          <div
+            key={i}
+            style={{
+              minWidth: "100%",
+              height: "100%",
+              flexShrink: 0,
+            }}
+          >
             <img
               src={img}
               alt={`slide-${i}`}
               style={{
-                width: "892px",
-                height: "344px",
+                width: "100%",
+                height: "100%",
                 objectFit: "cover",
+                display: "block",
               }}
             />
           </div>
         ))}
       </div>
 
-      {/* DOTS */}
+      {/* Dots */}
+
       <div
         style={{
           position: "absolute",
-          bottom: "11px",
+          bottom: "12px",
           left: "50%",
           transform: "translateX(-50%)",
           zIndex: 10,
-          backgroundColor: "rgba(255,255,255,0.2)",
+
+          background: "rgba(255,255,255,.2)",
+          backdropFilter: "blur(6px)",
+
           width: "95px",
           height: "25px",
+
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           gap: "10px",
-          borderRadius: "20px",
+
+          borderRadius: "999px",
         }}
       >
         {images.map((_, i) => (
@@ -147,11 +169,10 @@ export default function Banner() {
               width: i === activeDot ? "15px" : "10px",
               height: i === activeDot ? "15px" : "10px",
               borderRadius: "50%",
-              backgroundColor:
-                i === activeDot ? colors[i] : "rgba(255,255,255,0.5)",
-              boxShadow: "0 0 4px rgba(0,0,0,0.6)", // optional but helps
+              background: i === activeDot ? colors[i] : "rgba(255,255,255,.55)",
               cursor: "pointer",
-              transition: "all 0.3s ease",
+              transition: ".3s",
+              boxShadow: "0 0 4px rgba(0,0,0,.35)",
             }}
           />
         ))}

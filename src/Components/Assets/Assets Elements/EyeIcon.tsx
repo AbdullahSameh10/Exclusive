@@ -13,7 +13,7 @@ export default function EyeIcon() {
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="transition-all duration-300 stroke-black group-hover:stroke-[#DB4444] group-hover:fill-[#DB4444]"
+        className="transition-all duration-300 stroke-black dark:stroke-white/90 group-hover:stroke-[#DB4444] group-hover:fill-[#DB4444]"
       />
       <path
         d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
@@ -21,7 +21,7 @@ export default function EyeIcon() {
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="transition-all duration-300 stroke-black group-hover:stroke-white group-hover:fill-black"
+        className="transition-all duration-300 stroke-black dark:stroke-white/90 group-hover:stroke-white group-hover:fill-black"
       />
     </svg>
   );

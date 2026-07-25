@@ -1,4 +1,5 @@
-import Searchicon from "@Assets/SearchIcon.svg";
+// import Searchicon from "@Assets/SearchIcon.svg";
+import { SearchIcon } from "lucide-react"
 import { useNavigate, useSearchParams } from "react-router";
 import { useState, useEffect } from "react";
 
@@ -33,11 +34,11 @@ export default function SearchBar() {
             handleSearch();
           }
         }}
-        className="h-9 w-60 rounded-md border-none bg-[#F4F4F5] py-[7px] pl-5 pr-11 font-poppins text-xs leading-[18px] outline-none"
+        className="h-9 w-60 rounded-md border border-transparent bg-[#F4F4F5] py-[7px] pl-5 pr-11 font-poppins text-xs leading-[18px] outline-none transition-colors dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder:text-gray-400"
       />
 
       <button onClick={handleSearch} className="absolute right-3 top-[7px]">
-        <img src={Searchicon} alt="Search" />
+        <SearchIcon size={18} className="text-black dark:text-white"/>
       </button>
     </div>
   );

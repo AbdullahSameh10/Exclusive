@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { JSX, ReactNode } from "react";
 import rightArrowImg from "@Assets/right arrow.svg";
 import leftArrowImg from "@Assets/left arrow.svg";
+import styles from "@/styles.module.css";
 
 type SectionPropsTypes = {
   category: string;
@@ -23,6 +24,7 @@ export default function Section(props: SectionPropsTypes) {
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
+
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
 
@@ -64,54 +66,68 @@ export default function Section(props: SectionPropsTypes) {
   };
 
   return (
-    <section className={`${className} flex max-w-[1170px] flex-col`}>
-      <div className={`flex items-center gap-4 ${!heading && "mb-[60px]"}`}>
-        <div className="h-10 w-5 rounded-[4px] bg-[#DB4444]" />
-        <span className="font-poppins text-base font-semibold text-[#DB4444]">
+    <section
+      className={`${className} flex w-full max-w-[1170px] flex-col px-4 lg:px-0`}
+    >
+      {/* Category */}
+      <div
+        className={`flex items-center gap-4 ${
+          !heading ? "mb-10 lg:mb-[60px]" : ""
+        }`}
+      >
+        <div className="h-8 w-2 rounded bg-[#DB4444] lg:h-10 lg:w-5" />
+
+        <span className="font-poppins text-sm font-semibold text-[#DB4444] lg:text-base">
           {category}
         </span>
       </div>
 
-      <div className="flex items-center justify-between">
+      {/* Heading + Actions */}
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-4 lg:mb-[31px]">
         {heading && (
-          <h3 className="mb-[31px] mt-6 font-inter text-4xl font-semibold">
+          <h3 className="font-inter text-2xl font-semibold text-black dark:text-white/90 leading-tight sm:text-3xl lg:mt-6 lg:text-4xl">
             {heading}
           </h3>
         )}
 
-        {arrows && (
-          <div className="flex gap-2">
-            <button
-              onClick={scrollLeft}
-              className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#F5F5F5] transition-all duration-300 hover:bg-[#E5E5E5] active:scale-95 disabled:cursor-not-allowed disabled:opacity-20"
-              disabled={isAtStart}
-            >
-              <img
-                src={leftArrowImg}
-                alt="left arrow"
-              />
-            </button>
+        <div className="ml-auto flex items-center gap-2">
+          {arrows && (
+            <>
+              <button
+                onClick={scrollLeft}
+                disabled={isAtStart}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F5F5F5] transition-all duration-300 hover:bg-[#E5E5E5] active:scale-95 disabled:cursor-not-allowed disabled:opacity-20 lg:h-[46px] lg:w-[46px]"
+              >
+                <img
+                  src={leftArrowImg}
+                  alt="left arrow"
+                  className="w-4 lg:w-auto"
+                />
+              </button>
 
-            <button
-              onClick={scrollRight}
-              className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#F5F5F5] transition-all duration-300 hover:bg-[#E5E5E5] active:scale-95 disabled:cursor-not-allowed disabled:opacity-20"
-              disabled={isAtEnd}
-            >
-              <img
-                src={rightArrowImg}
-                alt="right arrow"
-              />
-            </button>
-          </div>
-        )}
+              <button
+                onClick={scrollRight}
+                disabled={isAtEnd}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F5F5F5] transition-all duration-300 hover:bg-[#E5E5E5] active:scale-95 disabled:cursor-not-allowed disabled:opacity-20 lg:h-[46px] lg:w-[46px]"
+              >
+                <img
+                  src={rightArrowImg}
+                  alt="right arrow"
+                  className="w-4 lg:w-auto"
+                />
+              </button>
+            </>
+          )}
 
-        {button}
+          {button}
+        </div>
       </div>
 
+      {/* Products */}
       <div
         ref={containerRef}
         onScroll={handleScroll}
-        className="flex w-full gap-[30px] overflow-hidden scroll-smooth"
+        className={`${styles.hiddenScrollbar} flex w-full gap-4 overflow-x-auto overflow-y-hidden scroll-smooth lg:gap-[30px]`}
       >
         {children}
       </div>

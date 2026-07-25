@@ -9,7 +9,7 @@ type CounterDownPropsTypes = {
 export default function CounterDown({
   className = "",
   initialSeconds = 3 * 24 * 60 * 60 + 23 * 60 * 60 + 19 * 60 + 20,
-  variant = "primary",
+  variant,
 }: CounterDownPropsTypes) {
   const [secondsLeft, setSecondsLeft] = useState(initialSeconds);
 
@@ -28,42 +28,83 @@ export default function CounterDown({
   const minutes = Math.floor((secondsLeft / 60) % 60);
   const seconds = secondsLeft % 60;
 
-  const format = (n: number) => String(n).padStart(2, "0");
+  const format = (value: number) => value.toString().padStart(2, "0");
 
-  return variant === "primary" ? (
-    <div className={`${className} flex items-end gap-4`}>
-      <TimeBlock label="Days" value={format(days)} variant="primary"/>
-      <span className="text-3xl font-bold text-[#DB4444]">:</span>
-      <TimeBlock label="Hours" value={format(hours)} variant="primary"/>
-      <span className="text-3xl font-bold text-[#DB4444]">:</span>
-      <TimeBlock label="Minutes" value={format(minutes)} variant="primary"/>
-      <span className="text-3xl font-bold text-[#DB4444]">:</span>
-      <TimeBlock label="Seconds" value={format(seconds)} variant="primary"/>
-    </div>
-  ) : (
-    <div className="flex gap-6 mb-10">
+  if (variant === "primary") {
+    return (
+      <div
+        className={`${className} flex flex-wrap items-end gap-2 sm:gap-3 lg:flex-nowrap lg:gap-4`}
+      >
+        <TimeBlock label="Days" value={format(days)} variant="primary" />
+
+        <Separator />
+
+        <TimeBlock label="Hours" value={format(hours)} variant="primary" />
+
+        <Separator />
+
+        <TimeBlock label="Minutes" value={format(minutes)} variant="primary" />
+
+        <Separator />
+
+        <TimeBlock label="Seconds" value={format(seconds)} variant="primary" />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`${className} mb-8 flex flex-wrap gap-3 sm:gap-4 lg:mb-10 lg:gap-6`}
+    >
       <TimeBlock label="Days" value={format(days)} variant="secondary" />
+
       <TimeBlock label="Hours" value={format(hours)} variant="secondary" />
+
       <TimeBlock label="Minutes" value={format(minutes)} variant="secondary" />
+
       <TimeBlock label="Seconds" value={format(seconds)} variant="secondary" />
     </div>
   );
 }
 
-function TimeBlock({ label, value, variant }: { label: string; value: string; variant: "primary" | "secondary" }) {
-  return variant === "primary" ? (
-    <div className="flex flex-col gap-1">
-      <span className="font-poppins text-xs font-medium leading-[18px]">
-        {label}
-      </span>
-      <span className="font-inter text-[32px] font-bold leading-7 tracking-[10%]">
+function Separator() {
+  return (
+    <span className="pb-1 text-xl font-bold text-[#DB4444] sm:text-2xl lg:text-3xl">
+      :
+    </span>
+  );
+}
+
+type TimeBlockProps = {
+  label: string;
+  value: string;
+  variant: "primary" | "secondary";
+};
+
+function TimeBlock({ label, value, variant }: TimeBlockProps) {
+  if (variant === "primary") {
+    return (
+      <div className="flex flex-col items-center gap-1 sm:items-start">
+        <span className="font-poppins text-[10px] font-medium uppercase tracking-wide text-neutral-600 dark:text-neutral-400 sm:text-xs">
+          {label}
+        </span>
+
+        <span className="font-inter text-2xl font-bold leading-none tracking-wider text-neutral-900 dark:text-white sm:text-[28px] lg:text-[32px]">
+          {value}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex h-12 w-12 flex-col items-center justify-center rounded-full bg-white shadow-sm transition-colors duration-300 dark:bg-neutral-800 sm:h-14 sm:w-14 lg:h-[62px] lg:w-[62px]">
+      <span className="font-poppins text-sm font-semibold text-black dark:text-white sm:text-[15px] lg:text-base">
         {value}
       </span>
-    </div>
-  ) : (
-    <div className="w-[62px] h-[62px] rounded-full bg-white flex flex-col items-center justify-center">
-      <span className="font-poppins font-semibold text-base leading-[20px]">{value}</span>
-      <span className="text-[11px] leading-[18px] font-poppins">{label}</span>
+
+      <span className="font-poppins text-[9px] text-neutral-600 dark:text-neutral-400 sm:text-[10px] lg:text-[11px]">
+        {label}
+      </span>
     </div>
   );
 }

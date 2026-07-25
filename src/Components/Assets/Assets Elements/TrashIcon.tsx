@@ -35,7 +35,7 @@ export default function TrashIcon({
       <FontAwesomeIcon
         icon={faTrashCan}
         style={{ fontSize: size }}
-        className="transition-colors duration-300 group-hover:text-red-600"
+        className="transition-colors duration-300 text-black dark:text-white/90 group-hover:text-red-600"
       />
     </button>
   );

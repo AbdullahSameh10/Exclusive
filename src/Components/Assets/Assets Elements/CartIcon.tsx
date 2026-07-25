@@ -26,7 +26,7 @@ export default function CartIcon() {
           d="M22 26c12 0 18 6 24 18"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className={`stroke-[8] transition-all duration-300 ${
+          className={`stroke-[8] transition-all stroke-black dark:stroke-white/90 duration-300 ${
             isCartPage
               ? "stroke-red-500"
               : "stroke-black group-hover:stroke-red-500"
@@ -37,7 +37,7 @@ export default function CartIcon() {
         <path
           d="M46 44h68l-10 42H56z"
           strokeLinejoin="round"
-          className={`stroke-[6] transition-all duration-300 ${
+          className={`stroke-[6] transition-all stroke-black dark:stroke-white/90 duration-300 ${
             isCartPage
               ? "fill-[#c6dbff] stroke-[#c6dbff]"
               : "fill-transparent stroke-black group-hover:fill-[#c6dbff] group-hover:stroke-[#c6dbff]"
@@ -47,7 +47,7 @@ export default function CartIcon() {
         {/* Basket grid */}
         <path
           d="M62 44v42M80 44v42M98 44v42"
-          className={`stroke-[4] transition-all duration-300 ${
+          className={`stroke-[4] transition-all stroke-black dark:stroke-white/90 duration-300 ${
             isCartPage
               ? "stroke-[#9bb8e8]"
               : "stroke-black/40 group-hover:stroke-[#9bb8e8]"
@@ -55,7 +55,7 @@ export default function CartIcon() {
         />
         <path
           d="M56 58h54M54 72h58"
-          className={`stroke-[4] transition-all duration-300 ${
+          className={`stroke-[4] transition-all stroke-black dark:stroke-white/90 duration-300 ${
             isCartPage
               ? "stroke-[#9bb8e8]"
               : "stroke-black/40 group-hover:stroke-[#9bb8e8]"
@@ -67,7 +67,7 @@ export default function CartIcon() {
           d="M56 86c-8 12-24 16-24 30h72"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className={`stroke-[8] transition-all duration-300 ${
+          className={`stroke-[8] transition-all stroke-black dark:stroke-white/90 duration-300 ${
             isCartPage
               ? "stroke-[#c6dbff]"
               : "stroke-black group-hover:stroke-[#c6dbff]"
@@ -79,7 +79,7 @@ export default function CartIcon() {
           cx="46"
           cy="135"
           r="8"
-          className={`stroke-[6] transition-all duration-300 ${
+          className={`stroke-[6] transition-all stroke-black dark:stroke-white/90 duration-300 ${
             isCartPage
               ? "fill-[#3b5b8a] stroke-[#3b5b8a]"
               : "fill-transparent stroke-black group-hover:fill-[#3b5b8a] group-hover:stroke-[#3b5b8a]"
@@ -89,7 +89,7 @@ export default function CartIcon() {
           cx="88"
           cy="135"
           r="8"
-          className={`stroke-[6] transition-all duration-300 ${
+          className={`stroke-[6] transition-all stroke-black dark:stroke-white/90 duration-300 ${
             isCartPage
               ? "fill-[#3b5b8a] stroke-[#3b5b8a]"
               : "fill-transparent stroke-black group-hover:fill-[#3b5b8a] group-hover:stroke-[#3b5b8a]"

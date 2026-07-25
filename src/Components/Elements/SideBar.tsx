@@ -67,7 +67,7 @@ export default function SideBar() {
   const transition = useRouteTransition();
 
   return (
-    <aside className="max-h-[384px] w-[233px] border-r border-black/20 pr-6 pt-10 dark:border-white/20">
+    <aside className="hidden lg:block lg:max-h-[384px] lg:w-[233px] lg:border-r lg:border-black/20 lg:pr-6 lg:pt-10 dark:lg:border-white/20">
       <ul className="space-y-1">
         {categories.map((item) => (
           <li key={item.title} className="group relative">
@@ -80,7 +80,7 @@ export default function SideBar() {
                   behavior: "smooth",
                 });
               }}
-              className="group flex items-center justify-between rounded-lg px-3 py-2 font-poppins text-[15px] font-medium text-black transition-all duration-300 hover:bg-red-50 hover:text-[#DB4444] dark:text-neutral-200 dark:hover:bg-red-500/10"
+              className="flex items-center justify-between rounded-lg px-3 py-2 font-poppins text-[15px] font-medium text-black transition-all duration-300 hover:bg-red-50 hover:text-[#DB4444] dark:text-neutral-200 dark:hover:bg-red-500/10"
             >
               <span>{item.title}</span>
 
@@ -91,6 +91,7 @@ export default function SideBar() {
                 />
               )}
             </Link>
+
             {item.children && (
               <ul className="invisible absolute left-full top-0 z-50 ml-2 w-56 rounded-xl border bg-white p-2 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100 dark:border-neutral-700 dark:bg-neutral-900">
                 {item.children.map((child) => (
@@ -104,7 +105,7 @@ export default function SideBar() {
                           behavior: "smooth",
                         });
                       }}
-                      className="block rounded-md px-3 py-2 hover:bg-red-50 dark:hover:bg-neutral-800"
+                      className="block rounded-md px-3 py-2 transition hover:bg-red-50 dark:hover:bg-neutral-800"
                     >
                       {child.title}
                     </Link>

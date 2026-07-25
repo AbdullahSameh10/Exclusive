@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import { TopHeader } from "../Elements";
+// import { TopHeader } from "@Elements/index";
 import Header from "./Header";
 import Footer from "./Footer";
 import { ToastContainer } from "react-toastify";
@@ -11,7 +11,7 @@ export default function Layout() {
     <>
       <ToastContainer position="top-right" autoClose={3000} limit={3} />
       <div className="relative min-h-screen bg-white dark:bg-neutral-900">
-        <TopHeader />
+        {/* <TopHeader /> */}
 
         <div className="sticky top-0 z-50">
           <Header />

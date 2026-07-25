@@ -23,6 +23,13 @@
   scroll-behavior: smooth;
 }
 
+.hiddenScrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+.hiddenScrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .transparentScrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
